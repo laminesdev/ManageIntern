@@ -10,14 +10,20 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['attendance', 'performance']);
+            $table->enum('type', ['attendance', 'performance', 'department', 'general'])->default('attendance');
             $table->date('period_start');
             $table->date('period_end');
-            $table->foreignId('department_id')->nullable()->constrained('departments')->nullOnDelete();
+            $table->unsignedBigInteger('department_id')->nullable();
             $table->json('data');
-            $table->foreignId('generated_by')->constrained('users')->cascadeOnDelete();
+            $table->unsignedBigInteger('generated_by');
             $table->boolean('sent_to_admin')->default(false);
             $table->timestamps();
+            
+            $table->index('type');
+            $table->index('department_id');
+            $table->index('period_start');
+            $table->index('period_end');
+            $table->index('sent_to_admin');
         });
     }
 

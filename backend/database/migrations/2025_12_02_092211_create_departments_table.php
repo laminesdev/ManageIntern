@@ -12,7 +12,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->unsignedBigInteger('manager_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

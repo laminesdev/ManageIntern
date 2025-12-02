@@ -10,15 +10,19 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('intern_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('recorded_by')->constrained('users')->cascadeOnDelete();
+            $table->unsignedBigInteger('intern_id');
+            $table->unsignedBigInteger('recorded_by');
             $table->date('attendance_date');
-            $table->enum('status', ['present', 'absent', 'late'])->default('present');
+            $table->enum('status', ['present', 'absent', 'late', 'excused'])->default('present');
             $table->timestamp('recorded_at')->useCurrent();
             $table->timestamps();
             
-            // Prevent duplicate attendance records for same intern on same day
+            // Unique constraint: No duplicate attendance for same intern on same day
             $table->unique(['intern_id', 'attendance_date']);
+            
+            $table->index('intern_id');
+            $table->index('attendance_date');
+            $table->index(['intern_id', 'attendance_date']);
         });
     }
 

@@ -14,7 +14,7 @@ class Task extends Model
         'title',
         'description',
         'status',
-        'priority',
+        'priority', // ← ADDED THIS
         'assigned_by',
         'assigned_to',
         'deadline',
@@ -22,6 +22,7 @@ class Task extends Model
 
     protected $casts = [
         'deadline' => 'datetime',
+        'priority' => 'string', // ← ADDED THIS
     ];
 
     // Relationships
@@ -49,5 +50,45 @@ class Task extends Model
     public function markAsInProgress()
     {
         $this->update(['status' => 'in_progress']);
+    }
+
+    // NEW: Validate deadline (not in past)
+    public function validateDeadline()
+    {
+        return $this->deadline && $this->deadline->isFuture();
+    }
+
+    // NEW: Check if task belongs to manager's department
+    public function belongsToManagerDepartment($manager)
+    {
+        if (!$manager || !$this->assignedTo) {
+            return false;
+        }
+        
+        return $this->assignedTo->department_id === $manager->department_id;
+    }
+
+    // NEW: Get priority color for UI
+    public function getPriorityColor()
+    {
+        return match($this->priority) {
+            'high' => 'danger',
+            'medium' => 'warning',
+            'low' => 'info',
+            default => 'secondary',
+        };
+    }
+
+    // NEW: Scope for priority
+    public function scopePriority($query, $priority)
+    {
+        return $query->where('priority', $priority);
+    }
+
+    // NEW: Scope for overdue tasks
+    public function scopeOverdue($query)
+    {
+        return $query->where('deadline', '<', now())
+            ->where('status', '!=', 'completed');
     }
 }

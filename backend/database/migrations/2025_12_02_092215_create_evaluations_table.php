@@ -10,14 +10,19 @@ return new class extends Migration
     {
         Schema::create('evaluations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('intern_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('manager_id')->constrained('users')->cascadeOnDelete();
-            $table->decimal('score', 5, 2);
+            $table->unsignedBigInteger('intern_id');
+            $table->unsignedBigInteger('manager_id');
+            $table->decimal('score', 5, 2); // 0.00 to 100.00
             $table->text('comments')->nullable();
-            $table->enum('evaluation_type', ['weekly', 'monthly', 'mid_term', 'final'])->nullable();
+            $table->enum('evaluation_type', ['mid_term', 'final', 'monthly', 'quarterly', 'project'])->default('monthly');
             $table->timestamp('evaluated_at')->useCurrent();
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
+            
+            $table->index('intern_id');
+            $table->index('manager_id');
+            $table->index('evaluation_type');
+            $table->index('evaluated_at');
         });
     }
 

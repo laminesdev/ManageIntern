@@ -15,11 +15,14 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['admin', 'manager', 'intern'])->default('intern');
-            $table->foreignId('department_id')->nullable()->constrained('departments')->nullOnDelete();
-            $table->foreignId('manager_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->softDeletes();
+            $table->unsignedBigInteger('department_id')->nullable();
+            $table->unsignedBigInteger('manager_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
+            
+            $table->index('role');
+            $table->index('department_id');
         });
     }
 

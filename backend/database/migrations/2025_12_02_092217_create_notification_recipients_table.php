@@ -10,12 +10,19 @@ return new class extends Migration
     {
         Schema::create('notification_recipients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('notification_id')->constrained('notifications')->cascadeOnDelete();
-            $table->foreignId('recipient_id')->constrained('users')->cascadeOnDelete();
+            $table->unsignedBigInteger('notification_id');
+            $table->unsignedBigInteger('recipient_id');
             $table->boolean('is_read')->default(false);
             $table->timestamp('read_at')->nullable();
             $table->boolean('is_archived')->default(false);
             $table->timestamps();
+            
+            // Unique: Each recipient gets notification only once
+            $table->unique(['notification_id', 'recipient_id']);
+            
+            $table->index('recipient_id');
+            $table->index('is_read');
+            $table->index('is_archived');
         });
     }
 

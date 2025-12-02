@@ -12,13 +12,18 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->enum('status', ['pending', 'in_progress', 'completed', 'overdue'])->default('pending');
-            $table->enum('priority', ['low', 'medium', 'high', 'urgent'])->default('medium');
-            $table->foreignId('assigned_by')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('assigned_to')->constrained('users')->cascadeOnDelete();
+            $table->enum('status', ['pending', 'in_progress', 'completed', 'cancelled'])->default('pending');
+            $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
+            $table->unsignedBigInteger('assigned_by');
+            $table->unsignedBigInteger('assigned_to');
             $table->timestamp('deadline');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
+            
+            $table->index('status');
+            $table->index('priority');
+            $table->index('deadline');
+            $table->index('assigned_to');
         });
     }
 
