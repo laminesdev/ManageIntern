@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Reclamation extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     protected $fillable = [
         'intern_id',
@@ -24,53 +24,18 @@ class Reclamation extends Model
     protected $casts = [
         'resolved_at' => 'datetime',
         'responded_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
-    // Relationships
-    public function intern()
+    public function intern(): BelongsTo
     {
         return $this->belongsTo(User::class, 'intern_id');
     }
 
-    public function manager()
+    public function manager(): BelongsTo
     {
         return $this->belongsTo(User::class, 'manager_id');
-    }
-
-    // Helper methods
-    public function markAsSolved()
-    {
-        $this->update([
-            'status' => 'solved',
-            'resolved_at' => now(),
-        ]);
-    }
-
-    public function markAsArchived()
-    {
-        $this->update(['status' => 'archived']);
-    }
-
-    public function respond($response)
-    {
-        $this->update([
-            'response' => $response,
-            'responded_at' => now(),
-        ]);
-    }
-
-    public function isResolved()
-    {
-        return $this->status === 'solved';
-    }
-
-    public function scopePending($query)
-    {
-        return $query->where('status', 'pending');
-    }
-
-    public function scopeSolved($query)
-    {
-        return $query->where('status', 'solved');
     }
 }

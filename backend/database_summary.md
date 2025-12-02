@@ -156,73 +156,6 @@ return new class extends Migration
 
 ```
 
-## File: migrations/2014_10_12_000000_create_departments_table.php
-```php
-<?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
-return new class extends Migration
-{
-    public function up(): void
-    {
-        Schema::create('departments', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->unsignedBigInteger('manager_id')->nullable(); // Changed from foreignId
-            $table->timestamps();
-            $table->softDeletes();
-        });
-    }
-
-    public function down(): void
-    {
-        Schema::dropIfExists('departments');
-    }
-};
-```
-
-## File: migrations/2014_10_12_000000_create_users_table.php
-```php
-<?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
-return new class extends Migration
-{
-    public function up(): void
-    {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->enum('role', ['admin', 'manager', 'intern'])->default('intern');
-            $table->foreignId('department_id')->nullable()->constrained('departments')->onDelete('set null');
-            $table->foreignId('manager_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->rememberToken();
-            $table->timestamps();
-            $table->softDeletes();
-            
-            // Indexes
-            $table->index('role');
-            $table->index('department_id');
-        });
-    }
-
-    public function down(): void
-    {
-        Schema::dropIfExists('users');
-    }
-};
-```
-
 ## File: migrations/2025_11_30_222711_create_personal_access_tokens_table.php
 ```php
 <?php
@@ -261,268 +194,6 @@ return new class extends Migration
 
 ```
 
-## File: migrations/2025_12_02_083519_create_tasks_table.php
-```php
-<?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
-return new class extends Migration
-{
-    public function up(): void
-    {
-        Schema::create('tasks', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->text('description');
-            $table->enum('status', ['pending', 'in_progress', 'completed', 'cancelled'])->default('pending');
-            $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
-            $table->foreignId('assigned_by')->constrained('users')->onDelete('cascade');
-            $table->foreignId('assigned_to')->constrained('users')->onDelete('cascade');
-            $table->timestamp('deadline');
-            $table->timestamps();
-            $table->softDeletes();
-            
-            // Indexes
-            $table->index('status');
-            $table->index('priority');
-            $table->index('deadline');
-            $table->index('assigned_to');
-        });
-    }
-
-    public function down(): void
-    {
-        Schema::dropIfExists('tasks');
-    }
-};
-```
-
-## File: migrations/2025_12_02_083520_create_reports_table.php
-```php
-<?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
-return new class extends Migration
-{
-    public function up(): void
-    {
-        Schema::create('reports', function (Blueprint $table) {
-            $table->id();
-            $table->enum('type', ['attendance', 'performance', 'department', 'general'])->default('attendance');
-            $table->date('period_start');
-            $table->date('period_end');
-            $table->foreignId('department_id')->nullable()->constrained('departments')->onDelete('cascade');
-            $table->json('data'); // Store report data as JSON
-            $table->foreignId('generated_by')->constrained('users')->onDelete('cascade');
-            $table->boolean('sent_to_admin')->default(false);
-            $table->timestamps();
-            
-            // Indexes
-            $table->index('type');
-            $table->index('department_id');
-            $table->index('period_start');
-            $table->index('period_end');
-            $table->index('sent_to_admin');
-        });
-    }
-
-    public function down(): void
-    {
-        Schema::dropIfExists('reports');
-    }
-};
-```
-
-## File: migrations/2025_12_02_083521_create_evaluations_table.php
-```php
-<?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
-return new class extends Migration
-{
-    public function up(): void
-    {
-        Schema::create('evaluations', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('intern_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('manager_id')->constrained('users')->onDelete('cascade');
-            $table->decimal('score', 5, 2); // 0.00 to 100.00
-            $table->text('comments')->nullable();
-            $table->enum('evaluation_type', ['mid_term', 'final', 'monthly', 'quarterly', 'project'])->default('monthly');
-            $table->timestamp('evaluated_at')->useCurrent();
-            $table->timestamps();
-            $table->softDeletes();
-            
-            // Indexes
-            $table->index('intern_id');
-            $table->index('manager_id');
-            $table->index('evaluation_type');
-            $table->index('evaluated_at');
-        });
-    }
-
-    public function down(): void
-    {
-        Schema::dropIfExists('evaluations');
-    }
-};
-```
-
-## File: migrations/2025_12_02_083522_create_attendances_table.php
-```php
-<?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
-return new class extends Migration
-{
-    public function up(): void
-    {
-        Schema::create('attendances', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('intern_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('recorded_by')->constrained('users')->onDelete('cascade');
-            $table->date('attendance_date');
-            $table->enum('status', ['present', 'absent', 'late', 'excused'])->default('present');
-            $table->timestamp('recorded_at')->useCurrent();
-            $table->timestamps();
-            
-            // Unique constraint: No duplicate attendance for same intern on same day
-            $table->unique(['intern_id', 'attendance_date']);
-            
-            // Indexes
-            $table->index('intern_id');
-            $table->index('attendance_date');
-            $table->index(['intern_id', 'attendance_date']);
-        });
-    }
-
-    public function down(): void
-    {
-        Schema::dropIfExists('attendances');
-    }
-};
-```
-
-## File: migrations/2025_12_02_083523_create_reclamations_table.php
-```php
-<?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
-return new class extends Migration
-{
-    public function up(): void
-    {
-        Schema::create('reclamations', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('intern_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('manager_id')->constrained('users')->onDelete('cascade');
-            $table->string('subject');
-            $table->text('description');
-            $table->enum('status', ['pending', 'in_review', 'solved', 'archived'])->default('pending');
-            $table->text('response')->nullable();
-            $table->timestamp('resolved_at')->nullable();
-            $table->timestamp('responded_at')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
-            
-            // Indexes
-            $table->index('intern_id');
-            $table->index('manager_id');
-            $table->index('status');
-        });
-    }
-
-    public function down(): void
-    {
-        Schema::dropIfExists('reclamations');
-    }
-};
-```
-
-## File: migrations/2025_12_02_083524_create_notifications_table.php
-```php
-<?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
-return new class extends Migration
-{
-    public function up(): void
-    {
-        Schema::create('notifications', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('sender_id')->constrained('users')->onDelete('cascade');
-            $table->string('title');
-            $table->text('message');
-            $table->timestamps();
-            
-            // Indexes
-            $table->index('sender_id');
-        });
-    }
-
-    public function down(): void
-    {
-        Schema::dropIfExists('notifications');
-    }
-};
-```
-
-## File: migrations/2025_12_02_083525_create_notification_recipients_table.php
-```php
-<?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
-return new class extends Migration
-{
-    public function up(): void
-    {
-        Schema::create('notification_recipients', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('notification_id')->constrained('notifications')->onDelete('cascade');
-            $table->foreignId('recipient_id')->constrained('users')->onDelete('cascade');
-            $table->boolean('is_read')->default(false);
-            $table->timestamp('read_at')->nullable();
-            $table->boolean('is_archived')->default(false);
-            $table->timestamps();
-            
-            // Unique: Each recipient gets notification only once
-            $table->unique(['notification_id', 'recipient_id']);
-            
-            // Indexes
-            $table->index('recipient_id');
-            $table->index('is_read');
-            $table->index('is_archived');
-        });
-    }
-
-    public function down(): void
-    {
-        Schema::dropIfExists('notification_recipients');
-    }
-};
-```
-
 ## File: migrations/2025_12_02_092211_create_departments_table.php
 ```php
 <?php
@@ -539,7 +210,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->foreignId('manager_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->unsignedBigInteger('manager_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -562,9 +233,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
@@ -574,27 +242,22 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['admin', 'manager', 'intern'])->default('intern');
-            $table->unsignedBigInteger('department_id')->nullable(); // Changed from foreignId
-            $table->unsignedBigInteger('manager_id')->nullable(); // Changed from foreignId
+            $table->unsignedBigInteger('department_id')->nullable();
+            $table->unsignedBigInteger('manager_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
             
-            // Indexes
             $table->index('role');
             $table->index('department_id');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('users');
     }
 };
-
 ```
 
 ## File: migrations/2025_12_02_092213_create_tasks_table.php
@@ -607,26 +270,32 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('description');
+            $table->enum('status', ['pending', 'in_progress', 'completed', 'cancelled'])->default('pending');
+            $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
+            $table->unsignedBigInteger('assigned_by');
+            $table->unsignedBigInteger('assigned_to');
+            $table->timestamp('deadline');
             $table->timestamps();
+            $table->softDeletes();
+            
+            $table->index('status');
+            $table->index('priority');
+            $table->index('deadline');
+            $table->index('assigned_to');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('tasks');
     }
 };
-
 ```
 
 ## File: migrations/2025_12_02_092214_create_attendances_table.php
@@ -639,26 +308,31 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('intern_id');
+            $table->unsignedBigInteger('recorded_by');
+            $table->date('attendance_date');
+            $table->enum('status', ['present', 'absent', 'late', 'excused'])->default('present');
+            $table->timestamp('recorded_at')->useCurrent();
             $table->timestamps();
+            
+            // Unique constraint: No duplicate attendance for same intern on same day
+            $table->unique(['intern_id', 'attendance_date']);
+            
+            $table->index('intern_id');
+            $table->index('attendance_date');
+            $table->index(['intern_id', 'attendance_date']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('attendances');
     }
 };
-
 ```
 
 ## File: migrations/2025_12_02_092215_create_evaluations_table.php
@@ -671,26 +345,31 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('evaluations', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('intern_id');
+            $table->unsignedBigInteger('manager_id');
+            $table->decimal('score', 5, 2); // 0.00 to 100.00
+            $table->text('comments')->nullable();
+            $table->enum('evaluation_type', ['mid_term', 'final', 'monthly', 'quarterly', 'project'])->default('monthly');
+            $table->timestamp('evaluated_at')->useCurrent();
             $table->timestamps();
+            $table->softDeletes();
+            
+            $table->index('intern_id');
+            $table->index('manager_id');
+            $table->index('evaluation_type');
+            $table->index('evaluated_at');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('evaluations');
     }
 };
-
 ```
 
 ## File: migrations/2025_12_02_092216_create_notifications_table.php
@@ -703,26 +382,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('sender_id');
+            $table->string('title');
+            $table->text('message');
             $table->timestamps();
+            
+            $table->index('sender_id');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('notifications');
     }
 };
-
 ```
 
 ## File: migrations/2025_12_02_092217_create_notification_recipients_table.php
@@ -735,26 +412,31 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('notification_recipients', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('notification_id');
+            $table->unsignedBigInteger('recipient_id');
+            $table->boolean('is_read')->default(false);
+            $table->timestamp('read_at')->nullable();
+            $table->boolean('is_archived')->default(false);
             $table->timestamps();
+            
+            // Unique: Each recipient gets notification only once
+            $table->unique(['notification_id', 'recipient_id']);
+            
+            $table->index('recipient_id');
+            $table->index('is_read');
+            $table->index('is_archived');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('notification_recipients');
     }
 };
-
 ```
 
 ## File: migrations/2025_12_02_092218_create_reclamations_table.php
@@ -767,26 +449,32 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('reclamations', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('intern_id');
+            $table->unsignedBigInteger('manager_id');
+            $table->string('subject');
+            $table->text('description');
+            $table->enum('status', ['pending', 'in_review', 'solved', 'archived'])->default('pending');
+            $table->text('response')->nullable();
+            $table->timestamp('resolved_at')->nullable();
+            $table->timestamp('responded_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+            
+            $table->index('intern_id');
+            $table->index('manager_id');
+            $table->index('status');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('reclamations');
     }
 };
-
 ```
 
 ## File: migrations/2025_12_02_092218_create_reports_table.php
@@ -799,26 +487,32 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
+            $table->enum('type', ['attendance', 'performance', 'department', 'general'])->default('attendance');
+            $table->date('period_start');
+            $table->date('period_end');
+            $table->unsignedBigInteger('department_id')->nullable();
+            $table->json('data');
+            $table->unsignedBigInteger('generated_by');
+            $table->boolean('sent_to_admin')->default(false);
             $table->timestamps();
+            
+            $table->index('type');
+            $table->index('department_id');
+            $table->index('period_start');
+            $table->index('period_end');
+            $table->index('sent_to_admin');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('reports');
     }
 };
-
 ```
 
 ## File: migrations/2025_12_02_092501_add_foreign_keys_to_departments_and_users.php
@@ -833,30 +527,109 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // First, update departments table to add manager_id foreign key
+        // Departments table - ONLY add foreign key, NOT the column
         Schema::table('departments', function (Blueprint $table) {
-            $table->foreignId('manager_id')->nullable()->constrained('users')->onDelete('set null')->after('description');
+            if (Schema::hasColumn('departments', 'manager_id')) {
+                $table->foreign('manager_id')->references('id')->on('users')->onDelete('set null');
+            }
         });
 
-        // Then, update users table to add department_id foreign key
+        // Users table - add foreign keys for existing columns
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('department_id')->nullable()->constrained('departments')->onDelete('set null')->after('role');
-            $table->foreignId('manager_id')->nullable()->constrained('users')->onDelete('set null')->after('department_id');
+            if (Schema::hasColumn('users', 'department_id')) {
+                $table->foreign('department_id')->references('id')->on('departments')->onDelete('set null');
+            }
+            if (Schema::hasColumn('users', 'manager_id')) {
+                $table->foreign('manager_id')->references('id')->on('users')->onDelete('set null');
+            }
+        });
+
+        // Tasks table
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->foreign('assigned_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('assigned_to')->references('id')->on('users')->onDelete('cascade');
+        });
+
+        // Attendances table
+        Schema::table('attendances', function (Blueprint $table) {
+            $table->foreign('intern_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('recorded_by')->references('id')->on('users')->onDelete('cascade');
+        });
+
+        // Evaluations table
+        Schema::table('evaluations', function (Blueprint $table) {
+            $table->foreign('intern_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('manager_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
+        // Notifications table
+        Schema::table('notifications', function (Blueprint $table) {
+            $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
+        // Notification recipients table
+        Schema::table('notification_recipients', function (Blueprint $table) {
+            $table->foreign('notification_id')->references('id')->on('notifications')->onDelete('cascade');
+            $table->foreign('recipient_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
+        // Reclamations table
+        Schema::table('reclamations', function (Blueprint $table) {
+            $table->foreign('intern_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('manager_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
+        // Reports table
+        Schema::table('reports', function (Blueprint $table) {
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
+            $table->foreign('generated_by')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
     public function down(): void
     {
-        Schema::table('departments', function (Blueprint $table) {
+        // Drop foreign keys (same as before)
+        Schema::table('reports', function (Blueprint $table) {
+            $table->dropForeign(['department_id']);
+            $table->dropForeign(['generated_by']);
+        });
+
+        Schema::table('reclamations', function (Blueprint $table) {
+            $table->dropForeign(['intern_id']);
             $table->dropForeign(['manager_id']);
-            $table->dropColumn('manager_id');
+        });
+
+        Schema::table('notification_recipients', function (Blueprint $table) {
+            $table->dropForeign(['notification_id']);
+            $table->dropForeign(['recipient_id']);
+        });
+
+        Schema::table('notifications', function (Blueprint $table) {
+            $table->dropForeign(['sender_id']);
+        });
+
+        Schema::table('evaluations', function (Blueprint $table) {
+            $table->dropForeign(['intern_id']);
+            $table->dropForeign(['manager_id']);
+        });
+
+        Schema::table('attendances', function (Blueprint $table) {
+            $table->dropForeign(['intern_id']);
+            $table->dropForeign(['recorded_by']);
+        });
+
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->dropForeign(['assigned_by']);
+            $table->dropForeign(['assigned_to']);
         });
 
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['department_id']);
             $table->dropForeign(['manager_id']);
-            $table->dropColumn('department_id');
-            $table->dropColumn('manager_id');
+        });
+
+        Schema::table('departments', function (Blueprint $table) {
+            $table->dropForeign(['manager_id']);
         });
     }
 };

@@ -2,57 +2,38 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Evaluation extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     protected $fillable = [
         'intern_id',
         'manager_id',
         'score',
         'comments',
-        'evaluation_type', // ← ADDED THIS
+        'evaluation_type',
         'evaluated_at',
     ];
 
     protected $casts = [
         'score' => 'decimal:2',
         'evaluated_at' => 'datetime',
-        'evaluation_type' => 'string', // ← ADDED THIS
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
-    // Relationships
-    public function intern()
+    public function intern(): BelongsTo
     {
         return $this->belongsTo(User::class, 'intern_id');
     }
 
-    public function manager()
+    public function manager(): BelongsTo
     {
         return $this->belongsTo(User::class, 'manager_id');
-    }
-
-    // Helper methods
-    public static function calculateAverage($internId)
-    {
-        return self::where('intern_id', $internId)->avg('score');
-    }
-
-    // NEW: Get evaluations by type
-    public static function getByType($internId, $type)
-    {
-        return self::where('intern_id', $internId)
-            ->where('evaluation_type', $type)
-            ->get();
-    }
-
-    // NEW: Check if evaluation is valid (score between 0-100)
-    public function isValid()
-    {
-        return $this->score >= 0 && $this->score <= 100;
     }
 }

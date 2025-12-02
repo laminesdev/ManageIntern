@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Attendance extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'intern_id',
         'recorded_by',
@@ -20,42 +18,17 @@ class Attendance extends Model
     protected $casts = [
         'attendance_date' => 'date',
         'recorded_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
-    // Relationships
-    public function intern()
+    public function intern(): BelongsTo
     {
         return $this->belongsTo(User::class, 'intern_id');
     }
 
-    public function recorder()
+    public function recordedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'recorded_by');
-    }
-
-    // Helper methods
-    public static function checkDuplicate($internId, $date)
-    {
-        return self::where('intern_id', $internId)
-            ->where('attendance_date', $date)
-            ->exists();
-    }
-
-    public static function calculateAttendanceRate($internId, $startDate = null, $endDate = null)
-    {
-        $query = self::where('intern_id', $internId);
-
-        if ($startDate) {
-            $query->where('attendance_date', '>=', $startDate);
-        }
-
-        if ($endDate) {
-            $query->where('attendance_date', '<=', $endDate);
-        }
-
-        $total = $query->count();
-        $present = $query->where('status', 'present')->count();
-
-        return $total > 0 ? ($present / $total) * 100 : 0;
     }
 }

@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class NotificationRecipient extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'notification_id',
         'recipient_id',
@@ -19,55 +17,19 @@ class NotificationRecipient extends Model
 
     protected $casts = [
         'is_read' => 'boolean',
-        'is_archived' => 'boolean',
         'read_at' => 'datetime',
+        'is_archived' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
-    // Relationships
-    public function notification()
+    public function notification(): BelongsTo
     {
         return $this->belongsTo(Notification::class);
     }
 
-    public function recipient()
+    public function recipient(): BelongsTo
     {
         return $this->belongsTo(User::class, 'recipient_id');
-    }
-
-    // Helper methods
-    public function markAsRead()
-    {
-        $this->update([
-            'is_read' => true,
-            'read_at' => now(),
-        ]);
-    }
-
-    public function markAsUnread()
-    {
-        $this->update([
-            'is_read' => false,
-            'read_at' => null,
-        ]);
-    }
-
-    public function archive()
-    {
-        $this->update(['is_archived' => true]);
-    }
-
-    public function unarchive()
-    {
-        $this->update(['is_archived' => false]);
-    }
-
-    public function scopeUnread($query)
-    {
-        return $query->where('is_read', false);
-    }
-
-    public function scopeArchived($query)
-    {
-        return $query->where('is_archived', true);
     }
 }

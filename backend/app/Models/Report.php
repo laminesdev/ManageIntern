@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Report extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'type',
         'period_start',
@@ -24,22 +22,17 @@ class Report extends Model
         'period_end' => 'date',
         'data' => 'array',
         'sent_to_admin' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
-    // Relationships
-    public function department()
+    public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
     }
 
-    public function generator()
+    public function generatedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'generated_by');
-    }
-
-    // Helper methods
-    public function markAsSent()
-    {
-        $this->update(['sent_to_admin' => true]);
     }
 }

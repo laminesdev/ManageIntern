@@ -2,47 +2,30 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Notification extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'sender_id',
         'title',
         'message',
     ];
 
-    // Relationships
-    public function sender()
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    public function sender(): BelongsTo
     {
         return $this->belongsTo(User::class, 'sender_id');
     }
 
-    public function recipients()
+    public function recipients(): HasMany
     {
         return $this->hasMany(NotificationRecipient::class);
-    }
-
-    // Helper methods
-    public function sendToMultiple(array $recipientIds)
-    {
-        foreach ($recipientIds as $recipientId) {
-            $this->recipients()->create([
-                'recipient_id' => $recipientId,
-            ]);
-        }
-    }
-
-    public function getReadCount()
-    {
-        return $this->recipients()->where('is_read', true)->count();
-    }
-
-    public function getUnreadCount()
-    {
-        return $this->recipients()->where('is_read', false)->count();
     }
 }
