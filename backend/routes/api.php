@@ -20,14 +20,14 @@ use App\Http\Controllers\DashboardController;
 // Public routes
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
+// Test routes (can remove in production)
 Route::get('/test', function () {
     return response()->json([
         'message' => 'Test endpoint works',
-        'hash_test' => \Illuminate\Support\Facades\Hash::check('test', 'hashed') // Test Hash facade
+        'hash_test' => \Illuminate\Support\Facades\Hash::check('test', 'hashed')
     ]);
 });
-
-use Illuminate\Support\Facades\Hash;
 
 Route::get('/debug-hash', function () {
     return response()->json([
@@ -48,7 +48,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     // Dashboard data
     Route::get('/dashboard', [DashboardController::class, 'index']);
-
     
     // ========== ADMIN ROUTES ==========
     Route::middleware(['role:admin'])->group(function () {
@@ -58,9 +57,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/users/{user}/soft-delete', [UserController::class, 'softDelete']);
         Route::post('/users/{user}/restore', [UserController::class, 'restore']);
         
+        // Get lists for dropdowns
+        Route::get('/managers', [UserController::class, 'getManagers']);
+        Route::get('/interns', [UserController::class, 'getInterns']);
+        Route::get('/unassigned-interns', [UserController::class, 'getInterns']);
+        
         // Reports (admin view)
-        Route::get('/reports', [ReportController::class, 'index']);
-        Route::get('/reports/{report}', [ReportController::class, 'show']);
+        Route::apiResource('reports', ReportController::class)->only(['index', 'show']);
+        Route::get('/reports/statistics', [ReportController::class, 'getStatistics']);
     });
     
     // ========== MANAGER ROUTES ==========
@@ -68,46 +72,63 @@ Route::middleware(['auth:sanctum'])->group(function () {
         // Tasks
         Route::apiResource('tasks', TaskController::class);
         Route::put('/tasks/{task}/status', [TaskController::class, 'updateStatus']);
+        Route::get('/tasks/statistics', [TaskController::class, 'getStatistics']);
+        Route::get('/interns-for-tasks', [TaskController::class, 'getInternsForAssignment']);
         
         // Attendance
         Route::apiResource('attendances', AttendanceController::class);
-        Route::get('/attendances/intern/{intern}', [AttendanceController::class, 'getInternAttendance']);
+        Route::get('/attendance/statistics', [AttendanceController::class, 'getStatistics']);
+        Route::get('/interns-for-attendance', [AttendanceController::class, 'getInternsForAttendance']);
         
         // Evaluations
         Route::apiResource('evaluations', EvaluationController::class);
-        Route::get('/evaluations/intern/{intern}', [EvaluationController::class, 'getInternEvaluations']);
+        Route::get('/evaluations/statistics', [EvaluationController::class, 'getStatistics']);
+        Route::get('/interns-for-evaluation', [EvaluationController::class, 'getInternsForEvaluation']);
         
         // Reclamations
         Route::apiResource('reclamations', ReclamationController::class)->except(['store']);
-        Route::put('/reclamations/{reclamation}/respond', [ReclamationController::class, 'respond']);
+        Route::put('/reclamations/{reclamation}/respond', [ReclamationController::class, 'update']);
         Route::put('/reclamations/{reclamation}/status', [ReclamationController::class, 'updateStatus']);
+        Route::get('/reclamations/statistics', [ReclamationController::class, 'getStatistics']);
         
         // Notifications
         Route::apiResource('notifications', NotificationController::class);
-        Route::post('/notifications/bulk', [NotificationController::class, 'sendBulk']);
+        Route::get('/notifications/interns', [NotificationController::class, 'getInternsForNotification']);
+        Route::post('/notifications/send', [NotificationController::class, 'store']);
         
-        // Reports (generation)
+        // Reports
         Route::post('/reports/generate', [ReportController::class, 'generate']);
         Route::post('/reports/{report}/send-to-admin', [ReportController::class, 'sendToAdmin']);
+        Route::get('/reports/statistics', [ReportController::class, 'getStatistics']);
     });
     
     // ========== INTERN ROUTES ==========
     Route::middleware(['role:intern'])->group(function () {
-        // Tasks (read-only)
+        // Tasks
         Route::get('/my-tasks', [TaskController::class, 'myTasks']);
         Route::get('/my-tasks/{task}', [TaskController::class, 'show']);
-        Route::put('/my-tasks/{task}/status', [TaskController::class, 'updateTaskStatus']);
+        Route::put('/my-tasks/{task}/status', [TaskController::class, 'updateStatus']);
         
-        // Evaluations (read-only)
-        Route::get('/my-evaluations', [EvaluationController::class, 'myEvaluations']);
+        // Evaluations
+        Route::get('/my-evaluations', [EvaluationController::class, 'index']);
+        Route::get('/my-evaluations/{evaluation}', [EvaluationController::class, 'show']);
+        Route::get('/my-evaluations/statistics', [EvaluationController::class, 'getStatistics']);
         
-        // Reclamations (create only)
-        Route::post('/reclamations', [ReclamationController::class, 'store']);
+        // Reclamations
+        Route::apiResource('reclamations', ReclamationController::class)->only(['store', 'index', 'show', 'destroy']);
         Route::get('/my-reclamations', [ReclamationController::class, 'myReclamations']);
+        Route::get('/reclamations/statistics', [ReclamationController::class, 'getStatistics']);
         
         // Notifications
-        Route::get('/my-notifications', [NotificationController::class, 'myNotifications']);
-        Route::put('/my-notifications/{notification}/mark-read', [NotificationController::class, 'markAsRead']);
-        Route::put('/my-notifications/{notification}/archive', [NotificationController::class, 'archive']);
+        Route::get('/my-notifications', [NotificationController::class, 'index']);
+        Route::get('/my-notifications/{notification}', [NotificationController::class, 'show']);
+        Route::put('/my-notifications/{notification}', [NotificationController::class, 'update']);
+        Route::delete('/my-notifications/{notification}', [NotificationController::class, 'destroy']);
+        Route::post('/my-notifications/mark-all-read', [NotificationController::class, 'markAllAsRead']);
+        
+        // Attendance
+        Route::get('/my-attendance', [AttendanceController::class, 'index']);
+        Route::get('/my-attendance/{attendance}', [AttendanceController::class, 'show']);
+        Route::get('/my-attendance/statistics', [AttendanceController::class, 'getStatistics']);
     });
 });
