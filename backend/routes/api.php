@@ -20,6 +20,23 @@ use App\Http\Controllers\DashboardController;
 // Public routes
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::get('/test', function () {
+    return response()->json([
+        'message' => 'Test endpoint works',
+        'hash_test' => \Illuminate\Support\Facades\Hash::check('test', 'hashed') // Test Hash facade
+    ]);
+});
+
+use Illuminate\Support\Facades\Hash;
+
+Route::get('/debug-hash', function () {
+    return response()->json([
+        'hash_test' => Hash::make('test123'),
+        'hash_check' => Hash::check('test123', Hash::make('test123')),
+        'env' => app()->environment(),
+        'debug' => config('app.debug'),
+    ]);
+});
 
 // Protected routes (require authentication)
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -31,6 +48,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     // Dashboard data
     Route::get('/dashboard', [DashboardController::class, 'index']);
+
     
     // ========== ADMIN ROUTES ==========
     Route::middleware(['role:admin'])->group(function () {

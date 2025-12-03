@@ -3,27 +3,29 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateProfileRequest extends FormRequest
+class UpdateTaskRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true; // All authenticated users can update their profile
+        return $this->user()->isManager();
     }
 
     public function rules(): array
     {
-        $userId = $this->user()->id;
-
         return [
-            'name' => 'required|string|max:255',
-            'email' => [
-                'required',
-                'email',
-                'max:255',
-                Rule::unique('users')->ignore($userId),
-            ],
+            'title' => 'sometimes|required|string|max:255',
+            'description' => 'sometimes|required|string',
+            'priority' => 'sometimes|required|in:low,medium,high,urgent',
+            'deadline' => 'sometimes|required|date|after:today',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'deadline.after' => 'Deadline must be a future date',
+            'priority.in' => 'Priority must be: low, medium, high, or urgent',
         ];
     }
 }
