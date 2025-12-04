@@ -16,16 +16,17 @@ class StoreUserRequest extends FormRequest
     {
         $userId = $this->route('user') ? $this->route('user')->id : null;
 
-        return [
-            'name' => 'required|string|max:255',
+        $rules = [
+            'name' => 'sometimes|required|string|max:255',
             'email' => [
+                'sometimes',
                 'required',
                 'email',
                 'max:255',
                 Rule::unique('users')->ignore($userId),
             ],
-            'password' => $userId ? 'nullable|min:8' : 'required|min:8',
-            'role' => 'required|in:admin,manager,intern',
+            'password' => $userId ? 'sometimes|nullable|min:8' : 'required|min:8',
+            'role' => 'sometimes|required|in:admin,manager,intern',
             'department_id' => 'nullable|exists:departments,id',
             'manager_id' => [
                 'nullable',
@@ -37,6 +38,8 @@ class StoreUserRequest extends FormRequest
                 }
             ],
         ];
+
+        return $rules;
     }
 
     public function messages(): array

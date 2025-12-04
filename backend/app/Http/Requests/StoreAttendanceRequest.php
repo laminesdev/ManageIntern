@@ -14,6 +14,8 @@ class StoreAttendanceRequest extends FormRequest
 
     public function rules(): array
     {
+        $attendanceId = $this->route('attendance') ? $this->route('attendance')->id : null;
+
         return [
             'intern_id' => [
                 'required',
@@ -34,7 +36,7 @@ class StoreAttendanceRequest extends FormRequest
                 'before_or_equal:today',
                 Rule::unique('attendances')->where(function ($query) {
                     return $query->where('intern_id', $this->intern_id);
-                })->ignore($this->route('attendance')),
+                })->ignore($attendanceId),
             ],
             'status' => 'required|in:present,absent,late,excused',
         ];

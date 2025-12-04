@@ -13,9 +13,11 @@ class StoreEvaluationRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
+        $evaluationId = $this->route('evaluation') ? $this->route('evaluation')->id : null;
+
+        $rules = [
             'intern_id' => [
-                'required',
+                $evaluationId ? 'sometimes' : 'required', // Required for create, optional for update
                 'exists:users,id',
                 function ($attribute, $value, $fail) {
                     $intern = \App\Models\User::find($value);
@@ -29,8 +31,10 @@ class StoreEvaluationRequest extends FormRequest
             ],
             'score' => 'required|numeric|min:0|max:100',
             'comments' => 'nullable|string',
-            'evaluation_type' => 'required|in:mid_term,final,monthly,weekly,quarterly,project',
+            'evaluation_type' => $evaluationId ? 'sometimes|required' : 'required|in:mid_term,final,monthly,weekly,quarterly,project',
         ];
+
+        return $rules;
     }
 
     public function messages(): array

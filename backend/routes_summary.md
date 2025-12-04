@@ -1,3 +1,7 @@
+# Project: routes
+
+## File: api.php
+```php
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -44,15 +48,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Dashboard data
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
-    // ========== COMMON ROUTES (for multiple roles) ==========
-    // These routes handle authorization in controllers
-    Route::get('/reclamations/statistics', [ReclamationController::class, 'getStatistics']);
-    Route::get('/my-attendance/statistics', [AttendanceController::class, 'getStatistics']);
-    Route::get('/my-evaluations/statistics', [EvaluationController::class, 'getStatistics']);
-    Route::get('/reports/statistics', [ReportController::class, 'getStatistics']);
-    Route::get('/reports', [ReportController::class, 'index']);
-    Route::get('/reports/{report}', [ReportController::class, 'show']);
-
     // ========== ADMIN ROUTES ==========
     Route::middleware(['role:admin'])->group(function () {
         // User management
@@ -65,6 +60,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/managers', [UserController::class, 'getManagers']);
         Route::get('/interns', [UserController::class, 'getInterns']);
         Route::get('/unassigned-interns', [UserController::class, 'getUnassignedInterns']);
+
+        // Reports (admin view) - FIXED ORDER
+        Route::get('/reports/statistics', [ReportController::class, 'getStatistics']); // FIRST
+        Route::get('/reports', [ReportController::class, 'index']);
+        Route::get('/reports/{report}', [ReportController::class, 'show']);
     });
 
 
@@ -87,6 +87,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::apiResource('evaluations', EvaluationController::class);
 
         // Reclamations
+        Route::get('/reclamations/statistics', [ReclamationController::class, 'getStatistics']);
         Route::apiResource('reclamations', ReclamationController::class)->except(['store']);
         Route::put('/reclamations/{reclamation}/respond', [ReclamationController::class, 'update']);
         Route::put('/reclamations/{reclamation}/status', [ReclamationController::class, 'updateStatus']);
@@ -96,12 +97,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/notifications/send', [NotificationController::class, 'store']);
         Route::apiResource('notifications', NotificationController::class);
 
-        // Reports - Manager-specific actions
+        // Reports - FIXED ORDER: Statistics MUST come before {report} routes
+        Route::get('/reports/statistics', [ReportController::class, 'getStatistics']); // FIRST
+        Route::get('/reports', [ReportController::class, 'index']);
         Route::post('/reports/generate', [ReportController::class, 'generate']);
+        Route::get('/reports/{report}', [ReportController::class, 'show']);
         Route::post('/reports/{report}/send-to-admin', [ReportController::class, 'sendToAdmin']);
         Route::delete('/reports/{report}', [ReportController::class, 'destroy']);
     });
-
 
     // ========== INTERN ROUTES ==========
     Route::middleware(['role:intern'])->group(function () {
@@ -113,12 +116,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         // Evaluations
         Route::get('/my-evaluations', [EvaluationController::class, 'index']);
         Route::get('/my-evaluations/{evaluation}', [EvaluationController::class, 'show']);
+        Route::get('/my-evaluations/statistics', [EvaluationController::class, 'getStatistics']);
 
         // Reclamations
         Route::post('/reclamations', [ReclamationController::class, 'store']);
         Route::get('/my-reclamations', [ReclamationController::class, 'myReclamations']);
         Route::get('/my-reclamations/{reclamation}', [ReclamationController::class, 'show']);
         Route::delete('/my-reclamations/{reclamation}', [ReclamationController::class, 'destroy']);
+        Route::get('/reclamations/statistics', [ReclamationController::class, 'getStatistics']);
 
         // Notifications
         Route::get('/my-notifications', [NotificationController::class, 'index']);
@@ -130,5 +135,33 @@ Route::middleware(['auth:sanctum'])->group(function () {
         // Attendance
         Route::get('/my-attendance', [AttendanceController::class, 'index']);
         Route::get('/my-attendance/{attendance}', [AttendanceController::class, 'show']);
+        Route::get('/my-attendance/statistics', [AttendanceController::class, 'getStatistics']);
     });
 });
+```
+
+## File: console.php
+```php
+<?php
+
+use Illuminate\Foundation\Inspiring;
+use Illuminate\Support\Facades\Artisan;
+
+Artisan::command('inspire', function () {
+    $this->comment(Inspiring::quote());
+})->purpose('Display an inspiring quote');
+
+```
+
+## File: web.php
+```php
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+```
+

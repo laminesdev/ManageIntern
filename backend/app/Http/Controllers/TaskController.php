@@ -247,6 +247,18 @@ class TaskController extends Controller
             ->where('assigned_by', $user->id)
             ->first();
         
+        // Handle null result (no tasks yet)
+        if (!$stats) {
+            $stats = (object) [
+                'total' => 0,
+                'pending' => 0,
+                'in_progress' => 0,
+                'completed' => 0,
+                'cancelled' => 0,
+                'overdue' => 0
+            ];
+        }
+        
         return response()->json($stats);
     }
 }

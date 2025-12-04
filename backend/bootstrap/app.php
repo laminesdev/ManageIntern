@@ -12,18 +12,17 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // API middleware (append to default API middleware)
-        $middleware->api(append: [
-            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+        // Simply add your middleware alias
+        $middleware->alias([
+            'role' => \App\Http\Middleware\CheckRole::class,
+            'ensure.json' => \App\Http\Middleware\EnsureJsonResponse::class,
         ]);
         
-        // Register middleware aliases
-        $middleware->alias([
-            'auth' => \App\Http\Middleware\Authenticate::class,
-            'role' => \App\Http\Middleware\CheckRole::class,
-            'signed' => \App\Http\Middleware\ValidateSignature::class,
+        // Add ensure.json to API group
+        $middleware->appendToGroup('api', [
+            \App\Http\Middleware\EnsureJsonResponse::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        // Optional: Custom exception handling
     })->create();
