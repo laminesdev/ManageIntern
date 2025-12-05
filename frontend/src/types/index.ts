@@ -75,6 +75,17 @@ export interface Reclamation {
   updated_at: string;
 }
 
+// Notification types
+export interface Notification {
+  id: number;
+  sender_id: number;
+  title: string;
+  message: string;
+  created_at: string;
+  updated_at: string;
+  is_read?: boolean;
+}
+
 // Dashboard stats
 export interface DashboardStats {
   total_tasks?: number;
