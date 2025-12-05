@@ -1,21 +1,12 @@
-import api, { ApiResponse, PaginatedResponse } from "./api";
-import type { User } from "./authService";
-
-export interface CreateUserRequest {
-   name: string;
-   email: string;
-   password: string;
-   role: "admin" | "manager" | "intern";
-   department_id?: number;
-   manager_id?: number;
-}
-
-export interface UpdateUserRequest extends Partial<CreateUserRequest> {}
-
-export interface AssignInternRequest {
-   department_id: number;
-   manager_id: number;
-}
+import api from "./api";
+import type {
+  User,
+  CreateUserRequest,
+  UpdateUserRequest,
+  AssignInternRequest,
+  ApiResponse,
+  PaginatedResponse
+} from "@/types";
 
 class UserService {
    async getUsers(params?: {
