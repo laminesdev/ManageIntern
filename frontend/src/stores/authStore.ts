@@ -1,7 +1,8 @@
+// src/stores/authStore.ts
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { User, AuthState } from "@/types";
-import { getUserDisplayName } from "@/utils/auth/userHelpers";
+import { config } from "@/config/env";
 
 interface AuthStoreActions {
    setAuth: (user: User, token: string) => void;
@@ -9,6 +10,7 @@ interface AuthStoreActions {
    updateUser: (user: Partial<User>) => void;
    setLoading: (loading: boolean) => void;
    setError: (error: string | null) => void;
+   initializeAuth: () => void; // Add this
 }
 
 export const useAuthStore = create<AuthState & AuthStoreActions>()(
@@ -20,15 +22,45 @@ export const useAuthStore = create<AuthState & AuthStoreActions>()(
          isLoading: false,
          error: null,
 
+         // Initialize auth from localStorage
+         initializeAuth: () => {
+            const token = localStorage.getItem(config.TOKEN_KEY);
+            const userStr = localStorage.getItem(config.USER_KEY);
+
+            if (token && userStr) {
+               try {
+                  const user = JSON.parse(userStr);
+                  set({
+                     user,
+                     token,
+                     isAuthenticated: true,
+                     isLoading: false,
+                  });
+               } catch (error) {
+                  // Clear invalid storage
+                  localStorage.removeItem(config.TOKEN_KEY);
+                  localStorage.removeItem(config.USER_KEY);
+                  set({
+                     user: null,
+                     token: null,
+                     isAuthenticated: false,
+                     isLoading: false,
+                  });
+               }
+            } else {
+               set({ isLoading: false });
+            }
+         },
+
          setAuth: (user, token) => {
-            localStorage.setItem("token", token);
-            localStorage.setItem("user", JSON.stringify(user));
+            localStorage.setItem(config.TOKEN_KEY, token);
+            localStorage.setItem(config.USER_KEY, JSON.stringify(user));
             set({ user, token, isAuthenticated: true, error: null });
          },
 
          clearAuth: () => {
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
+            localStorage.removeItem(config.TOKEN_KEY);
+            localStorage.removeItem(config.USER_KEY);
             set({
                user: null,
                token: null,
@@ -66,6 +98,5 @@ export const useAuthComputed = () => {
       isManager: user?.role === "manager",
       isIntern: user?.role === "intern",
       user,
-      userDisplayName: getUserDisplayName(user),
    };
 };
