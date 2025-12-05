@@ -1,24 +1,16 @@
 import { create } from 'zustand';
-import type { Notification } from '@/services/notificationService';
+import type { 
+  Notification, 
+  NotificationStoreState 
+} from '@/types';
 
-interface NotificationState {
-  // State
-  notifications: Notification[];
-  selectedNotification: Notification | null;
-  isLoading: boolean;
-  error: string | null;
-  filters: {
-    is_read?: boolean;
-    is_archived?: boolean;
-    search?: string;
-  };
-
+interface NotificationStoreActions {
   // Actions
   setNotifications: (notifications: Notification[]) => void;
   setSelectedNotification: (notification: Notification | null) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
-  setFilters: (filters: Partial<NotificationState['filters']>) => void;
+  setFilters: (filters: Partial<NotificationStoreState['filters']>) => void;
   resetFilters: () => void;
   
   // Notification operations
@@ -26,14 +18,9 @@ interface NotificationState {
   updateNotification: (id: number, updates: Partial<Notification>) => void;
   deleteNotification: (id: number) => void;
   markAllAsRead: () => void;
-  
-  // Helper methods for computed properties
-  getUnreadCount: () => number;
-  getUnreadNotifications: () => Notification[];
-  getRecentNotifications: (limit?: number) => Notification[];
 }
 
-export const useNotificationStore = create<NotificationState>((set, get) => ({
+export const useNotificationStore = create<NotificationStoreState & NotificationStoreActions>((set, get) => ({
   // Initial state
   notifications: [],
   selectedNotification: null,

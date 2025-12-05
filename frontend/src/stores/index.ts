@@ -1,4 +1,4 @@
-export { useAuthStore } from './authStore';
+export { useAuthStore, useAuthComputed } from './authStore';
 export { useTaskStore } from './taskStore';
 export { useAttendanceStore } from './attendanceStore';
 export { useEvaluationStore } from './evaluationStore';

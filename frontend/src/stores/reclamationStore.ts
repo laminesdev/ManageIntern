@@ -1,25 +1,18 @@
 import { create } from 'zustand';
-import type { Reclamation, ReclamationStatistics } from '@/services/reclamationService';
+import type { 
+  Reclamation, 
+  ReclamationStatistics, 
+  ReclamationStoreState 
+} from '@/types';
 
-interface ReclamationState {
-  // State
-  reclamations: Reclamation[];
-  selectedReclamation: Reclamation | null;
-  statistics: ReclamationStatistics | null;
-  isLoading: boolean;
-  error: string | null;
-  filters: {
-    status?: string;
-    search?: string;
-  };
-
+interface ReclamationStoreActions {
   // Actions
   setReclamations: (reclamations: Reclamation[]) => void;
   setSelectedReclamation: (reclamation: Reclamation | null) => void;
   setStatistics: (stats: ReclamationStatistics) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
-  setFilters: (filters: Partial<ReclamationState['filters']>) => void;
+  setFilters: (filters: Partial<ReclamationStoreState['filters']>) => void;
   resetFilters: () => void;
   
   // Reclamation operations
@@ -27,14 +20,11 @@ interface ReclamationState {
   updateReclamation: (id: number, updates: Partial<Reclamation>) => void;
   deleteReclamation: (id: number) => void;
   
-  // Helper method - we'll remove the computed property that uses auth store
+  // Helper method
   getReclamationsByUserId: (userId: number, userRole: 'admin' | 'manager' | 'intern') => Reclamation[];
-  
-  // Computed properties (without auth dependency)
-  pendingReclamations: Reclamation[];
 }
 
-export const useReclamationStore = create<ReclamationState>((set, get) => ({
+export const useReclamationStore = create<ReclamationStoreState & ReclamationStoreActions>((set, get) => ({
   // Initial state
   reclamations: [],
   selectedReclamation: null,

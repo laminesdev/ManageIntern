@@ -1,8 +1,5 @@
 import { create } from "zustand";
-import type {
-   Attendance,
-   AttendanceStatistics,
-} from "@/services/attendanceService";
+import type { Attendance, AttendanceStatistics } from "@/types";
 
 interface AttendanceState {
    // State
