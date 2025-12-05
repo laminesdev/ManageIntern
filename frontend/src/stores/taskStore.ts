@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { Task, TaskStatistics, TaskStoreState } from "@/types";
+import { isPastDate } from "@/utils/date/formatters";
 
 interface TaskStoreActions {
    // Actions
@@ -17,6 +18,12 @@ interface TaskStoreActions {
    addTask: (task: Task) => void;
    updateTask: (id: number, updates: Partial<Task>) => void;
    deleteTask: (id: number) => void;
+
+   // Helper methods
+   getPendingTasks: () => Task[];
+   getInProgressTasks: () => Task[];
+   getCompletedTasks: () => Task[];
+   getOverdueTasks: () => Task[];
 }
 
 export const useTaskStore = create<TaskStoreState & TaskStoreActions>(
@@ -156,24 +163,23 @@ export const useTaskStore = create<TaskStoreState & TaskStoreActions>(
             };
          }),
 
-      // Computed properties
-      get pendingTasks() {
+      // Helper methods instead of computed properties
+      getPendingTasks: () => {
          return get().tasks.filter((task) => task.status === "pending");
       },
 
-      get inProgressTasks() {
+      getInProgressTasks: () => {
          return get().tasks.filter((task) => task.status === "in_progress");
       },
 
-      get completedTasks() {
+      getCompletedTasks: () => {
          return get().tasks.filter((task) => task.status === "completed");
       },
 
-      get overdueTasks() {
+      getOverdueTasks: () => {
          const now = new Date();
          return get().tasks.filter(
-            (task) =>
-               task.status !== "completed" && new Date(task.deadline) < now
+            (task) => task.status !== "completed" && isPastDate(task.deadline)
          );
       },
    })

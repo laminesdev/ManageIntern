@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { User, AuthState } from "@/types";
+import { getUserDisplayName } from "@/utils/auth/userHelpers";
 
 interface AuthStoreActions {
    setAuth: (user: User, token: string) => void;
@@ -65,5 +66,6 @@ export const useAuthComputed = () => {
       isManager: user?.role === "manager",
       isIntern: user?.role === "intern",
       user,
+      userDisplayName: getUserDisplayName(user),
    };
 };

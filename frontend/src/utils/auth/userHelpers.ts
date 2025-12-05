@@ -17,3 +17,12 @@ export const getUserDisplayName = (user: User | null): string => {
   if (!user) return 'Unknown User';
   return `${user.name} - ${user.role.toUpperCase()}`;
 };
+
+export const getRoleDisplayName = (role: string): string => {
+  switch (role) {
+    case 'admin': return 'Administrator';
+    case 'manager': return 'Manager';
+    case 'intern': return 'Intern';
+    default: return role.charAt(0).toUpperCase() + role.slice(1);
+  }
+};

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { extractErrorMessage } from "@/utils/api/responseParsers";
 
 const API_BASE_URL = "http://localhost:8000/api";
 
@@ -27,7 +28,8 @@ api.interceptors.response.use(
          localStorage.removeItem("user");
          window.location.href = "/login";
       }
-      return Promise.reject(error);
+      const errorMessage = extractErrorMessage(error);
+      return Promise.reject(new Error(errorMessage));
    }
 );
 

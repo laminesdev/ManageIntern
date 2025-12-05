@@ -25,3 +25,19 @@ export const formatTime = (dateString: string): string => {
       minute: "2-digit",
    });
 };
+
+export const getTodayDateString = (): string => {
+   return new Date().toISOString().split("T")[0];
+};
+
+export const isToday = (dateString: string): boolean => {
+   const date = new Date(dateString);
+   const today = new Date();
+   return date.toDateString() === today.toDateString();
+};
+
+export const isPastDate = (dateString: string): boolean => {
+   const date = new Date(dateString);
+   const now = new Date();
+   return date < now;
+};

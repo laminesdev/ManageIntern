@@ -13,3 +13,32 @@ export const formatNumber = (num: number): string => {
 export const formatPercentage = (value: number): string => {
   return `${value.toFixed(1)}%`;
 };
+
+export const formatAttendanceRate = (present: number, total: number): string => {
+  if (total === 0) return '0%';
+  const rate = (present / total) * 100;
+  return formatPercentage(rate);
+};
+
+export const formatAverageScore = (score: number): string => {
+  return formatPercentage(score);
+};
+
+export const formatDateForDisplay = (dateString: string): string => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  });
+};
+
+export const formatTimeForDisplay = (dateString: string): string => {
+  const date = new Date(dateString);
+  return date.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  });
+};
