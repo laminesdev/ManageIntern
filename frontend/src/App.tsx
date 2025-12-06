@@ -11,6 +11,7 @@ import AdminReports from "./pages/admin/Reports";
 import AssignInterns from "./pages/admin/AssignInterns";
 import ViewAttendanceReports from "./pages/admin/reports/ViewAttendanceReports";
 import ViewPerformanceReports from "./pages/admin/reports/ViewPerformanceReports";
+// REMOVED: import AdminAnalytics from "./pages/admin/Analytics";
 
 // Manager Pages
 import ManagerDashboard from "./pages/manager/Dashboard";
@@ -75,6 +76,7 @@ export default function App() {
                path="reports/performance"
                element={<ViewPerformanceReports />}
             />
+            {/* REMOVED: Analytics route */}
          </Route>
 
          {/* Manager Routes */}

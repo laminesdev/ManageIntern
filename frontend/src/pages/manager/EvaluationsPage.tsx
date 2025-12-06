@@ -65,7 +65,8 @@ import { evaluationService } from "@/services/evaluationService";
 // FIXED: Using correct Zod syntax - remove invalid options from z.number()
 const evaluationSchema = z.object({
    intern_id: z.number().min(1, "Please select an intern"),
-   score: z.number()
+   score: z
+      .number()
       .min(0, "Score must be at least 0")
       .max(100, "Score cannot exceed 100"),
    feedback: z.string().min(1, "Feedback is required"),
@@ -108,18 +109,19 @@ export default function EvaluationsPage() {
    const loadData = async () => {
       try {
          setIsLoading(true);
-         
-         // FIXED: Changed from userService.getInterns() (admin-only endpoint) 
+
+         // FIXED: Changed from userService.getInterns() (admin-only endpoint)
          // to evaluationService.getInternsForEvaluation() (manager-specific endpoint)
-         const internsResponse = await evaluationService.getInternsForEvaluation();
+         const internsResponse =
+            await evaluationService.getInternsForEvaluation();
          setInterns(internsResponse.data || []);
-         
+
          // Load evaluations
          const evaluationsResponse = await evaluationService.getEvaluations();
          setEvaluations(evaluationsResponse.data || []);
       } catch (error: any) {
          console.error("Load data error:", error);
-         
+
          // Better error handling
          if (error.response?.status === 403) {
             toast.error("Access denied. Please check your permissions.");
@@ -177,7 +179,9 @@ export default function EvaluationsPage() {
          } else if (error.response?.status === 403) {
             toast.error("You don't have permission to evaluate this intern");
          } else {
-            toast.error(error.response?.data?.message || "Failed to create evaluation");
+            toast.error(
+               error.response?.data?.message || "Failed to create evaluation"
+            );
          }
       }
    };
@@ -190,15 +194,24 @@ export default function EvaluationsPage() {
    };
 
    const getScoreBadge = (score: number) => {
-      if (score >= 90) return <Badge className="bg-green-100 text-green-800">Excellent</Badge>;
-      if (score >= 80) return <Badge className="bg-blue-100 text-blue-800">Good</Badge>;
-      if (score >= 70) return <Badge className="bg-yellow-100 text-yellow-800">Average</Badge>;
-      return <Badge className="bg-red-100 text-red-800">Needs Improvement</Badge>;
+      if (score >= 90)
+         return (
+            <Badge className="bg-green-100 text-green-800">Excellent</Badge>
+         );
+      if (score >= 80)
+         return <Badge className="bg-blue-100 text-blue-800">Good</Badge>;
+      if (score >= 70)
+         return (
+            <Badge className="bg-yellow-100 text-yellow-800">Average</Badge>
+         );
+      return (
+         <Badge className="bg-red-100 text-red-800">Needs Improvement</Badge>
+      );
    };
 
    const handleDeleteEvaluation = async (id: number) => {
       if (!confirm("Are you sure you want to delete this evaluation?")) return;
-      
+
       try {
          await evaluationService.deleteEvaluation(id);
          toast.success("Evaluation deleted successfully!");
@@ -217,8 +230,12 @@ export default function EvaluationsPage() {
          <div className="space-y-6">
             <div className="flex items-center justify-between">
                <div>
-                  <h1 className="text-3xl font-bold tracking-tight">Evaluations</h1>
-                  <p className="text-muted-foreground">Evaluate intern performance</p>
+                  <h1 className="text-3xl font-bold tracking-tight">
+                     Evaluations
+                  </h1>
+                  <p className="text-muted-foreground">
+                     Evaluate intern performance
+                  </p>
                </div>
                <Skeleton className="h-10 w-32" />
             </div>
@@ -231,7 +248,9 @@ export default function EvaluationsPage() {
       <div className="space-y-6">
          <div className="flex items-center justify-between">
             <div>
-               <h1 className="text-3xl font-bold tracking-tight">Evaluations</h1>
+               <h1 className="text-3xl font-bold tracking-tight">
+                  Evaluations
+               </h1>
                <p className="text-muted-foreground">
                   Evaluate and track intern performance in your department
                </p>
@@ -248,7 +267,10 @@ export default function EvaluationsPage() {
                      <DialogTitle>Create New Evaluation</DialogTitle>
                   </DialogHeader>
                   <Form {...form}>
-                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                     <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className="space-y-4"
+                     >
                         <FormField
                            control={form.control}
                            name="intern_id"
@@ -256,7 +278,9 @@ export default function EvaluationsPage() {
                               <FormItem>
                                  <FormLabel>Intern *</FormLabel>
                                  <Select
-                                    onValueChange={(value) => field.onChange(parseInt(value))}
+                                    onValueChange={(value) =>
+                                       field.onChange(parseInt(value))
+                                    }
                                     value={field.value?.toString() || ""}
                                     disabled={interns.length === 0}
                                  >
@@ -293,17 +317,28 @@ export default function EvaluationsPage() {
                            render={({ field }) => (
                               <FormItem>
                                  <FormLabel>Evaluation Type *</FormLabel>
-                                 <Select onValueChange={field.onChange} value={field.value}>
+                                 <Select
+                                    onValueChange={field.onChange}
+                                    value={field.value}
+                                 >
                                     <FormControl>
                                        <SelectTrigger>
                                           <SelectValue placeholder="Select type" />
                                        </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                       <SelectItem value="weekly">Weekly</SelectItem>
-                                       <SelectItem value="monthly">Monthly</SelectItem>
-                                       <SelectItem value="quarterly">Quarterly</SelectItem>
-                                       <SelectItem value="final">Final</SelectItem>
+                                       <SelectItem value="weekly">
+                                          Weekly
+                                       </SelectItem>
+                                       <SelectItem value="monthly">
+                                          Monthly
+                                       </SelectItem>
+                                       <SelectItem value="quarterly">
+                                          Quarterly
+                                       </SelectItem>
+                                       <SelectItem value="final">
+                                          Final
+                                       </SelectItem>
                                     </SelectContent>
                                  </Select>
                                  <FormMessage />
@@ -323,7 +358,11 @@ export default function EvaluationsPage() {
                                        min="0"
                                        max="100"
                                        {...field}
-                                       onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                                       onChange={(e) =>
+                                          field.onChange(
+                                             parseInt(e.target.value) || 0
+                                          )
+                                       }
                                        value={field.value}
                                     />
                                  </FormControl>
@@ -405,8 +444,12 @@ export default function EvaluationsPage() {
                <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                      <div>
-                        <p className="text-sm text-gray-500">Total Evaluations</p>
-                        <p className="text-2xl font-bold">{evaluations.length}</p>
+                        <p className="text-sm text-gray-500">
+                           Total Evaluations
+                        </p>
+                        <p className="text-2xl font-bold">
+                           {evaluations.length}
+                        </p>
                      </div>
                      <TrendingUp className="h-8 w-8 text-blue-500" />
                   </div>
@@ -420,8 +463,10 @@ export default function EvaluationsPage() {
                         <p className="text-2xl font-bold">
                            {evaluations.length > 0
                               ? `${(
-                                   evaluations.reduce((sum, evalItem) => sum + evalItem.score, 0) /
-                                   evaluations.length
+                                   evaluations.reduce(
+                                      (sum, evalItem) => sum + evalItem.score,
+                                      0
+                                   ) / evaluations.length
                                 ).toFixed(1)}%`
                               : "0%"}
                         </p>
@@ -434,7 +479,9 @@ export default function EvaluationsPage() {
                <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                      <div>
-                        <p className="text-sm text-gray-500">Interns Evaluated</p>
+                        <p className="text-sm text-gray-500">
+                           Interns Evaluated
+                        </p>
                         <p className="text-2xl font-bold">
                            {new Set(evaluations.map((e) => e.intern_id)).size}
                         </p>
@@ -535,19 +582,34 @@ export default function EvaluationsPage() {
                                  {evaluation.intern?.name || "Unknown"}
                               </TableCell>
                               <TableCell>
-                                 <Badge variant="outline" className="capitalize">
+                                 <Badge
+                                    variant="outline"
+                                    className="capitalize"
+                                 >
                                     {evaluation.evaluation_type}
                                  </Badge>
                               </TableCell>
                               <TableCell>
-                                 <div className={`font-bold ${getScoreColor(evaluation.score)}`}>
+                                 <div
+                                    className={`font-bold ${getScoreColor(
+                                       evaluation.score
+                                    )}`}
+                                 >
                                     {evaluation.score}%
                                  </div>
-                                 <Progress value={evaluation.score} className="mt-1 w-24" />
+                                 <Progress
+                                    value={evaluation.score}
+                                    className="mt-1 w-24"
+                                 />
                               </TableCell>
-                              <TableCell>{getScoreBadge(evaluation.score)}</TableCell>
                               <TableCell>
-                                 {format(new Date(evaluation.created_at), "MMM dd, yyyy")}
+                                 {getScoreBadge(evaluation.score)}
+                              </TableCell>
+                              <TableCell>
+                                 {format(
+                                    new Date(evaluation.created_at),
+                                    "MMM dd, yyyy"
+                                 )}
                               </TableCell>
                               <TableCell>
                                  <div className="flex items-center space-x-2">
@@ -557,7 +619,9 @@ export default function EvaluationsPage() {
                                     <Button
                                        variant="ghost"
                                        size="sm"
-                                       onClick={() => handleDeleteEvaluation(evaluation.id)}
+                                       onClick={() =>
+                                          handleDeleteEvaluation(evaluation.id)
+                                       }
                                     >
                                        <Trash2 className="h-4 w-4 text-red-500" />
                                     </Button>
