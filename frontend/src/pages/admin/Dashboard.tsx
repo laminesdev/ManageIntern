@@ -8,16 +8,24 @@ import { userService } from "@/services/userService";
 import { reportService } from "@/services/reportService";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
+import { DashboardStats, DashboardActivity, User, Report } from '@/types';
+
+// Define the response structure from dashboardService.getDashboard()
+interface DashboardResponse {
+  data: {
+    recent_activity?: DashboardActivity[];
+  };
+}
+
+// Define a type for activity with type property
+interface ActivityWithType extends DashboardActivity {
+  type?: 'user' | 'report' | 'system';
+}
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const [stats, setStats] = useState({
-    totalUsers: 0,
-    admins: 0,
-    managers: 0,
-    interns: 0,
-    reportsCount: 0,
+  const [stats, setStats] = useState<DashboardStats>({
     recentActivity: []
   });
 
@@ -30,26 +38,27 @@ export default function AdminDashboard() {
       setIsLoading(true);
       
       // Fetch ONLY admin-accessible data
-      const [dashboardData, usersResponse, reportsResponse] = await Promise.all([
+      const [dashboardResponse, usersResponse, reportsResponse] = await Promise.all([
         dashboardService.getDashboard(),
         userService.getUsers({ per_page: 100 }),
         reportService.getReports()
       ]);
 
-      const users = usersResponse.data || [];
-      const reports = reportsResponse.data || [];
+      const users: User[] = usersResponse.data || [];
+      const reports: Report[] = reportsResponse.data || [];
+      const dashboardData = dashboardResponse as DashboardResponse;
 
       // Calculate statistics from user data only (admin can access all users)
-      const userStats = {
+      const dashboardStats: DashboardStats = {
         totalUsers: users.length,
-        admins: users.filter(user => user.role === 'admin').length,
-        managers: users.filter(user => user.role === 'manager').length,
-        interns: users.filter(user => user.role === 'intern').length,
+        admins: users.filter((user: User) => user.role === 'admin').length,
+        managers: users.filter((user: User) => user.role === 'manager').length,
+        interns: users.filter((user: User) => user.role === 'intern').length,
         reportsCount: reports.length,
-        recentActivity: dashboardData.recent_activity || []
+        recentActivity: dashboardData.data?.recent_activity || []
       };
 
-      setStats(userStats);
+      setStats(dashboardStats);
 
     } catch (error) {
       console.error("Failed to load dashboard data:", error);
@@ -59,31 +68,43 @@ export default function AdminDashboard() {
     }
   };
 
+  // Helper function to determine activity type based on content
+  const getActivityType = (activity: DashboardActivity): 'user' | 'report' | 'system' => {
+    const action = activity.action.toLowerCase();
+    if (action.includes('user') || action.includes('login') || action.includes('created') || action.includes('updated')) {
+      return 'user';
+    } else if (action.includes('report') || action.includes('generated') || action.includes('exported')) {
+      return 'report';
+    } else {
+      return 'system';
+    }
+  };
+
   const statCards = [
     {
       title: "Total Users",
-      value: stats.totalUsers.toString(),
+      value: stats.totalUsers?.toString() || "0",
       icon: Users,
       color: "bg-purple-500",
-      description: `${stats.admins} admins, ${stats.managers} managers, ${stats.interns} interns`,
+      description: `${stats.admins || 0} admins, ${stats.managers || 0} managers, ${stats.interns || 0} interns`,
     },
     {
       title: "Managers",
-      value: stats.managers.toString(),
+      value: stats.managers?.toString() || "0",
       icon: Briefcase,
       color: "bg-blue-500",
       description: "Department managers",
     },
     {
       title: "Interns",
-      value: stats.interns.toString(),
+      value: stats.interns?.toString() || "0",
       icon: Users,
       color: "bg-green-500",
       description: "Active interns",
     },
     {
       title: "Reports",
-      value: stats.reportsCount.toString(),
+      value: stats.reportsCount?.toString() || "0",
       icon: BarChart3,
       color: "bg-amber-500",
       description: "Generated reports",
@@ -178,29 +199,32 @@ export default function AdminDashboard() {
         <CardContent>
           {stats.recentActivity.length > 0 ? (
             <div className="space-y-4">
-              {stats.recentActivity.slice(0, 5).map((activity: any, index: number) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-gray-100 rounded-lg">
-                      {activity.type === 'user' && <Users className="h-4 w-4 text-gray-600" />}
-                      {activity.type === 'report' && <BarChart3 className="h-4 w-4 text-gray-600" />}
-                      {activity.type === 'system' && <Shield className="h-4 w-4 text-gray-600" />}
+              {stats.recentActivity.slice(0, 5).map((activity: DashboardActivity, index: number) => {
+                const activityType = getActivityType(activity);
+                return (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className="p-2 bg-gray-100 rounded-lg">
+                        {activityType === 'user' && <Users className="h-4 w-4 text-gray-600" />}
+                        {activityType === 'report' && <BarChart3 className="h-4 w-4 text-gray-600" />}
+                        {activityType === 'system' && <Shield className="h-4 w-4 text-gray-600" />}
+                      </div>
+                      <div>
+                        <p className="font-medium">{activity.user || 'System'}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {activity.action}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-medium">{activity.user_name || 'System'}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {activity.action}
-                      </p>
-                    </div>
+                    <span className="text-sm text-muted-foreground">
+                      {activity.time}
+                    </span>
                   </div>
-                  <span className="text-sm text-muted-foreground">
-                    {activity.time}
-                  </span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
             <div className="text-center py-8 text-muted-foreground">

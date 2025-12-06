@@ -8,6 +8,10 @@ export interface DashboardActivity {
 export interface DashboardStats {
    // Admin stats
    totalUsers?: number;
+   admins?: number;
+   managers?: number;
+   interns?: number;
+   reportsCount?: number;
    activeInterns?: number;
    pendingTasks?: number;
    reportsGenerated?: number;
