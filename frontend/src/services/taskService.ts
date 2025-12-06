@@ -1,105 +1,90 @@
 import api from "./api";
-import type {
-  Task,
-  CreateTaskRequest,
-  UpdateTaskRequest,
-  UpdateTaskStatusRequest,
-  TaskStatistics,
-  PaginatedResponse,
-  ApiResponse
-} from "@/types";
 
-class TaskService {
-   // Manager endpoints
+export interface TaskData {
+   title: string;
+   description: string;
+   assigned_to: number;
+   priority: "low" | "medium" | "high" | "urgent";
+   deadline: string;
+}
+
+export interface Task extends TaskData {
+   id: number;
+   status: "pending" | "in_progress" | "completed" | "overdue";
+   created_at: string;
+   updated_at: string;
+   assigned_to_user?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+}
+
+export const taskService = {
    async getTasks(params?: {
       status?: string;
-      priority?: string;
       assigned_to?: number;
-      search?: string;
-      sort_by?: string;
-      sort_order?: "asc" | "desc";
       page?: number;
       per_page?: number;
-   }): Promise<PaginatedResponse<Task>> {
-      const response = await api.get<PaginatedResponse<Task>>("/tasks", {
-         params,
-      });
+   }) {
+      const response = await api.get("/tasks", { params });
       return response.data;
-   }
+   },
 
-   async getTaskStatistics(): Promise<TaskStatistics> {
-      const response = await api.get<TaskStatistics>("/tasks/statistics");
+   async createTask(data: TaskData) {
+      const response = await api.post("/tasks", data);
       return response.data;
-   }
+   },
 
-   async getInternsForTasks(): Promise<any[]> {
-      const response = await api.get("/interns-for-tasks");
+   async updateTask(id: number, data: Partial<TaskData>) {
+      const response = await api.put(`/tasks/${id}`, data);
       return response.data;
-   }
+   },
 
-   async createTask(data: CreateTaskRequest): Promise<{ task: Task }> {
-      const response = await api.post<{ task: Task }>("/tasks", data);
+   async deleteTask(id: number) {
+      const response = await api.delete(`/tasks/${id}`);
       return response.data;
-   }
+   },
 
-   async getTask(id: number): Promise<Task> {
-      const response = await api.get<Task>(`/tasks/${id}`);
+   async getInternsForTasks() {
+      // Use the correct endpoint from documentation
+      try {
+         const response = await api.get("/interns-for-tasks");
+         return response.data;
+      } catch (error) {
+         console.error("Error getting interns for tasks:", error);
+         throw error;
+      }
+   },
+
+   async updateTaskStatus(id: number, status: Task["status"]) {
+      const response = await api.put(`/tasks/${id}/status`, { status });
       return response.data;
-   }
+   },
 
-   async updateTask(
-      id: number,
-      data: UpdateTaskRequest
-   ): Promise<{ task: Task }> {
-      const response = await api.put<{ task: Task }>(`/tasks/${id}`, data);
+   async getTaskStatistics() {
+      const response = await api.get("/tasks/statistics");
       return response.data;
-   }
+   },
 
-   async updateTaskStatus(
-      id: number,
-      data: UpdateTaskStatusRequest
-   ): Promise<{ task: Task }> {
-      const response = await api.put<{ task: Task }>(
-         `/tasks/${id}/status`,
-         data
-      );
-      return response.data;
-   }
-
-   async deleteTask(id: number): Promise<ApiResponse> {
-      const response = await api.delete<ApiResponse>(`/tasks/${id}`);
-      return response.data;
-   }
-
-   // Intern endpoints
    async getMyTasks(params?: {
       status?: string;
       priority?: string;
       overdue?: boolean;
       page?: number;
       per_page?: number;
-   }): Promise<PaginatedResponse<Task>> {
-      const response = await api.get<PaginatedResponse<Task>>("/my-tasks", {
-         params,
-      });
+   }) {
+      const response = await api.get("/my-tasks", { params });
       return response.data;
-   }
+   },
 
-   async getMyTask(id: number): Promise<Task> {
-      const response = await api.get<Task>(`/my-tasks/${id}`);
+   async getMyTask(id: number) {
+      const response = await api.get(`/my-tasks/${id}`);
       return response.data;
-   }
+   },
 
-   async updateMyTaskStatus(
-      id: number,
-      data: UpdateTaskStatusRequest
-   ): Promise<{ task: Task }> {
-      const response = await api.put<{ task: Task }>(
-         `/my-tasks/${id}/status`,
-         data
-      );
+   async updateMyTaskStatus(id: number, status: Task["status"]) {
+      const response = await api.put(`/my-tasks/${id}/status`, { status });
       return response.data;
-   }
-}
-
-export const taskService = new TaskService();
+   },
+};

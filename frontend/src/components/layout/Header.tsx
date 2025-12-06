@@ -14,8 +14,6 @@ import { toast } from 'sonner';
 import {
   LogOut,
   User,
-  Settings,
-  Bell,
   ChevronDown,
   Shield,
   Briefcase,
@@ -71,21 +69,8 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Right side - User Menu & Notifications */}
+        {/* Right side - User Menu */}
         <div className="flex items-center space-x-4">
-          {/* Notifications Bell */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="relative"
-            onClick={() => navigate(`/${user?.role}/notifications`)}
-          >
-            <Bell className="h-5 w-5" />
-            <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-red-500 text-xs text-white flex items-center justify-center">
-              3
-            </span>
-          </Button>
-
           {/* User Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -107,15 +92,6 @@ export default function Header() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => navigate(`/${user?.role}/profile`)}>
-                <User className="mr-2 h-4 w-4" />
-                <span>Profile</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => navigate(`/${user?.role}/settings`)}>
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
-              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={handleLogout}

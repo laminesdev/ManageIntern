@@ -5,7 +5,6 @@ import {
    Star,
    Bell,
    AlertCircle,
-   Calendar,
    User,
    Target,
    GraduationCap,
@@ -37,16 +36,6 @@ const navItems = [
       path: "/intern/reclamations",
       label: "Reclamations",
       icon: AlertCircle,
-   },
-   {
-      path: "/intern/attendance",
-      label: "Attendance",
-      icon: Calendar,
-   },
-   {
-      path: "/intern/profile",
-      label: "Profile",
-      icon: User,
    },
 ];
 
@@ -97,10 +86,6 @@ export default function InternSidebar() {
                   <div className="flex justify-between text-sm">
                      <span className="text-gray-600">Tasks Completed</span>
                      <span className="font-semibold">8/12</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                     <span className="text-gray-600">Attendance</span>
-                     <span className="font-semibold">100%</span>
                   </div>
                   <div className="flex justify-between text-sm">
                      <span className="text-gray-600">Avg. Score</span>

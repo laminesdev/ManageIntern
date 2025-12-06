@@ -7,8 +7,6 @@ import {
   Bell,
   FileText,
   AlertCircle,
-  Users,
-  BarChart3,
   Briefcase,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -48,11 +46,6 @@ const navItems = [
     path: '/manager/reports',
     label: 'Reports',
     icon: FileText,
-  },
-  {
-    path: '/manager/team',
-    label: 'My Team',
-    icon: Users,
   },
 ];
 
@@ -103,10 +96,10 @@ export default function ManagerSidebar() {
             <CheckSquare className="h-4 w-4 text-gray-400" />
           </NavLink>
           <NavLink
-            to="/manager/attendance/today"
+            to="/manager/attendance"
             className="flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
           >
-            <span className="text-sm font-medium">Today's Attendance</span>
+            <span className="text-sm font-medium">Mark Attendance</span>
             <Calendar className="h-4 w-4 text-gray-400" />
           </NavLink>
         </div>

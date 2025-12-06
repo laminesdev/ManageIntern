@@ -1,87 +1,69 @@
-import api from "./api";
-import type {
-  User,
-  CreateUserRequest,
-  UpdateUserRequest,
-  AssignInternRequest,
-  ApiResponse,
-  PaginatedResponse
-} from "@/types";
+import api from './api';
 
-class UserService {
-   async getUsers(params?: {
-      role?: string;
-      department_id?: number;
-      search?: string;
-      page?: number;
-      per_page?: number;
-   }): Promise<PaginatedResponse<User>> {
-      const response = await api.get<PaginatedResponse<User>>("/users", {
-         params,
-      });
-      return response.data;
-   }
+export const userService = {
+  // Get all users (Admin only)
+  getUsers: async (params: any = {}): Promise<any> => {
+    const response = await api.get('/users', { params });
+    return response.data;
+  },
 
-   async createUser(data: CreateUserRequest): Promise<{ user: User }> {
-      const response = await api.post<{ user: User }>("/users", data);
-      return response.data;
-   }
+  // Create user (Admin only)
+  createUser: async (data: any): Promise<any> => {
+    const response = await api.post('/users', data);
+    return response.data;
+  },
 
-   async getUser(id: number): Promise<User> {
-      const response = await api.get<User>(`/users/${id}`);
-      return response.data;
-   }
+  // Get user details (Admin only)
+  getUser: async (id: number): Promise<any> => {
+    const response = await api.get(`/users/${id}`);
+    return response.data;
+  },
 
-   async updateUser(
-      id: number,
-      data: UpdateUserRequest
-   ): Promise<{ user: User }> {
-      const response = await api.put<{ user: User }>(`/users/${id}`, data);
-      return response.data;
-   }
+  // Update user (Admin only)
+  updateUser: async (id: number, data: any): Promise<any> => {
+    const response = await api.put(`/users/${id}`, data);
+    return response.data;
+  },
 
-   async deleteUser(id: number): Promise<ApiResponse> {
-      const response = await api.delete<ApiResponse>(`/users/${id}`);
-      return response.data;
-   }
+  // Delete user (Admin only)
+  deleteUser: async (id: number): Promise<any> => {
+    const response = await api.delete(`/users/${id}`);
+    return response.data;
+  },
 
-   async assignIntern(
-      id: number,
-      data: AssignInternRequest
-   ): Promise<ApiResponse> {
-      const response = await api.post<ApiResponse>(`/users/${id}/assign`, data);
-      return response.data;
-   }
+  // Soft delete user (Admin only)
+  softDeleteUser: async (id: number): Promise<any> => {
+    const response = await api.delete(`/users/${id}/soft-delete`);
+    return response.data;
+  },
 
-   async softDeleteUser(id: number): Promise<ApiResponse> {
-      const response = await api.delete<ApiResponse>(
-         `/users/${id}/soft-delete`
-      );
-      return response.data;
-   }
+  // Restore user (Admin only)
+  restoreUser: async (id: number): Promise<any> => {
+    const response = await api.post(`/users/${id}/restore`);
+    return response.data;
+  },
 
-   async restoreUser(id: number): Promise<ApiResponse> {
-      const response = await api.post<ApiResponse>(`/users/${id}/restore`);
-      return response.data;
-   }
+  // Get managers list
+  getManagers: async (): Promise<any> => {
+    const response = await api.get('/managers');
+    return response.data;
+  },
 
-   async getManagers(): Promise<User[]> {
-      const response = await api.get<User[]>("/managers");
-      return response.data;
-   }
+  // Get interns list
+  getInterns: async (params: any = {}): Promise<any> => {
+    const response = await api.get('/interns', { params });
+    return response.data;
+  },
 
-   async getInterns(params?: {
-      unassigned?: boolean;
-      department_id?: number;
-   }): Promise<User[]> {
-      const response = await api.get<User[]>("/interns", { params });
-      return response.data;
-   }
+  // Get unassigned interns
+  getUnassignedInterns: async (): Promise<any> => {
+    const response = await api.get('/unassigned-interns');
+    return response.data;
+  },
 
-   async getUnassignedInterns(): Promise<User[]> {
-      const response = await api.get<User[]>("/unassigned-interns");
-      return response.data;
-   }
-}
-
-export const userService = new UserService();
+  // Assign intern (Admin only)
+  assignIntern: async (id: number, data: any): Promise<any> => {
+    const response = await api.post(`/users/${id}/assign`, data);
+    return response.data;
+  }
+};

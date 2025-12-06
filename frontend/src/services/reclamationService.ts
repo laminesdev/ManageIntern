@@ -1,109 +1,144 @@
 import api from "./api";
-import type {
-  Reclamation,
-  CreateReclamationRequest,
-  RespondToReclamationRequest,
-  UpdateReclamationStatusRequest,
-  ReclamationStatistics,
-  PaginatedResponse,
-  ApiResponse
-} from "@/types";
 
-class ReclamationService {
-   // Manager endpoints
-   async getReclamations(params?: {
-      status?: string;
-      search?: string;
-      start_date?: string;
-      end_date?: string;
-      page?: number;
-      per_page?: number;
-   }): Promise<PaginatedResponse<Reclamation>> {
-      const response = await api.get<PaginatedResponse<Reclamation>>(
-         "/reclamations",
-         { params }
-      );
-      return response.data;
-   }
-
-   async getReclamationStatistics(): Promise<ReclamationStatistics> {
-      const response = await api.get<ReclamationStatistics>(
-         "/reclamations/statistics"
-      );
-      return response.data;
-   }
-
-   async getReclamation(id: number): Promise<Reclamation> {
-      const response = await api.get<Reclamation>(`/reclamations/${id}`);
-      return response.data;
-   }
-
-   async respondToReclamation(
-      id: number,
-      data: RespondToReclamationRequest
-   ): Promise<{ reclamation: Reclamation }> {
-      const response = await api.put<{ reclamation: Reclamation }>(
-         `/reclamations/${id}/respond`,
-         data
-      );
-      return response.data;
-   }
-
-   async updateReclamationStatus(
-      id: number,
-      data: UpdateReclamationStatusRequest
-   ): Promise<{ reclamation: Reclamation }> {
-      const response = await api.put<{ reclamation: Reclamation }>(
-         `/reclamations/${id}/status`,
-         data
-      );
-      return response.data;
-   }
-
-   async deleteReclamation(id: number): Promise<ApiResponse> {
-      const response = await api.delete<ApiResponse>(`/reclamations/${id}`);
-      return response.data;
-   }
-
-   // Intern endpoints
-   async createReclamation(
-      data: CreateReclamationRequest
-   ): Promise<{ reclamation: Reclamation }> {
-      const response = await api.post<{ reclamation: Reclamation }>(
-         "/reclamations",
-         data
-      );
-      return response.data;
-   }
-
-   async getMyReclamations(params?: {
-      status?: string;
-      page?: number;
-      per_page?: number;
-   }): Promise<PaginatedResponse<Reclamation>> {
-      const response = await api.get<PaginatedResponse<Reclamation>>(
-         "/my-reclamations",
-         { params }
-      );
-      return response.data;
-   }
-
-   async getMyReclamation(id: number): Promise<Reclamation> {
-      const response = await api.get<Reclamation>(`/my-reclamations/${id}`);
-      return response.data;
-   }
-
-   async deleteMyReclamation(id: number): Promise<ApiResponse> {
-      const response = await api.delete<ApiResponse>(`/my-reclamations/${id}`);
-      return response.data;
-   }
-
-   async getMyReclamationStatistics(): Promise<ReclamationStatistics> {
-      const response = await api.get<ReclamationStatistics>(
-         "/reclamations/statistics"
-      );
-      return response.data;
-   }
+export interface Reclamation {
+   id: number;
+   intern_id: number;
+   manager_id: number;
+   subject: string;
+   description: string;
+   status: "pending" | "in_review" | "solved" | "archived";
+   response?: string;
+   resolved_at?: string;
+   responded_at?: string;
+   created_at: string;
+   updated_at: string;
+   deleted_at?: string;
+   intern?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+   manager?: {
+      id: number;
+      name: string;
+      email: string;
+   };
 }
 
-export const reclamationService = new ReclamationService();
+export interface CreateReclamationData {
+   subject: string;
+   description: string;
+}
+
+export interface RespondToReclamationData {
+   response: string;
+   status: "pending" | "in_review" | "solved" | "archived";
+}
+
+export const reclamationService = {
+   // Manager: Get reclamations (department reclamations)
+   getReclamations: async (
+      params: {
+         status?: string;
+         search?: string;
+         start_date?: string;
+         end_date?: string;
+      } = {}
+   ): Promise<{ data: Reclamation[] }> => {
+      const response = await api.get("/reclamations", { params });
+      return response.data;
+   },
+
+   // Manager: Get department reclamations (same as getReclamations but semantic)
+   getDepartmentReclamations: async (): Promise<{ data: Reclamation[] }> => {
+      const response = await api.get("/reclamations");
+      return response.data;
+   },
+
+   // Manager: Get reclamation details
+   getReclamationById: async (
+      id: number
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.get(`/reclamations/${id}`);
+      return response.data;
+   },
+
+   // Manager: Respond to reclamation
+   respondToReclamation: async (
+      id: number,
+      data: RespondToReclamationData
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.put(`/reclamations/${id}/respond`, data);
+      return response.data;
+   },
+
+   // Manager: Update reclamation (for status updates)
+   updateReclamation: async (
+      id: number,
+      data: { status?: string; resolution_notes?: string }
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.put(`/reclamations/${id}/respond`, data);
+      return response.data;
+   },
+
+   // Manager: Update reclamation status only
+   updateReclamationStatus: async (
+      id: number,
+      status: string
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.put(`/reclamations/${id}/status`, { status });
+      return response.data;
+   },
+
+   // Manager: Delete reclamation
+   deleteReclamation: async (id: number): Promise<{ message: string }> => {
+      const response = await api.delete(`/reclamations/${id}`);
+      return response.data;
+   },
+
+   // Manager: Get reclamation statistics
+   getReclamationStatistics: async (): Promise<{
+      statistics: {
+         total: number;
+         pending: number;
+         in_review: number;
+         solved: number;
+         archived: number;
+      };
+   }> => {
+      const response = await api.get("/reclamations/statistics");
+      return response.data;
+   },
+
+   // Intern: Create reclamation
+   createReclamation: async (
+      data: CreateReclamationData
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.post("/reclamations", data);
+      return response.data;
+   },
+
+   // Intern: Get my reclamations
+   getMyReclamations: async (
+      params: {
+         status?: string;
+      } = {}
+   ): Promise<{ data: Reclamation[] }> => {
+      const response = await api.get("/my-reclamations", { params });
+      return response.data;
+   },
+
+   // Intern: Get my reclamation details
+   getMyReclamationById: async (
+      id: number
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.get(`/my-reclamations/${id}`);
+      return response.data;
+   },
+
+   // Intern: Delete my reclamation
+   deleteMyReclamation: async (id: number): Promise<{ message: string }> => {
+      const response = await api.delete(`/my-reclamations/${id}`);
+      return response.data;
+   },
+};
