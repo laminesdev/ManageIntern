@@ -19,8 +19,11 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/stores/authStore";
 import { toast } from "sonner";
-import { dashboardService } from "@/services/dashboardService";
+import { taskService } from "@/services/taskService";
 import { attendanceService } from "@/services/attendanceService";
+import { evaluationService } from "@/services/evaluationService";
+import { reclamationService } from "@/services/reclamationService";
+import { format } from "date-fns";
 
 interface DashboardStats {
    total_interns: number;
@@ -41,7 +44,14 @@ export default function ManagerDashboard() {
    const { user } = useAuthStore();
    const [isLoading, setIsLoading] = useState(true);
    const [isRefreshing, setIsRefreshing] = useState(false);
-   const [stats, setStats] = useState<DashboardStats | null>(null);
+   const [stats, setStats] = useState<DashboardStats>({
+      total_interns: 0,
+      pending_tasks: 0,
+      todays_attendance: "0/0",
+      average_score: 0,
+      pending_reclamations: 0,
+      recent_activity: [],
+   });
 
    useEffect(() => {
       loadDashboardData();
@@ -51,53 +61,90 @@ export default function ManagerDashboard() {
       try {
          setIsLoading(true);
 
-         // Fetch dashboard data from API
-         const response = await dashboardService.getManagerDashboard();
+         // Load all required data in parallel
+         const [
+            tasksResponse,
+            internsResponse,
+            attendanceResponse,
+            evaluationsResponse,
+            reclamationsResponse,
+         ] = await Promise.all([
+            taskService.getTasks({ status: "pending" }).catch(() => ({ data: [] })),
+            taskService.getInternsForTasks().catch(() => ({ data: [] })),
+            attendanceService.getAttendance({
+               start_date: format(new Date(), "yyyy-MM-dd"),
+               end_date: format(new Date(), "yyyy-MM-dd"),
+            }).catch(() => ({ data: [] })),
+            evaluationService.getEvaluations().catch(() => ({ data: [] })),
+            reclamationService.getReclamations({ status: "pending" }).catch(() => ({ data: [] })),
+         ]);
 
-         // Handle different response structures from API
-         let dashboardData: DashboardStats;
+         // Calculate statistics
+         const interns = internsResponse.data || [];
+         const tasks = tasksResponse.data || [];
+         const todayAttendance = attendanceResponse.data || [];
+         const evaluations = evaluationsResponse.data || [];
+         const reclamations = reclamationsResponse.data || [];
 
-         if (response?.data) {
-            // If API returns { data: {...} }
-            dashboardData = response.data as DashboardStats;
-         } else if (response) {
-            // If API returns data directly
-            dashboardData = response as any;
-         } else {
-            throw new Error("No data received from server");
-         }
+         // Calculate average score
+         const avgScore =
+            evaluations.length > 0
+               ? evaluations.reduce((sum: number, e: any) => sum + e.score, 0) / evaluations.length
+               : 0;
 
-         // Ensure all required fields exist with defaults
+         // Calculate today's attendance
+         const presentCount = todayAttendance.filter((a: any) => a.status === "present").length;
+         const attendanceString = `${presentCount}/${interns.length}`;
+
+         // Generate recent activity
+         const recentActivity: Array<{
+            user_name: string;
+            action: string;
+            time: string;
+            type: string;
+         }> = [];
+
+         // Add task activities
+         tasks.slice(0, 2).forEach((task: any) => {
+            recentActivity.push({
+               user_name: task.assigned_to_user?.name || "Unknown",
+               action: `Assigned task: ${task.title}`,
+               time: format(new Date(task.created_at), "h:mm a"),
+               type: "task",
+            });
+         });
+
+         // Add attendance activities
+         todayAttendance.slice(0, 2).forEach((att: any) => {
+            recentActivity.push({
+               user_name: att.intern?.name || "Unknown",
+               action: `Marked ${att.status}`,
+               time: format(new Date(att.created_at), "h:mm a"),
+               type: "attendance",
+            });
+         });
+
+         // Add evaluation activities - FIXED: renamed 'eval' to 'evaluation'
+         evaluations.slice(0, 2).forEach((evaluation: any) => {
+            recentActivity.push({
+               user_name: evaluation.intern?.name || "Unknown",
+               action: `Evaluated with score ${evaluation.score}%`,
+               time: format(new Date(evaluation.created_at), "h:mm a"),
+               type: "evaluation",
+            });
+         });
+
          setStats({
-            total_interns: dashboardData.total_interns ?? 0,
-            pending_tasks: dashboardData.pending_tasks ?? 0,
-            todays_attendance: dashboardData.todays_attendance ?? "0/0",
-            average_score: dashboardData.average_score ?? 0,
-            pending_reclamations: dashboardData.pending_reclamations ?? 0,
-            recent_activity: dashboardData.recent_activity ?? [],
+            total_interns: interns.length,
+            pending_tasks: tasks.length,
+            todays_attendance: attendanceString,
+            average_score: Math.round(avgScore),
+            pending_reclamations: reclamations.length,
+            recent_activity: recentActivity.slice(0, 5),
          });
       } catch (error: any) {
          console.error("Failed to load dashboard data:", error);
-
-         // Show user-friendly error message
-         const errorMessage =
-            error.response?.data?.message ||
-            error.message ||
-            "Failed to load dashboard data";
-
-         toast.error(errorMessage, {
-            description: "Please try refreshing the page",
-         });
-
-         // Set empty stats to prevent crashes
-         setStats({
-            total_interns: 0,
-            pending_tasks: 0,
-            todays_attendance: "0/0",
-            average_score: 0,
-            pending_reclamations: 0,
-            recent_activity: [],
-         });
+         toast.error("Failed to load dashboard data");
       } finally {
          setIsLoading(false);
       }
@@ -116,11 +163,9 @@ export default function ManagerDashboard() {
    };
 
    const handleQuickAction = async (path: string) => {
-      // For attendance, check if there are interns first
       if (path === "/manager/attendance") {
          try {
-            const internsResponse =
-               await attendanceService.getDepartmentInterns();
+            const internsResponse = await attendanceService.getDepartmentInterns();
             if (!internsResponse.data || internsResponse.data.length === 0) {
                toast.error("No interns available in your department");
                return;
@@ -130,15 +175,12 @@ export default function ManagerDashboard() {
             return;
          }
       }
-
       navigate(path);
    };
 
-   // Loading State
    if (isLoading) {
       return (
          <div className="space-y-6">
-            {/* Loading Header */}
             <div className="flex items-center justify-between">
                <div>
                   <div className="h-10 w-48 bg-gray-200 rounded animate-pulse mb-2" />
@@ -149,8 +191,6 @@ export default function ManagerDashboard() {
                   <div className="h-10 w-32 bg-gray-200 rounded animate-pulse" />
                </div>
             </div>
-
-            {/* Loading Stats Grid */}
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                {[1, 2, 3, 4].map((i) => (
                   <Card key={i} className="animate-pulse">
@@ -165,14 +205,10 @@ export default function ManagerDashboard() {
                   </Card>
                ))}
             </div>
-
-            {/* Loading Message */}
             <div className="flex items-center justify-center py-12">
                <div className="text-center">
                   <Loader2 className="h-12 w-12 animate-spin text-blue-500 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                     Loading Dashboard
-                  </h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Loading Dashboard</h3>
                   <p className="text-gray-500">Fetching your team data...</p>
                </div>
             </div>
@@ -180,37 +216,6 @@ export default function ManagerDashboard() {
       );
    }
 
-   // Error State
-   if (!stats) {
-      return (
-         <div className="flex items-center justify-center min-h-[400px]">
-            <div className="text-center">
-               <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Failed to Load Dashboard
-               </h3>
-               <p className="text-gray-500 mb-4">
-                  Unable to retrieve dashboard data
-               </p>
-               <Button onClick={handleRefresh} disabled={isRefreshing}>
-                  {isRefreshing ? (
-                     <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Refreshing...
-                     </>
-                  ) : (
-                     <>
-                        <RefreshCw className="mr-2 h-4 w-4" />
-                        Try Again
-                     </>
-                  )}
-               </Button>
-            </div>
-         </div>
-      );
-   }
-
-   // Stat Cards Configuration
    const statCards = [
       {
          title: "My Interns",
@@ -218,7 +223,7 @@ export default function ManagerDashboard() {
          icon: Users,
          color: "bg-blue-500",
          description: "In your department",
-         trend: "+2 this month",
+         trend: `${stats.total_interns} total`,
          trendUp: true,
       },
       {
@@ -227,7 +232,7 @@ export default function ManagerDashboard() {
          icon: CheckSquare,
          color: "bg-amber-500",
          description: "Require attention",
-         trend: "5 overdue",
+         trend: "Needs review",
          trendUp: false,
       },
       {
@@ -236,7 +241,7 @@ export default function ManagerDashboard() {
          icon: Calendar,
          color: "bg-green-500",
          description: "Present today",
-         trend: "95% rate",
+         trend: "Current status",
          trendUp: true,
       },
       {
@@ -245,12 +250,11 @@ export default function ManagerDashboard() {
          icon: Star,
          color: "bg-purple-500",
          description: "Team average",
-         trend: "+3% vs last month",
+         trend: "Performance",
          trendUp: true,
       },
    ];
 
-   // Quick Actions Configuration
    const quickActions = [
       {
          title: "Assign New Task",
@@ -288,15 +292,10 @@ export default function ManagerDashboard() {
 
    return (
       <div className="space-y-6">
-         {/* Header */}
          <div className="flex items-center justify-between">
             <div>
-               <h1 className="text-3xl font-bold tracking-tight">
-                  Welcome back, {user?.name}!
-               </h1>
-               <p className="text-muted-foreground">
-                  Here's what's happening with your team today
-               </p>
+               <h1 className="text-3xl font-bold tracking-tight">Welcome back, {user?.name}!</h1>
+               <p className="text-muted-foreground">Here's what's happening with your team today</p>
             </div>
             <div className="flex items-center space-x-3">
                <Button
@@ -305,9 +304,7 @@ export default function ManagerDashboard() {
                   onClick={handleRefresh}
                   disabled={isRefreshing}
                >
-                  <RefreshCw
-                     className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`}
-                  />
+                  <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
                </Button>
                <Button onClick={() => navigate("/manager/tasks/new")}>
                   <Plus className="mr-2 h-4 w-4" />
@@ -316,43 +313,29 @@ export default function ManagerDashboard() {
             </div>
          </div>
 
-         {/* Stats Grid */}
          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {statCards.map((stat) => {
                const Icon = stat.icon;
                return (
-                  <Card
-                     key={stat.title}
-                     className="hover:shadow-lg transition-shadow"
-                  >
+                  <Card key={stat.title} className="hover:shadow-lg transition-shadow">
                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">
-                           {stat.title}
-                        </CardTitle>
-                        <div
-                           className={`p-2 rounded-full ${stat.color} text-white`}
-                        >
+                        <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
+                        <div className={`p-2 rounded-full ${stat.color} text-white`}>
                            <Icon className="h-4 w-4" />
                         </div>
                      </CardHeader>
                      <CardContent>
                         <div className="text-2xl font-bold">{stat.value}</div>
-                        <div className="text-xs text-muted-foreground mt-1">
-                           {stat.description}
-                        </div>
+                        <div className="text-xs text-muted-foreground mt-1">{stat.description}</div>
                         <div className="flex items-center mt-2">
                            <TrendingUp
                               className={`h-3 w-3 mr-1 ${
-                                 stat.trendUp
-                                    ? "text-green-500"
-                                    : "text-red-500"
+                                 stat.trendUp ? "text-green-500" : "text-red-500"
                               }`}
                            />
                            <span
                               className={`text-xs ${
-                                 stat.trendUp
-                                    ? "text-green-600"
-                                    : "text-red-600"
+                                 stat.trendUp ? "text-green-600" : "text-red-600"
                               }`}
                            >
                               {stat.trend}
@@ -364,7 +347,6 @@ export default function ManagerDashboard() {
             })}
          </div>
 
-         {/* Quick Actions */}
          <div>
             <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -375,9 +357,7 @@ export default function ManagerDashboard() {
                   return (
                      <button
                         key={action.title}
-                        onClick={() =>
-                           !isDisabled && handleQuickAction(action.path)
-                        }
+                        onClick={() => !isDisabled && handleQuickAction(action.path)}
                         className={`p-4 bg-white border rounded-lg transition-all text-left group ${
                            isDisabled
                               ? "opacity-50 cursor-not-allowed"
@@ -393,27 +373,18 @@ export default function ManagerDashboard() {
                               <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
                            )}
                         </div>
-                        <h3 className="font-medium text-gray-900">
-                           {action.title}
-                        </h3>
-                        <p className="text-sm text-gray-500 mt-1">
-                           {action.description}
-                        </p>
-                        {isDisabled &&
-                           action.path === "/manager/attendance" && (
-                              <p className="text-xs text-red-500 mt-2">
-                                 No interns available
-                              </p>
-                           )}
+                        <h3 className="font-medium text-gray-900">{action.title}</h3>
+                        <p className="text-sm text-gray-500 mt-1">{action.description}</p>
+                        {isDisabled && action.path === "/manager/attendance" && (
+                           <p className="text-xs text-red-500 mt-2">No interns available</p>
+                        )}
                      </button>
                   );
                })}
             </div>
          </div>
 
-         {/* Alerts & Activity Section */}
          <div className="grid gap-6 lg:grid-cols-2">
-            {/* Pending Reclamations Card */}
             <Card>
                <CardHeader>
                   <CardTitle className="flex items-center">
@@ -434,15 +405,10 @@ export default function ManagerDashboard() {
                                     {stats.pending_reclamations} Reclamation
                                     {stats.pending_reclamations > 1 ? "s" : ""}
                                  </p>
-                                 <p className="text-sm text-amber-700">
-                                    Waiting for your review
-                                 </p>
+                                 <p className="text-sm text-amber-700">Waiting for your review</p>
                               </div>
                            </div>
-                           <Button
-                              size="sm"
-                              onClick={() => navigate("/manager/reclamations")}
-                           >
+                           <Button size="sm" onClick={() => navigate("/manager/reclamations")}>
                               Review
                            </Button>
                         </div>
@@ -450,9 +416,7 @@ export default function ManagerDashboard() {
                   ) : (
                      <div className="text-center py-8">
                         <CheckSquare className="h-12 w-12 text-gray-300 mx-auto mb-2" />
-                        <p className="text-sm text-muted-foreground">
-                           No pending reclamations
-                        </p>
+                        <p className="text-sm text-muted-foreground">No pending reclamations</p>
                         <p className="text-xs text-gray-400 mt-1">
                            All reclamations have been addressed
                         </p>
@@ -461,7 +425,6 @@ export default function ManagerDashboard() {
                </CardContent>
             </Card>
 
-            {/* Recent Activity Card */}
             <Card>
                <CardHeader>
                   <CardTitle className="flex items-center">
@@ -472,74 +435,50 @@ export default function ManagerDashboard() {
                <CardContent>
                   {stats.recent_activity && stats.recent_activity.length > 0 ? (
                      <div className="space-y-3">
-                        {stats.recent_activity
-                           .slice(0, 4)
-                           .map((activity, index) => {
-                              // Determine icon based on activity type
-                              let ActivityIcon = CheckSquare;
-                              let iconColor = "text-blue-600";
-                              let bgColor = "bg-blue-100";
+                        {stats.recent_activity.slice(0, 4).map((activity, index) => {
+                           let ActivityIcon = CheckSquare;
+                           let iconColor = "text-blue-600";
+                           let bgColor = "bg-blue-100";
 
-                              if (activity.type === "reclamation") {
-                                 ActivityIcon = AlertCircle;
-                                 iconColor = "text-amber-600";
-                                 bgColor = "bg-amber-100";
-                              } else if (activity.type === "attendance") {
-                                 ActivityIcon = Calendar;
-                                 iconColor = "text-green-600";
-                                 bgColor = "bg-green-100";
-                              } else if (activity.type === "evaluation") {
-                                 ActivityIcon = Star;
-                                 iconColor = "text-purple-600";
-                                 bgColor = "bg-purple-100";
-                              }
+                           if (activity.type === "reclamation") {
+                              ActivityIcon = AlertCircle;
+                              iconColor = "text-amber-600";
+                              bgColor = "bg-amber-100";
+                           } else if (activity.type === "attendance") {
+                              ActivityIcon = Calendar;
+                              iconColor = "text-green-600";
+                              bgColor = "bg-green-100";
+                           } else if (activity.type === "evaluation") {
+                              ActivityIcon = Star;
+                              iconColor = "text-purple-600";
+                              bgColor = "bg-purple-100";
+                           }
 
-                              return (
-                                 <div
-                                    key={index}
-                                    className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors"
-                                 >
-                                    <div className="flex items-center space-x-3">
-                                       <div
-                                          className={`h-8 w-8 rounded-full ${bgColor} flex items-center justify-center`}
-                                       >
-                                          <ActivityIcon
-                                             className={`h-4 w-4 ${iconColor}`}
-                                          />
-                                       </div>
-                                       <div>
-                                          <p className="font-medium text-sm">
-                                             {activity.user_name}
-                                          </p>
-                                          <p className="text-xs text-gray-500">
-                                             {activity.action}
-                                          </p>
-                                       </div>
+                           return (
+                              <div
+                                 key={index}
+                                 className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors"
+                              >
+                                 <div className="flex items-center space-x-3">
+                                    <div
+                                       className={`h-8 w-8 rounded-full ${bgColor} flex items-center justify-center`}
+                                    >
+                                       <ActivityIcon className={`h-4 w-4 ${iconColor}`} />
                                     </div>
-                                    <span className="text-xs text-gray-400">
-                                       {activity.time}
-                                    </span>
+                                    <div>
+                                       <p className="font-medium text-sm">{activity.user_name}</p>
+                                       <p className="text-xs text-gray-500">{activity.action}</p>
+                                    </div>
                                  </div>
-                              );
-                           })}
-                        {stats.recent_activity.length > 4 && (
-                           <Button
-                              variant="ghost"
-                              className="w-full text-sm"
-                              onClick={() => {
-                                 toast.info("Activity log feature coming soon");
-                              }}
-                           >
-                              View All Activity
-                           </Button>
-                        )}
+                                 <span className="text-xs text-gray-400">{activity.time}</span>
+                              </div>
+                           );
+                        })}
                      </div>
                   ) : (
                      <div className="text-center py-8">
                         <Clock className="h-12 w-12 text-gray-300 mx-auto mb-2" />
-                        <p className="text-sm text-muted-foreground">
-                           No recent activity
-                        </p>
+                        <p className="text-sm text-muted-foreground">No recent activity</p>
                         <p className="text-xs text-gray-400 mt-1">
                            Activity will appear here as your team works
                         </p>
@@ -549,7 +488,6 @@ export default function ManagerDashboard() {
             </Card>
          </div>
 
-         {/* Team Overview Card */}
          <Card>
             <CardHeader>
                <CardTitle>Team Overview</CardTitle>
@@ -560,106 +498,36 @@ export default function ManagerDashboard() {
                      className="text-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors cursor-pointer"
                      onClick={() => navigate("/manager/tasks")}
                   >
-                     <div className="text-2xl font-bold text-blue-600">
-                        {stats.total_interns}
-                     </div>
-                     <div className="text-sm text-gray-600 mt-1">
-                        Total Interns
-                     </div>
-                     <div className="text-xs text-blue-500 mt-1">
-                        View All →
-                     </div>
+                     <div className="text-2xl font-bold text-blue-600">{stats.total_interns}</div>
+                     <div className="text-sm text-gray-600 mt-1">Total Interns</div>
+                     <div className="text-xs text-blue-500 mt-1">View All →</div>
                   </div>
                   <div
                      className="text-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors cursor-pointer"
                      onClick={() => navigate("/manager/attendance")}
                   >
                      <div className="text-2xl font-bold text-green-600">
-                        {stats.todays_attendance.split("/")[0]}/
-                        {stats.todays_attendance.split("/")[1]}
+                        {stats.todays_attendance.split("/")[0]}/{stats.todays_attendance.split("/")[1]}
                      </div>
-                     <div className="text-sm text-gray-600 mt-1">
-                        Present Today
-                     </div>
-                     <div className="text-xs text-green-500 mt-1">
-                        Mark Attendance →
-                     </div>
+                     <div className="text-sm text-gray-600 mt-1">Present Today</div>
+                     <div className="text-xs text-green-500 mt-1">Mark Attendance →</div>
                   </div>
                   <div
                      className="text-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors cursor-pointer"
                      onClick={() => navigate("/manager/evaluations")}
                   >
-                     <div className="text-2xl font-bold text-purple-600">
-                        {stats.average_score}%
-                     </div>
-                     <div className="text-sm text-gray-600 mt-1">
-                        Average Score
-                     </div>
-                     <div className="text-xs text-purple-500 mt-1">
-                        View Evaluations →
-                     </div>
+                     <div className="text-2xl font-bold text-purple-600">{stats.average_score}%</div>
+                     <div className="text-sm text-gray-600 mt-1">Average Score</div>
+                     <div className="text-xs text-purple-500 mt-1">View Evaluations →</div>
                   </div>
                   <div
                      className="text-center p-4 bg-amber-50 rounded-lg hover:bg-amber-100 transition-colors cursor-pointer"
                      onClick={() => navigate("/manager/tasks")}
                   >
-                     <div className="text-2xl font-bold text-amber-600">
-                        {stats.pending_tasks}
-                     </div>
-                     <div className="text-sm text-gray-600 mt-1">
-                        Pending Tasks
-                     </div>
-                     <div className="text-xs text-amber-500 mt-1">
-                        Manage Tasks →
-                     </div>
+                     <div className="text-2xl font-bold text-amber-600">{stats.pending_tasks}</div>
+                     <div className="text-sm text-gray-600 mt-1">Pending Tasks</div>
+                     <div className="text-xs text-amber-500 mt-1">Manage Tasks →</div>
                   </div>
-               </div>
-            </CardContent>
-         </Card>
-
-         {/* Additional Quick Links */}
-         <Card>
-            <CardHeader>
-               <CardTitle>Need Help?</CardTitle>
-            </CardHeader>
-            <CardContent>
-               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <Button
-                     variant="outline"
-                     className="h-auto py-4 justify-start"
-                     onClick={() => toast.info("Documentation coming soon")}
-                  >
-                     <div className="text-left">
-                        <p className="font-medium">View Documentation</p>
-                        <p className="text-xs text-gray-500">
-                           Learn how to use the system
-                        </p>
-                     </div>
-                  </Button>
-                  <Button
-                     variant="outline"
-                     className="h-auto py-4 justify-start"
-                     onClick={() => navigate("/manager/reports")}
-                  >
-                     <div className="text-left">
-                        <p className="font-medium">Generate Report</p>
-                        <p className="text-xs text-gray-500">
-                           Create attendance or performance report
-                        </p>
-                     </div>
-                  </Button>
-                  <Button
-                     variant="outline"
-                     className="h-auto py-4 justify-start"
-                     onClick={() => toast.info("Support feature coming soon")}
-                  >
-                     <div className="text-left">
-                        <p className="font-medium">Contact Support</p>
-                        <p className="text-xs text-gray-500">
-                           Get help with any issues
-                        </p>
-                     </div>
-                  </Button>
                </div>
             </CardContent>
          </Card>

@@ -89,13 +89,13 @@ export const useReclamationStore = create<
                // Decrement old status
                if (oldReclamation.status === "pending") newStats.pending--;
                if (oldReclamation.status === "in_review") newStats.in_review--;
-               if (oldReclamation.status === "solved") newStats.solved--;
+               if (oldReclamation.status === "resolved") newStats.resolved--;
                if (oldReclamation.status === "archived") newStats.archived--;
 
                // Increment new status
                if (updates.status === "pending") newStats.pending++;
                if (updates.status === "in_review") newStats.in_review++;
-               if (updates.status === "solved") newStats.solved++;
+               if (updates.status === "resolved") newStats.resolved++;
                if (updates.status === "archived") newStats.archived++;
             }
          }
@@ -130,7 +130,7 @@ export const useReclamationStore = create<
             if (reclamationToDelete.status === "pending") newStats.pending--;
             if (reclamationToDelete.status === "in_review")
                newStats.in_review--;
-            if (reclamationToDelete.status === "solved") newStats.solved--;
+            if (reclamationToDelete.status === "resolved") newStats.resolved--;
             if (reclamationToDelete.status === "archived") newStats.archived--;
          }
 

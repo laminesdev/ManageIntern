@@ -1,7 +1,6 @@
 import api from "./api";
 
 export interface DashboardData {
-   // Manager Dashboard
    total_interns?: number;
    pending_tasks?: number;
    todays_attendance?: string;
@@ -13,14 +12,10 @@ export interface DashboardData {
       time: string;
       type: string;
    }>;
-
-   // Admin Dashboard
    total_users?: number;
    total_managers?: number;
    active_interns?: number;
    total_departments?: number;
-
-   // Intern Dashboard
    my_tasks?: number;
    my_evaluations?: number;
    unread_notifications?: number;
@@ -28,7 +23,6 @@ export interface DashboardData {
 }
 
 export const dashboardService = {
-   // Get role-specific dashboard data
    getDashboard: async (): Promise<{ data: DashboardData }> => {
       try {
          const response = await api.get("/dashboard");
@@ -39,11 +33,9 @@ export const dashboardService = {
       }
    },
 
-   // Manager Dashboard
    getManagerDashboard: async (): Promise<{ data: DashboardData }> => {
       try {
          const response = await api.get("/dashboard");
-         // API returns role-specific data automatically
          return response.data;
       } catch (error) {
          console.error("Manager dashboard error:", error);
@@ -51,7 +43,6 @@ export const dashboardService = {
       }
    },
 
-   // Admin Dashboard
    getAdminDashboard: async (): Promise<{ data: DashboardData }> => {
       try {
          const response = await api.get("/dashboard");
@@ -62,7 +53,6 @@ export const dashboardService = {
       }
    },
 
-   // Intern Dashboard
    getInternDashboard: async (): Promise<{ data: DashboardData }> => {
       try {
          const response = await api.get("/dashboard");

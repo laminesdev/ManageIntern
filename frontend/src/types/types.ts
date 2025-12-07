@@ -213,7 +213,7 @@ export interface ReclamationStatistics {
    total: number;
    pending: number;
    in_review: number;
-   solved: number;
+   resolved: number;
    archived: number;
 }
 

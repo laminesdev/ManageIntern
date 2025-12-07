@@ -60,28 +60,6 @@ export default function AdminSidebar() {
             ))}
          </nav>
 
-         {/* Quick Stats - KEEPING THIS */}
-         <div className="p-4 mt-8">
-            <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-4">
-               <h3 className="text-sm font-semibold text-gray-900 mb-2">
-                  System Status
-               </h3>
-               <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                     <span className="text-gray-600">Active Users</span>
-                     <span className="font-semibold">24</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                     <span className="text-gray-600">Departments</span>
-                     <span className="font-semibold">5</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                     <span className="text-gray-600">Today's Logins</span>
-                     <span className="font-semibold">18</span>
-                  </div>
-               </div>
-            </div>
-         </div>
       </aside>
    );
 }

@@ -6,7 +6,7 @@ export interface Reclamation {
    manager_id: number;
    subject: string;
    description: string;
-   status: "pending" | "in_review" | "solved" | "archived";
+   status: "pending" | "in_review" | "resolved" | "archived";
    response?: string;
    resolved_at?: string;
    responded_at?: string;
@@ -102,7 +102,7 @@ export const reclamationService = {
          total: number;
          pending: number;
          in_review: number;
-         solved: number;
+         resolved: number;
          archived: number;
       };
    }> => {

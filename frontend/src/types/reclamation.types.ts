@@ -4,7 +4,7 @@ export interface Reclamation {
    manager_id: number;
    subject: string;
    description: string;
-   status: "pending" | "in_review" | "solved" | "archived";
+   status: "pending" | "in_review" | "resolved" | "archived"; // FIXED: changed "solved" to "resolved"
    response?: string;
    resolved_at?: string;
    responded_at?: string;
@@ -20,19 +20,19 @@ export interface CreateReclamationRequest {
    description: string;
 }
 
-export interface RespondToReclamationRequest {
+export interface RespondToReclamationData {
    response: string;
-   status: "pending" | "in_review" | "solved" | "archived";
+   status: "pending" | "in_review" | "resolved" | "archived"; // FIXED
 }
 
 export interface UpdateReclamationStatusRequest {
-   status: "pending" | "in_review" | "solved" | "archived";
+   status: "pending" | "in_review" | "resolved" | "archived"; // FIXED
 }
 
 export interface ReclamationStatistics {
    total: number;
    pending: number;
    in_review: number;
-   solved: number;
+   resolved: number; // FIXED: changed "solved" to "resolved"
    archived: number;
 }

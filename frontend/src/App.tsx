@@ -11,7 +11,6 @@ import AdminReports from "./pages/admin/Reports";
 import AssignInterns from "./pages/admin/AssignInterns";
 import ViewAttendanceReports from "./pages/admin/reports/ViewAttendanceReports";
 import ViewPerformanceReports from "./pages/admin/reports/ViewPerformanceReports";
-// REMOVED: import AdminAnalytics from "./pages/admin/Analytics";
 
 // Manager Pages
 import ManagerDashboard from "./pages/manager/Dashboard";
@@ -23,6 +22,8 @@ import ReclamationsPage from "./pages/manager/ReclamationsPage";
 import ManagerReports from "./pages/manager/Reports";
 import SendNotificationPage from "./pages/manager/SendNotificationPage";
 import NewTaskPage from "./pages/manager/NewTaskPage";
+import EditTaskPage from "./pages/manager/EditTaskPage";
+import ReclamationDetailsPage from "./pages/manager/ReclamationDetailsPage";
 
 // Intern Pages
 import InternDashboard from "./pages/intern/Dashboard";
@@ -101,6 +102,17 @@ export default function App() {
             />
             <Route path="reclamations" element={<ReclamationsPage />} />
             <Route path="reports" element={<ManagerReports />} />
+            <Route path="tasks/edit/:id" element={<EditTaskPage />} />
+            <Route path="attendance" element={<AttendancePage />} />
+            <Route path="evaluations" element={<EvaluationsPage />} />
+            <Route path="notifications" element={<NotificationsPage />} />
+            <Route
+               path="notifications/send"
+               element={<SendNotificationPage />}
+            />
+            <Route path="reclamations" element={<ReclamationsPage />} />
+            <Route path="reports" element={<ManagerReports />} />
+            <Route path="reclamations/:id" element={<ReclamationDetailsPage />} />
          </Route>
 
          {/* Intern Routes */}

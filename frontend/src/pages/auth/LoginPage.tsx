@@ -57,29 +57,6 @@ export default function LoginPage() {
     }
   };
 
-  const handleDemoLogin = async (role: 'admin' | 'manager' | 'intern') => {
-    const credentials = {
-      admin: { email: 'admin@manageintern.com', password: 'password123' },
-      manager: { email: 'manager1@test.com', password: 'password123' },
-      intern: { email: 'intern1@test.com', password: 'password123' },
-    }[role];
-
-    try {
-      setIsLoading(true);
-      
-      const response = await authService.login(credentials);
-      
-      setAuth(response.user, response.token);
-      toast.success(`Logged in as ${role}`);
-      
-      navigate(response.redirect_to);
-    } catch (error) {
-      toast.error('Demo login failed. Please try manually.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-50 p-4">
       <div className="w-full max-w-4xl grid md:grid-cols-2 gap-8">
@@ -192,59 +169,6 @@ export default function LoginPage() {
                 </Button>
               </form>
               
-              {/* Demo Login Buttons */}
-              <div className="mt-8 pt-6 border-t">
-                <p className="text-sm text-muted-foreground mb-4 text-center">
-                  Try demo accounts:
-                </p>
-                <div className="grid grid-cols-3 gap-3">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleDemoLogin('admin')}
-                    disabled={isLoading}
-                    className="text-xs"
-                  >
-                    Admin
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleDemoLogin('manager')}
-                    disabled={isLoading}
-                    className="text-xs"
-                  >
-                    Manager
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleDemoLogin('intern')}
-                    disabled={isLoading}
-                    className="text-xs"
-                  >
-                    Intern
-                  </Button>
-                </div>
-              </div>
-              
-              {/* Test Credentials */}
-              <div className="mt-6 pt-6 border-t">
-                <p className="text-xs text-muted-foreground mb-2">Test Credentials:</p>
-                <div className="space-y-1 text-xs">
-                  <div className="flex justify-between">
-                    <span className="font-medium">Admin:</span>
-                    <code className="bg-gray-100 px-2 py-1 rounded">admin@manageintern.com</code>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Password:</span>
-                    <code className="bg-gray-100 px-2 py-1 rounded">password123</code>
-                  </div>
-                </div>
-              </div>
             </CardContent>
           </Card>
         </div>

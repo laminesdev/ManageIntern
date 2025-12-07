@@ -42,20 +42,6 @@ const navItems = [
 export default function InternSidebar() {
    return (
       <aside className="w-64 border-r bg-white min-h-[calc(100vh-70px)] hidden md:block">
-         <div className="p-6 border-b">
-            <div className="flex items-center space-x-3">
-               <div className="p-2 bg-green-100 rounded-lg">
-                  <GraduationCap className="h-6 w-6 text-green-600" />
-               </div>
-               <div>
-                  <h2 className="font-semibold text-gray-900">Intern Portal</h2>
-                  <p className="text-xs text-gray-500">
-                     Learning & Development
-                  </p>
-               </div>
-            </div>
-         </div>
-
          <nav className="p-4 space-y-1">
             {navItems.map((item) => (
                <NavLink
