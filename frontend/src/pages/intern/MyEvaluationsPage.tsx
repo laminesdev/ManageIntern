@@ -39,9 +39,7 @@ export default function MyEvaluationsPage() {
       if (score >= 80)
          return <Badge className="bg-red-100 text-red-800">Good</Badge>;
       if (score >= 70)
-         return (
-            <Badge className="bg-yellow-100 text-yellow-800">Average</Badge>
-         );
+         return <Badge className="bg-red-100 text-red-800">Average</Badge>;
       return (
          <Badge className="bg-red-100 text-red-800">Needs Improvement</Badge>
       );
@@ -182,10 +180,10 @@ export default function MyEvaluationsPage() {
 
                         {evaluation.areas_for_improvement && (
                            <div>
-                              <h4 className="font-semibold mb-2 text-amber-700">
+                              <h4 className="font-semibold mb-2 text-red-700">
                                  Areas for Improvement
                               </h4>
-                              <p className="text-sm text-gray-700 bg-amber-50 p-3 rounded">
+                              <p className="text-sm text-gray-700 bg-red-50 p-3 rounded">
                                  {evaluation.areas_for_improvement}
                               </p>
                            </div>

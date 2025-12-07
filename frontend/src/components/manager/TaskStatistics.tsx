@@ -23,7 +23,7 @@ export default function TaskStatistics({ statistics }: TaskStatisticsProps) {
          label: "Pending",
          value: statistics.pending,
          icon: Clock,
-         color: "text-yellow-600",
+         color: "text-red-600",
       },
       {
          label: "In Progress",

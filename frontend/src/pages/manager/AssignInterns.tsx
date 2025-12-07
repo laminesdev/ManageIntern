@@ -295,8 +295,8 @@ export default function AssignInterns() {
                     <TableCell>{intern.email}</TuableCell>
                     <TableCell>
                       <div className="flex items-center">
-                        <XCircle className="h-4 w-4 text-amber-500 mr-2" />
-                        <span className="text-amber-600">Unassigned</span>
+                        <XCircle className="h-4 w-4 text-red-500 mr-2" />
+                        <span className="text-red-600">Unassigned</span>
                       </div>
                     </TableCell>
                   </TableRow>

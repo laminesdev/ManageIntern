@@ -224,7 +224,7 @@ export default function AdminReports() {
                            {reports.filter((r) => r.sent_to_admin).length}
                         </p>
                      </div>
-                     <Filter className="h-8 w-8 text-amber-500" />
+                     <Filter className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>

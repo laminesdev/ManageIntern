@@ -109,7 +109,7 @@ export default function MyNotificationsPage() {
                            {notifications.filter((n) => !n.is_read).length}
                         </p>
                      </div>
-                     <Bell className="h-8 w-8 text-amber-500" />
+                     <Bell className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>

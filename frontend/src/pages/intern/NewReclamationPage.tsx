@@ -140,9 +140,9 @@ export default function NewReclamationPage() {
                         )}
                      />
 
-                     <div className="flex items-center p-4 bg-amber-50 border border-amber-200 rounded-lg">
-                        <AlertCircle className="h-5 w-5 text-amber-600 mr-3" />
-                        <p className="text-sm text-amber-800">
+                     <div className="flex items-center p-4 bg-red-50 border border-red-200 rounded-lg">
+                        <AlertCircle className="h-5 w-5 text-red-600 mr-3" />
+                        <p className="text-sm text-red-800">
                            Your reclamation will be sent to your manager for
                            review. Please provide clear details.
                         </p>

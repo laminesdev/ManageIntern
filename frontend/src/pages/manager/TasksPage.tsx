@@ -120,9 +120,7 @@ export default function TasksPage() {
          case "low":
             return <Badge className="bg-gray-100 text-gray-800">Low</Badge>;
          case "medium":
-            return (
-               <Badge className="bg-yellow-100 text-yellow-800">Medium</Badge>
-            );
+            return <Badge className="bg-red-100 text-red-800">Medium</Badge>;
          case "high":
             return <Badge className="bg-red-100 text-red-800">High</Badge>;
          case "urgent":
@@ -276,7 +274,7 @@ export default function TasksPage() {
                            {tasks.filter((t) => t.status === "pending").length}
                         </p>
                      </div>
-                     <Clock className="h-8 w-8 text-yellow-500" />
+                     <Clock className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>

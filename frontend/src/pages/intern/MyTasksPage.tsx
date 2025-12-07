@@ -131,7 +131,7 @@ export default function MyAttendancePage() {
             );
          case "late":
             return (
-               <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
+               <Badge className="bg-red-100 text-red-800 border-red-200">
                   Late
                </Badge>
             );
@@ -153,7 +153,7 @@ export default function MyAttendancePage() {
          case "absent":
             return <XCircle className="h-5 w-5 text-red-500" />;
          case "late":
-            return <Clock className="h-5 w-5 text-yellow-500" />;
+            return <Clock className="h-5 w-5 text-red-500" />;
          case "excused":
             return <AlertCircle className="h-5 w-5 text-red-500" />;
          default:
@@ -315,7 +315,7 @@ export default function MyAttendancePage() {
                         <p className="text-sm text-gray-500">Late</p>
                         <p className="text-2xl font-bold">{stats.late || 0}</p>
                      </div>
-                     <Clock className="h-8 w-8 text-yellow-500" />
+                     <Clock className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>
@@ -409,11 +409,11 @@ export default function MyAttendancePage() {
                         </div>
                         <div className="text-sm text-red-600">Absent Days</div>
                      </div>
-                     <div className="text-center p-4 bg-yellow-50 rounded-lg border border-yellow-100">
-                        <div className="text-xl font-bold text-yellow-700">
+                     <div className="text-center p-4 bg-red-50 rounded-lg border border-red-100">
+                        <div className="text-xl font-bold text-red-700">
                            {stats.late || 0}
                         </div>
-                        <div className="text-sm text-yellow-600">Late Days</div>
+                        <div className="text-sm text-red-600">Late Days</div>
                      </div>
                      <div className="text-center p-4 bg-red-50 rounded-lg border border-red-100">
                         <div className="text-xl font-bold text-red-700">
@@ -441,7 +441,7 @@ export default function MyAttendancePage() {
                                  : (stats.attendance_rate || 0) >= 80
                                  ? "bg-red-500"
                                  : (stats.attendance_rate || 0) >= 70
-                                 ? "bg-yellow-500"
+                                 ? "bg-red-500"
                                  : "bg-red-500"
                            }`}
                            style={{

@@ -332,7 +332,7 @@ export default function ViewPerformanceReports() {
    const getScoreColor = (score: number) => {
       if (score >= 90) return "text-red-600";
       if (score >= 80) return "text-red-600";
-      if (score >= 70) return "text-yellow-600";
+      if (score >= 70) return "text-red-600";
       return "text-red-600";
    };
 
@@ -744,11 +744,11 @@ export default function ViewPerformanceReports() {
                                        <div
                                           className={`flex items-center justify-center w-8 h-8 rounded-full ${
                                              index === 0
-                                                ? "bg-yellow-100 text-yellow-800"
+                                                ? "bg-red-100 text-red-800"
                                                 : index === 1
                                                 ? "bg-gray-100 text-gray-800"
                                                 : index === 2
-                                                ? "bg-amber-100 text-amber-800"
+                                                ? "bg-red-100 text-red-800"
                                                 : "bg-red-50 text-red-800"
                                           }`}
                                        >

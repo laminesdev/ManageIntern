@@ -123,9 +123,7 @@ export default function ViewAttendanceReports() {
          case "absent":
             return <Badge className="bg-red-100 text-red-800">Absent</Badge>;
          case "late":
-            return (
-               <Badge className="bg-yellow-100 text-yellow-800">Late</Badge>
-            );
+            return <Badge className="bg-red-100 text-red-800">Late</Badge>;
          case "excused":
             return <Badge className="bg-red-100 text-red-800">Excused</Badge>;
          default:

@@ -110,9 +110,7 @@ export default function ReclamationDetailsPage() {
    const getStatusBadge = (status: string) => {
       switch (status) {
          case "pending":
-            return (
-               <Badge className="bg-yellow-100 text-yellow-800">Pending</Badge>
-            );
+            return <Badge className="bg-red-100 text-red-800">Pending</Badge>;
          case "in_review":
             return <Badge className="bg-red-100 text-red-800">In Review</Badge>;
          case "solved": // FIXED

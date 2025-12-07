@@ -116,7 +116,7 @@ export default function AdminDashboard() {
          title: "Reports",
          value: stats.reportsCount?.toString() || "0",
          icon: BarChart3,
-         color: "bg-amber-500",
+         color: "bg-red-500",
          description: "Generated reports",
       },
    ];

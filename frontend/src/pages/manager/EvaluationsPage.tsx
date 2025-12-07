@@ -189,7 +189,7 @@ export default function EvaluationsPage() {
    const getScoreColor = (score: number) => {
       if (score >= 90) return "text-red-600";
       if (score >= 80) return "text-red-600";
-      if (score >= 70) return "text-yellow-600";
+      if (score >= 70) return "text-red-600";
       return "text-red-600";
    };
 
@@ -199,9 +199,7 @@ export default function EvaluationsPage() {
       if (score >= 80)
          return <Badge className="bg-red-100 text-red-800">Good</Badge>;
       if (score >= 70)
-         return (
-            <Badge className="bg-yellow-100 text-yellow-800">Average</Badge>
-         );
+         return <Badge className="bg-red-100 text-red-800">Average</Badge>;
       return (
          <Badge className="bg-red-100 text-red-800">Needs Improvement</Badge>
       );
@@ -503,7 +501,7 @@ export default function EvaluationsPage() {
                            }
                         </p>
                      </div>
-                     <Filter className="h-8 w-8 text-amber-500" />
+                     <Filter className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>

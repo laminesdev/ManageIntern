@@ -91,9 +91,7 @@ export default function ReclamationsPage() {
    const getStatusBadge = (status: string) => {
       switch (status) {
          case "pending":
-            return (
-               <Badge className="bg-yellow-100 text-yellow-800">Pending</Badge>
-            );
+            return <Badge className="bg-red-100 text-red-800">Pending</Badge>;
          case "in_review":
             return <Badge className="bg-red-100 text-red-800">In Review</Badge>;
          case "resolved": // FIXED
@@ -170,11 +168,11 @@ export default function ReclamationsPage() {
                   <div className="flex items-center justify-between">
                      <div>
                         <p className="text-sm text-gray-500">Pending</p>
-                        <p className="text-2xl font-bold text-yellow-600">
+                        <p className="text-2xl font-bold text-red-600">
                            {stats.pending}
                         </p>
                      </div>
-                     <AlertCircle className="h-8 w-8 text-yellow-500" />
+                     <AlertCircle className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>

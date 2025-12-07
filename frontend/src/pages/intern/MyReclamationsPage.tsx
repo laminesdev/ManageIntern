@@ -32,9 +32,7 @@ export default function MyReclamationsPage() {
 
    const getStatusBadge = (status: string) => {
       const badges = {
-         pending: (
-            <Badge className="bg-yellow-100 text-yellow-800">Pending</Badge>
-         ),
+         pending: <Badge className="bg-red-100 text-red-800">Pending</Badge>,
          in_review: (
             <Badge className="bg-red-100 text-red-800">In Review</Badge>
          ),
@@ -94,7 +92,7 @@ export default function MyReclamationsPage() {
                            }
                         </p>
                      </div>
-                     <AlertCircle className="h-8 w-8 text-yellow-500" />
+                     <AlertCircle className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>

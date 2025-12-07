@@ -92,10 +92,7 @@ export default function MyTasksPage() {
    const getStatusBadge = (status: string): React.ReactElement => {
       const badges: Record<string, React.ReactElement> = {
          pending: (
-            <Badge
-               variant="outline"
-               className="border-yellow-200 text-yellow-700"
-            >
+            <Badge variant="outline" className="border-red-200 text-red-700">
                Pending
             </Badge>
          ),
@@ -126,7 +123,7 @@ export default function MyTasksPage() {
             </Badge>
          ),
          medium: (
-            <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
+            <Badge className="bg-red-100 text-red-800 border-red-200">
                Medium
             </Badge>
          ),
@@ -237,7 +234,7 @@ export default function MyTasksPage() {
                         <p className="text-sm text-gray-500">Pending</p>
                         <p className="text-2xl font-bold">{pendingTasks}</p>
                      </div>
-                     <Clock className="h-8 w-8 text-yellow-500" />
+                     <Clock className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>

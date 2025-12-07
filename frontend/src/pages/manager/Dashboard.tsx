@@ -242,7 +242,7 @@ export default function ManagerDashboard() {
          title: "Pending Tasks",
          value: stats.pending_tasks.toString(),
          icon: CheckSquare,
-         color: "bg-amber-500",
+         color: "bg-red-500",
          description: "Require attention",
          trend: "Needs review",
          trendUp: false,
@@ -289,7 +289,7 @@ export default function ManagerDashboard() {
          description: "Notify your team",
          icon: Bell,
          path: "/manager/notifications/send",
-         color: "bg-amber-100 text-amber-600",
+         color: "bg-red-100 text-red-600",
          enabled: true,
       },
       {
@@ -424,24 +424,24 @@ export default function ManagerDashboard() {
             <Card>
                <CardHeader>
                   <CardTitle className="flex items-center">
-                     <AlertCircle className="mr-2 h-5 w-5 text-amber-500" />
+                     <AlertCircle className="mr-2 h-5 w-5 text-red-500" />
                      Pending Reclamations
                   </CardTitle>
                </CardHeader>
                <CardContent>
                   {stats.pending_reclamations > 0 ? (
                      <div className="space-y-3">
-                        <div className="flex items-center justify-between p-4 bg-amber-50 rounded-lg border border-amber-200">
+                        <div className="flex items-center justify-between p-4 bg-red-50 rounded-lg border border-red-200">
                            <div className="flex items-center space-x-3">
-                              <div className="flex items-center justify-center w-10 h-10 bg-amber-100 rounded-full">
-                                 <AlertCircle className="h-5 w-5 text-amber-600" />
+                              <div className="flex items-center justify-center w-10 h-10 bg-red-100 rounded-full">
+                                 <AlertCircle className="h-5 w-5 text-red-600" />
                               </div>
                               <div>
-                                 <p className="font-medium text-amber-900">
+                                 <p className="font-medium text-red-900">
                                     {stats.pending_reclamations} Reclamation
                                     {stats.pending_reclamations > 1 ? "s" : ""}
                                  </p>
-                                 <p className="text-sm text-amber-700">
+                                 <p className="text-sm text-red-700">
                                     Waiting for your review
                                  </p>
                               </div>
@@ -487,8 +487,8 @@ export default function ManagerDashboard() {
 
                               if (activity.type === "reclamation") {
                                  ActivityIcon = AlertCircle;
-                                 iconColor = "text-amber-600";
-                                 bgColor = "bg-amber-100";
+                                 iconColor = "text-red-600";
+                                 bgColor = "bg-red-100";
                               } else if (activity.type === "attendance") {
                                  ActivityIcon = Calendar;
                                  iconColor = "text-red-600";
@@ -591,16 +591,16 @@ export default function ManagerDashboard() {
                      </div>
                   </div>
                   <div
-                     className="text-center p-4 bg-amber-50 rounded-lg hover:bg-amber-100 transition-colors cursor-pointer"
+                     className="text-center p-4 bg-red-50 rounded-lg hover:bg-red-100 transition-colors cursor-pointer"
                      onClick={() => navigate("/manager/tasks")}
                   >
-                     <div className="text-2xl font-bold text-amber-600">
+                     <div className="text-2xl font-bold text-red-600">
                         {stats.pending_tasks}
                      </div>
                      <div className="text-sm text-gray-600 mt-1">
                         Pending Tasks
                      </div>
-                     <div className="text-xs text-amber-500 mt-1">
+                     <div className="text-xs text-red-500 mt-1">
                         Manage Tasks →
                      </div>
                   </div>

@@ -71,15 +71,14 @@ export default function LoginPage() {
             {/* Left side - Branding */}
             <div className="hidden md:flex flex-col justify-center space-y-6">
                <div className="flex items-center space-x-3">
-                  <div className="p-3 bg-red-600 rounded-lg">
-                     <Building className="h-8 w-8 text-white" />
-                  </div>
+                  <img src="vite.svg" className="h-20 w-20 p-3" />
+
                   <div>
                      <h1 className="text-3xl font-bold text-gray-900">
-                        {config.APP_NAME}
+                        Marriott Interns Management System
                      </h1>
                      <p className="text-gray-600">
-                        Streamline your internship management process
+                        Streamline internship management process
                      </p>
                   </div>
                </div>

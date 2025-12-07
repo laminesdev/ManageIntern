@@ -177,7 +177,7 @@ export default function InternDashboard() {
          case "urgent":
             return "bg-red-100 text-red-800";
          case "medium":
-            return "bg-yellow-100 text-yellow-800";
+            return "bg-red-100 text-red-800";
          default:
             return "bg-gray-100 text-gray-800";
       }
@@ -204,7 +204,7 @@ export default function InternDashboard() {
          title: "Notifications",
          value: stats.unreadNotifications.toString(),
          icon: Bell,
-         color: "bg-amber-500",
+         color: "bg-red-500",
          change: "Unread",
          description: "New messages",
       },
@@ -327,7 +327,7 @@ export default function InternDashboard() {
                                     ? "bg-red-100 text-red-800"
                                     : task.status === "in_progress"
                                     ? "bg-red-100 text-red-800"
-                                    : "bg-yellow-100 text-yellow-800"
+                                    : "bg-red-100 text-red-800"
                               }`}
                            >
                               {task.status?.replace("_", " ") || "pending"}
@@ -377,7 +377,7 @@ export default function InternDashboard() {
                               </p>
                               <div className="flex items-center space-x-2 mt-1">
                                  <div className="flex items-center">
-                                    <Star className="h-4 w-4 text-yellow-500 mr-1" />
+                                    <Star className="h-4 w-4 text-red-500 mr-1" />
                                     <span className="font-bold">
                                        {evaluation.score || 0}%
                                     </span>
@@ -397,7 +397,7 @@ export default function InternDashboard() {
                                     : (evaluation.score || 0) >= 80
                                     ? "bg-red-100 text-red-800"
                                     : (evaluation.score || 0) >= 70
-                                    ? "bg-yellow-100 text-yellow-800"
+                                    ? "bg-red-100 text-red-800"
                                     : "bg-red-100 text-red-800"
                               }`}
                            >
@@ -498,7 +498,7 @@ export default function InternDashboard() {
             <Card>
                <CardHeader>
                   <CardTitle className="flex items-center">
-                     <Clock className="mr-2 h-5 w-5 text-amber-500" />
+                     <Clock className="mr-2 h-5 w-5 text-red-500" />
                      Upcoming Deadlines
                   </CardTitle>
                </CardHeader>
@@ -516,7 +516,7 @@ export default function InternDashboard() {
                                     task.priority === "high" ||
                                     task.priority === "urgent"
                                        ? "bg-red-500"
-                                       : "bg-yellow-500"
+                                       : "bg-red-500"
                                  }`}
                               ></div>
                               <div className="flex-1">

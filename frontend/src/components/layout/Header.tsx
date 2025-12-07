@@ -54,25 +54,7 @@ export default function Header() {
       <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
          <div className="px-6 py-3 flex items-center justify-between">
             {/* Left side - Logo & Breadcrumb */}
-            <div className="flex items-center space-x-4">
-               <div className="flex items-center space-x-2">
-                  <div
-                     className={cn(
-                        "p-2 rounded-lg",
-                        roleColors[user?.role as keyof typeof roleColors]
-                     )}
-                  >
-                     <RoleIcon className="h-5 w-5" />
-                  </div>
-                  <div>
-                     <h1 className="text-lg font-semibold text-gray-900">
-                        {user?.role === "admin" && "Admin Dashboard"}
-                        {user?.role === "manager" && "Manager Portal"}
-                        {user?.role === "intern" && "Intern Portal"}
-                     </h1>
-                  </div>
-               </div>
-            </div>
+               <img src="https://upload.wikimedia.org/wikipedia/commons/b/b3/Marriott_hotels_logo14.svg" className="h-10 w-10 pl-2" />
 
             {/* Right side - User Menu */}
             <div className="flex items-center space-x-4">

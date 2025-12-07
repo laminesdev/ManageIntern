@@ -160,9 +160,7 @@ export default function AttendancePage() {
          case "absent":
             return <Badge className="bg-red-100 text-red-800">Absent</Badge>;
          case "late":
-            return (
-               <Badge className="bg-yellow-100 text-yellow-800">Late</Badge>
-            );
+            return <Badge className="bg-red-100 text-red-800">Late</Badge>;
          case "excused":
             return <Badge className="bg-red-100 text-red-800">Excused</Badge>;
          default:
@@ -177,7 +175,7 @@ export default function AttendancePage() {
          case "absent":
             return <XCircle className="h-4 w-4 text-red-500" />;
          case "late":
-            return <Clock className="h-4 w-4 text-yellow-500" />;
+            return <Clock className="h-4 w-4 text-red-500" />;
          case "excused":
             return <CheckCircle className="h-4 w-4 text-red-500" />;
       }
@@ -420,7 +418,7 @@ export default function AttendancePage() {
                                        </SelectItem>
                                        <SelectItem value="late">
                                           <div className="flex items-center">
-                                             <Clock className="h-4 w-4 text-yellow-500 mr-2" />
+                                             <Clock className="h-4 w-4 text-red-500 mr-2" />
                                              Late
                                           </div>
                                        </SelectItem>
