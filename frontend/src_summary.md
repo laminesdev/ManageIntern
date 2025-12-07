@@ -207,12 +207,6 @@ export default function App() {
 }
 
 ```
-
-## File: assets/react.svg
-```svg
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--logos" width="35.93" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 228"><path fill="#00D8FF" d="M210.483 73.824a171.49 171.49 0 0 0-8.24-2.597c.465-1.9.893-3.777 1.273-5.621c6.238-30.281 2.16-54.676-11.769-62.708c-13.355-7.7-35.196.329-57.254 19.526a171.23 171.23 0 0 0-6.375 5.848a155.866 155.866 0 0 0-4.241-3.917C100.759 3.829 77.587-4.822 63.673 3.233C50.33 10.957 46.379 33.89 51.995 62.588a170.974 170.974 0 0 0 1.892 8.48c-3.28.932-6.445 1.924-9.474 2.98C17.309 83.498 0 98.307 0 113.668c0 15.865 18.582 31.778 46.812 41.427a145.52 145.52 0 0 0 6.921 2.165a167.467 167.467 0 0 0-2.01 9.138c-5.354 28.2-1.173 50.591 12.134 58.266c13.744 7.926 36.812-.22 59.273-19.855a145.567 145.567 0 0 0 5.342-4.923a168.064 168.064 0 0 0 6.92 6.314c21.758 18.722 43.246 26.282 56.54 18.586c13.731-7.949 18.194-32.003 12.4-61.268a145.016 145.016 0 0 0-1.535-6.842c1.62-.48 3.21-.974 4.76-1.488c29.348-9.723 48.443-25.443 48.443-41.52c0-15.417-17.868-30.326-45.517-39.844Zm-6.365 70.984c-1.4.463-2.836.91-4.3 1.345c-3.24-10.257-7.612-21.163-12.963-32.432c5.106-11 9.31-21.767 12.459-31.957c2.619.758 5.16 1.557 7.61 2.4c23.69 8.156 38.14 20.213 38.14 29.504c0 9.896-15.606 22.743-40.946 31.14Zm-10.514 20.834c2.562 12.94 2.927 24.64 1.23 33.787c-1.524 8.219-4.59 13.698-8.382 15.893c-8.067 4.67-25.32-1.4-43.927-17.412a156.726 156.726 0 0 1-6.437-5.87c7.214-7.889 14.423-17.06 21.459-27.246c12.376-1.098 24.068-2.894 34.671-5.345a134.17 134.17 0 0 1 1.386 6.193ZM87.276 214.515c-7.882 2.783-14.16 2.863-17.955.675c-8.075-4.657-11.432-22.636-6.853-46.752a156.923 156.923 0 0 1 1.869-8.499c10.486 2.32 22.093 3.988 34.498 4.994c7.084 9.967 14.501 19.128 21.976 27.15a134.668 134.668 0 0 1-4.877 4.492c-9.933 8.682-19.886 14.842-28.658 17.94ZM50.35 144.747c-12.483-4.267-22.792-9.812-29.858-15.863c-6.35-5.437-9.555-10.836-9.555-15.216c0-9.322 13.897-21.212 37.076-29.293c2.813-.98 5.757-1.905 8.812-2.773c3.204 10.42 7.406 21.315 12.477 32.332c-5.137 11.18-9.399 22.249-12.634 32.792a134.718 134.718 0 0 1-6.318-1.979Zm12.378-84.26c-4.811-24.587-1.616-43.134 6.425-47.789c8.564-4.958 27.502 2.111 47.463 19.835a144.318 144.318 0 0 1 3.841 3.545c-7.438 7.987-14.787 17.08-21.808 26.988c-12.04 1.116-23.565 2.908-34.161 5.309a160.342 160.342 0 0 1-1.76-7.887Zm110.427 27.268a347.8 347.8 0 0 0-7.785-12.803c8.168 1.033 15.994 2.404 23.343 4.08c-2.206 7.072-4.956 14.465-8.193 22.045a381.151 381.151 0 0 0-7.365-13.322Zm-45.032-43.861c5.044 5.465 10.096 11.566 15.065 18.186a322.04 322.04 0 0 0-30.257-.006c4.974-6.559 10.069-12.652 15.192-18.18ZM82.802 87.83a323.167 323.167 0 0 0-7.227 13.238c-3.184-7.553-5.909-14.98-8.134-22.152c7.304-1.634 15.093-2.97 23.209-3.984a321.524 321.524 0 0 0-7.848 12.897Zm8.081 65.352c-8.385-.936-16.291-2.203-23.593-3.793c2.26-7.3 5.045-14.885 8.298-22.6a321.187 321.187 0 0 0 7.257 13.246c2.594 4.48 5.28 8.868 8.038 13.147Zm37.542 31.03c-5.184-5.592-10.354-11.779-15.403-18.433c4.902.192 9.899.29 14.978.29c5.218 0 10.376-.117 15.453-.343c-4.985 6.774-10.018 12.97-15.028 18.486Zm52.198-57.817c3.422 7.8 6.306 15.345 8.596 22.52c-7.422 1.694-15.436 3.058-23.88 4.071a382.417 382.417 0 0 0 7.859-13.026a347.403 347.403 0 0 0 7.425-13.565Zm-16.898 8.101a358.557 358.557 0 0 1-12.281 19.815a329.4 329.4 0 0 1-23.444.823c-7.967 0-15.716-.248-23.178-.732a310.202 310.202 0 0 1-12.513-19.846h.001a307.41 307.41 0 0 1-10.923-20.627a310.278 310.278 0 0 1 10.89-20.637l-.001.001a307.318 307.318 0 0 1 12.413-19.761c7.613-.576 15.42-.876 23.31-.876H128c7.926 0 15.743.303 23.354.883a329.357 329.357 0 0 1 12.335 19.695a358.489 358.489 0 0 1 11.036 20.54a329.472 329.472 0 0 1-11 20.722Zm22.56-122.124c8.572 4.944 11.906 24.881 6.52 51.026c-.344 1.668-.73 3.367-1.15 5.09c-10.622-2.452-22.155-4.275-34.23-5.408c-7.034-10.017-14.323-19.124-21.64-27.008a160.789 160.789 0 0 1 5.888-5.4c18.9-16.447 36.564-22.941 44.612-18.3ZM128 90.808c12.625 0 22.86 10.235 22.86 22.86s-10.235 22.86-22.86 22.86s-22.86-10.235-22.86-22.86s10.235-22.86 22.86-22.86Z"></path></svg>
-```
-
 ## File: components/auth/ProtectedRoute.tsx
 ```tsx
 // src/components/auth/ProtectedRoute.tsx
@@ -4401,7 +4395,6 @@ import { toast } from "sonner";
 import { Loader2, Plus, Edit, Trash2, Search, Eye, EyeOff } from "lucide-react";
 import { userService } from "@/services/userService";
 
-// Define the schemas with proper types - FIXED: Use z.number() instead of z.coerce.number()
 const userSchema = z.object({
    name: z.string().min(1, "Name is required"),
    email: z.string().email("Invalid email address"),
@@ -4415,11 +4408,9 @@ const editUserSchema = userSchema.omit({ password: true }).extend({
    password: z.string().optional(),
 });
 
-// Define proper types from schemas
 type UserFormData = z.infer<typeof userSchema>;
 type EditUserFormData = z.infer<typeof editUserSchema>;
 
-// Define interface for user
 interface User {
    id: number;
    name: string;
@@ -4428,25 +4419,29 @@ interface User {
    department_id?: number;
    manager_id?: number;
    department?: {
+      id: number;
       name: string;
    };
    manager?: {
+      id: number;
       name: string;
    };
 }
 
-// Define interface for department
 interface Department {
    id: number;
    name: string;
 }
 
-// Define interface for manager
 interface Manager {
    id: number;
    name: string;
    email: string;
    department_id?: number;
+   department?: {
+      id: number;
+      name: string;
+   };
 }
 
 export default function UserManagement() {
@@ -4460,7 +4455,6 @@ export default function UserManagement() {
    const [departments, setDepartments] = useState<Department[]>([]);
    const [managers, setManagers] = useState<Manager[]>([]);
 
-   // FIXED: Explicitly typed useForm hooks
    const addForm = useForm<UserFormData>({
       resolver: zodResolver(userSchema),
       defaultValues: {
@@ -4486,36 +4480,75 @@ export default function UserManagement() {
    });
 
    useEffect(() => {
-      loadUsers();
-      loadDepartments();
+      loadData();
    }, []);
+
+   const loadData = async () => {
+      try {
+         setIsLoading(true);
+
+         // Load users and managers in parallel
+         const [usersResponse, managersResponse] = await Promise.all([
+            userService.getUsers(),
+            userService.getManagers(),
+         ]);
+
+         const usersData = usersResponse.data as User[];
+         const managersData = managersResponse as Manager[];
+
+         setUsers(usersData);
+         setManagers(managersData);
+
+         // Extract unique departments from ALL users (including managers and interns)
+         const uniqueDepartments = extractDepartments([
+            ...usersData,
+            ...managersData,
+         ]);
+         setDepartments(uniqueDepartments);
+      } catch (error: any) {
+         console.error("Failed to load data:", error);
+         toast.error("Failed to load data");
+      } finally {
+         setIsLoading(false);
+      }
+   };
+
+   // Extract unique departments from users array
+   const extractDepartments = (
+      usersArray: (User | Manager)[]
+   ): Department[] => {
+      const departmentMap = new Map<number, string>();
+
+      usersArray.forEach((user) => {
+         if (user.department_id && user.department?.name) {
+            departmentMap.set(user.department_id, user.department.name);
+         }
+      });
+
+      // Convert map to array of department objects
+      return Array.from(departmentMap.entries())
+         .map(([id, name]) => ({
+            id,
+            name,
+         }))
+         .sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically
+   };
 
    const loadUsers = async () => {
       try {
          const response = await userService.getUsers();
-         setUsers(response.data as User[]);
-      } catch (error) {
+         const usersData = response.data as User[];
+         setUsers(usersData);
+
+         // Update departments when users change
+         const uniqueDepartments = extractDepartments([
+            ...usersData,
+            ...managers,
+         ]);
+         setDepartments(uniqueDepartments);
+      } catch (error: any) {
+         console.error("Failed to load users:", error);
          toast.error("Failed to load users");
-      }
-   };
-
-   const loadDepartments = async () => {
-      // Mock departments (should come from API)
-      const mockDepartments: Department[] = [
-         { id: 1, name: "Engineering" },
-         { id: 2, name: "Marketing" },
-         { id: 3, name: "Sales" },
-         { id: 4, name: "Human Resources" },
-         { id: 5, name: "Finance" },
-      ];
-      setDepartments(mockDepartments);
-
-      // Load managers
-      try {
-         const managersData = await userService.getManagers();
-         setManagers(managersData as Manager[]);
-      } catch (error) {
-         console.error("Failed to load managers:", error);
       }
    };
 
@@ -4526,7 +4559,7 @@ export default function UserManagement() {
          toast.success("User created successfully!");
          setIsAddDialogOpen(false);
          addForm.reset();
-         loadUsers();
+         loadData();
       } catch (error: any) {
          if (error.response?.status === 422) {
             const errors = error.response.data?.errors;
@@ -4553,7 +4586,7 @@ export default function UserManagement() {
          await userService.updateUser(selectedUser.id, data);
          toast.success("User updated successfully!");
          setIsEditDialogOpen(false);
-         loadUsers();
+         loadData();
       } catch (error: any) {
          toast.error(error.response?.data?.message || "Failed to update user");
       } finally {
@@ -4567,7 +4600,7 @@ export default function UserManagement() {
       try {
          await userService.deleteUser(id);
          toast.success("User deleted successfully!");
-         loadUsers();
+         loadData();
       } catch (error) {
          toast.error("Failed to delete user");
       }
@@ -4581,7 +4614,7 @@ export default function UserManagement() {
          role: user.role,
          department_id: user.department_id,
          manager_id: user.manager_id,
-         password: "", // Empty for edit unless changing
+         password: "",
       });
       setIsEditDialogOpen(true);
    };
@@ -4592,6 +4625,24 @@ export default function UserManagement() {
          user.email.toLowerCase().includes(search.toLowerCase()) ||
          user.role.toLowerCase().includes(search.toLowerCase())
    );
+
+   // Get department name by ID
+   const getDepartmentName = (departmentId?: number): string => {
+      if (!departmentId) return "-";
+      const dept = departments.find((d) => d.id === departmentId);
+      return dept?.name || "Unknown Department";
+   };
+
+   if (isLoading && users.length === 0) {
+      return (
+         <div className="flex items-center justify-center min-h-[400px]">
+            <div className="text-center">
+               <Loader2 className="h-12 w-12 animate-spin text-blue-500 mx-auto mb-4" />
+               <p className="text-gray-500">Loading users...</p>
+            </div>
+         </div>
+      );
+   }
 
    return (
       <div className="space-y-6">
@@ -4611,7 +4662,7 @@ export default function UserManagement() {
                      Add User
                   </Button>
                </DialogTrigger>
-               <DialogContent className="max-w-md">
+               <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
                   <DialogHeader>
                      <DialogTitle>Add New User</DialogTitle>
                   </DialogHeader>
@@ -4737,7 +4788,13 @@ export default function UserManagement() {
                                  >
                                     <FormControl>
                                        <SelectTrigger>
-                                          <SelectValue placeholder="Select department (optional)" />
+                                          <SelectValue
+                                             placeholder={
+                                                departments.length === 0
+                                                   ? "No departments available"
+                                                   : "Select department (optional)"
+                                             }
+                                          />
                                        </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
@@ -4782,6 +4839,11 @@ export default function UserManagement() {
                                              value={manager.id.toString()}
                                           >
                                              {manager.name} - {manager.email}
+                                             {manager.department?.name && (
+                                                <span className="text-xs text-gray-500 ml-1">
+                                                   ({manager.department.name})
+                                                </span>
+                                             )}
                                           </SelectItem>
                                        ))}
                                     </SelectContent>
@@ -4823,7 +4885,7 @@ export default function UserManagement() {
          {/* Users Table */}
          <Card>
             <CardHeader>
-               <CardTitle>Users List</CardTitle>
+               <CardTitle>Users List ({filteredUsers.length})</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
                <Table>
@@ -4857,7 +4919,10 @@ export default function UserManagement() {
                                  {user.role}
                               </span>
                            </TableCell>
-                           <TableCell>{user.department?.name || "-"}</TableCell>
+                           <TableCell>
+                              {user.department?.name ||
+                                 getDepartmentName(user.department_id)}
+                           </TableCell>
                            <TableCell>{user.manager?.name || "-"}</TableCell>
                            <TableCell>
                               <div className="flex items-center space-x-2">
@@ -4887,7 +4952,7 @@ export default function UserManagement() {
 
          {/* Edit User Dialog */}
          <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-            <DialogContent className="max-w-md">
+            <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
                <DialogHeader>
                   <DialogTitle>Edit User</DialogTitle>
                </DialogHeader>
@@ -5014,7 +5079,13 @@ export default function UserManagement() {
                               >
                                  <FormControl>
                                     <SelectTrigger>
-                                       <SelectValue placeholder="Select department (optional)" />
+                                       <SelectValue
+                                          placeholder={
+                                             departments.length === 0
+                                                ? "No departments available"
+                                                : "Select department (optional)"
+                                          }
+                                       />
                                     </SelectTrigger>
                                  </FormControl>
                                  <SelectContent>
@@ -5059,6 +5130,11 @@ export default function UserManagement() {
                                           value={manager.id.toString()}
                                        >
                                           {manager.name} - {manager.email}
+                                          {manager.department?.name && (
+                                             <span className="text-xs text-gray-500 ml-1">
+                                                ({manager.department.name})
+                                             </span>
+                                          )}
                                        </SelectItem>
                                     ))}
                                  </SelectContent>
@@ -5087,6 +5163,7 @@ export default function UserManagement() {
       </div>
    );
 }
+
 ```
 
 ## File: pages/admin/reports/ViewAttendanceReports.tsx
@@ -6479,6 +6556,7 @@ export default function Unauthorized() {
 ## File: pages/intern/Dashboard.tsx
 ```tsx
 // src/pages/intern/Dashboard.tsx
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { 
@@ -6490,53 +6568,44 @@ import {
   Clock,
   AlertCircle,
   Target,
-  Award
+  Award,
+  Loader2
 } from 'lucide-react';
-import { useDashboardStore } from '@/stores/dashboardStore';
-import { useEffect } from 'react';
-import { dashboardService } from '@/services/dashboardService.ts';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/stores/authStore';
+import { taskService } from '@/services/taskService';
+import { evaluationService } from '@/services/evaluationService';
+import { notificationService } from '@/services/notificationService';
+import { attendanceService } from '@/services/attendanceService';
+import { dashboardService } from '@/services/dashboardService';
+import { toast } from 'sonner';
 
-const statCards = [
-  {
-    title: 'My Tasks',
-    value: '8',
-    icon: CheckSquare,
-    color: 'bg-blue-500',
-    change: '+2',
-    description: 'Assigned to you',
-  },
-  {
-    title: 'Average Score',
-    value: '88%',
-    icon: Star,
-    color: 'bg-green-500',
-    change: '+5%',
-    description: 'This month',
-  },
-  {
-    title: 'Notifications',
-    value: '3',
-    icon: Bell,
-    color: 'bg-amber-500',
-    change: 'New',
-    description: 'Unread messages',
-  },
-  {
-    title: 'Attendance Rate',
-    value: '100%',
-    icon: Calendar,
-    color: 'bg-purple-500',
-    change: 'Perfect',
-    description: 'This month',
-  },
-];
+interface DashboardStats {
+  totalTasks: number;
+  completedTasks: number;
+  averageScore: number;
+  unreadNotifications: number;
+  attendanceRate: number;
+  pendingTasks: number;
+  recentTasks: any[];
+  recentEvaluations: any[];
+}
 
 export default function InternDashboard() {
   const navigate = useNavigate();
   const { user } = useAuthStore();
-  const { stats, isLoading, setStats } = useDashboardStore();
+  const [isLoading, setIsLoading] = useState(true);
+  const [stats, setStats] = useState<DashboardStats>({
+    totalTasks: 0,
+    completedTasks: 0,
+    averageScore: 0,
+    unreadNotifications: 0,
+    attendanceRate: 0,
+    pendingTasks: 0,
+    recentTasks: [],
+    recentEvaluations: []
+  });
+  const [upcomingDeadlines, setUpcomingDeadlines] = useState<any[]>([]);
 
   useEffect(() => {
     loadDashboardData();
@@ -6544,22 +6613,153 @@ export default function InternDashboard() {
 
   const loadDashboardData = async () => {
     try {
-      const data = await dashboardService.getInternDashboard();
-      setStats(data);
-    } catch (error) {
+      setIsLoading(true);
+      
+      // Load all data in parallel
+      const [
+        tasksResponse,
+        evaluationsResponse,
+        notificationsResponse,
+        attendanceResponse,
+        dashboardResponse
+      ] = await Promise.all([
+        taskService.getMyTasks(),
+        evaluationService.getMyEvaluations(),
+        notificationService.getMyNotifications(),
+        attendanceService.getMyAttendance(),
+        dashboardService.getInternDashboard()
+      ]);
+
+      const tasks = tasksResponse.data || [];
+      const evaluations = evaluationsResponse.data || [];
+      const notifications = notificationsResponse.data || [];
+      const attendance = attendanceResponse.data || [];
+      const dashboardData = dashboardResponse.data || {};
+
+      // Calculate statistics
+      const completedTasks = tasks.filter((task: any) => task.status === 'completed').length;
+      const pendingTasks = tasks.filter((task: any) => task.status === 'pending' || task.status === 'in_progress').length;
+      
+      const totalScore = evaluations.reduce((sum: number, evalItem: any) => sum + (evalItem.score || 0), 0);
+      const averageScore = evaluations.length > 0 ? Math.round(totalScore / evaluations.length) : 0;
+      
+      const unreadNotifications = notifications.filter((notif: any) => !notif.is_read).length;
+      
+      const presentCount = attendance.filter((record: any) => record.status === 'present').length;
+      const attendanceRate = attendance.length > 0 ? Math.round((presentCount / attendance.length) * 100) : 100;
+
+      // Get upcoming deadlines (tasks due in next 3 days)
+      const today = new Date();
+      const threeDaysLater = new Date();
+      threeDaysLater.setDate(today.getDate() + 3);
+      
+      const upcomingTasks = tasks
+        .filter((task: any) => {
+          const dueDate = new Date(task.deadline);
+          return dueDate >= today && dueDate <= threeDaysLater && task.status !== 'completed';
+        })
+        .map((task: any) => ({
+          id: task.id,
+          title: task.title,
+          deadline: task.deadline,
+          priority: task.priority || 'medium',
+          dueText: getDueText(new Date(task.deadline))
+        }))
+        .slice(0, 3);
+
+      setStats({
+        totalTasks: tasks.length,
+        completedTasks,
+        averageScore,
+        unreadNotifications,
+        attendanceRate,
+        pendingTasks,
+        recentTasks: tasks.slice(0, 3),
+        recentEvaluations: evaluations.slice(0, 2)
+      });
+
+      setUpcomingDeadlines(upcomingTasks);
+
+    } catch (error: any) {
       console.error('Failed to load dashboard data:', error);
+      toast.error(error.response?.data?.message || 'Failed to load dashboard data');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const pendingTasks = [
-    { id: 1, title: 'Complete API Documentation', priority: 'High', due: 'Tomorrow' },
-    { id: 2, title: 'Learn React Query', priority: 'Medium', due: 'In 3 days' },
+  const getDueText = (dueDate: Date): string => {
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+    
+    if (dueDate.toDateString() === today.toDateString()) {
+      return 'Today';
+    } else if (dueDate.toDateString() === tomorrow.toDateString()) {
+      return 'Tomorrow';
+    } else {
+      const diffDays = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+      return `In ${diffDays} days`;
+    }
+  };
+
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case 'high':
+      case 'urgent':
+        return 'bg-red-100 text-red-800';
+      case 'medium':
+        return 'bg-yellow-100 text-yellow-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const statCards = [
+    {
+      title: 'My Tasks',
+      value: stats.totalTasks.toString(),
+      icon: CheckSquare,
+      color: 'bg-blue-500',
+      change: `+${stats.pendingTasks} pending`,
+      description: `${stats.completedTasks} completed`,
+    },
+    {
+      title: 'Average Score',
+      value: `${stats.averageScore}%`,
+      icon: Star,
+      color: 'bg-green-500',
+      change: stats.averageScore >= 80 ? '+Good' : '+Needs Improvement',
+      description: 'Based on evaluations',
+    },
+    {
+      title: 'Notifications',
+      value: stats.unreadNotifications.toString(),
+      icon: Bell,
+      color: 'bg-amber-500',
+      change: 'Unread',
+      description: 'New messages',
+    },
+    {
+      title: 'Attendance Rate',
+      value: `${stats.attendanceRate}%`,
+      icon: Calendar,
+      color: 'bg-purple-500',
+      change: stats.attendanceRate === 100 ? 'Perfect' : 'Good',
+      description: 'This month',
+    },
   ];
 
-  const recentEvaluations = [
-    { id: 1, type: 'Monthly', score: 92, date: '1 week ago' },
-    { id: 2, type: 'Weekly', score: 88, date: '3 days ago' },
-  ];
+  if (isLoading) {
+    return (
+      <div className="min-h-[400px] flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="h-12 w-12 animate-spin text-blue-500 mx-auto mb-4" />
+          <p className="text-gray-500">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -6608,50 +6808,59 @@ export default function InternDashboard() {
 
       {/* Tasks & Evaluations */}
       <div className="grid gap-6 lg:grid-cols-2">
-        {/* Pending Tasks */}
+        {/* Recent Tasks */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center">
               <CheckSquare className="mr-2 h-5 w-5 text-blue-500" />
-              Pending Tasks
+              Recent Tasks
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {pendingTasks.map((task) => (
+              {stats.recentTasks.map((task: any) => (
                 <div
                   key={task.id}
-                  className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-100"
+                  className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-100 hover:bg-blue-100 transition-colors cursor-pointer"
+                  onClick={() => navigate(`/intern/tasks`)}
                 >
-                  <div>
-                    <p className="font-medium">{task.title}</p>
+                  <div className="flex-1">
+                    <p className="font-medium truncate">{task.title}</p>
                     <div className="flex items-center space-x-2 mt-1">
-                      <span className={`text-xs px-2 py-1 rounded-full ${
-                        task.priority === 'High' 
-                          ? 'bg-red-100 text-red-800' 
-                          : 'bg-yellow-100 text-yellow-800'
-                      }`}>
-                        {task.priority}
+                      <span className={`text-xs px-2 py-1 rounded-full ${getPriorityColor(task.priority)}`}>
+                        {task.priority || 'medium'}
                       </span>
                       <span className="text-xs text-gray-500">
-                        Due: {task.due}
+                        Due: {new Date(task.deadline).toLocaleDateString()}
                       </span>
                     </div>
                   </div>
-                  <Button
-                    size="sm"
-                    onClick={() => navigate(`/intern/tasks/${task.id}`)}
-                  >
-                    View
-                  </Button>
+                  <span className={`text-xs px-2 py-1 rounded-full ${
+                    task.status === 'completed' 
+                      ? 'bg-green-100 text-green-800'
+                      : task.status === 'in_progress'
+                      ? 'bg-blue-100 text-blue-800'
+                      : 'bg-yellow-100 text-yellow-800'
+                  }`}>
+                    {task.status?.replace('_', ' ') || 'pending'}
+                  </span>
                 </div>
               ))}
-              {pendingTasks.length === 0 && (
+              {stats.recentTasks.length === 0 && (
                 <p className="text-center text-muted-foreground py-4">
-                  No pending tasks
+                  No tasks assigned yet
                 </p>
               )}
             </div>
+            {stats.recentTasks.length > 0 && (
+              <Button 
+                variant="ghost" 
+                className="w-full mt-4"
+                onClick={() => navigate('/intern/tasks')}
+              >
+                View All Tasks
+              </Button>
+            )}
           </CardContent>
         </Card>
 
@@ -6665,38 +6874,56 @@ export default function InternDashboard() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {recentEvaluations.map((evaluation) => (
+              {stats.recentEvaluations.map((evaluation: any) => (
                 <div
                   key={evaluation.id}
-                  className="flex items-center justify-between p-3 bg-purple-50 rounded-lg border border-purple-100"
+                  className="flex items-center justify-between p-3 bg-purple-50 rounded-lg border border-purple-100 hover:bg-purple-100 transition-colors cursor-pointer"
+                  onClick={() => navigate(`/intern/evaluations`)}
                 >
-                  <div>
-                    <p className="font-medium">{evaluation.type} Evaluation</p>
+                  <div className="flex-1">
+                    <p className="font-medium capitalize">
+                      {evaluation.evaluation_type?.replace('_', ' ') || 'Evaluation'}
+                    </p>
                     <div className="flex items-center space-x-2 mt-1">
                       <div className="flex items-center">
                         <Star className="h-4 w-4 text-yellow-500 mr-1" />
-                        <span className="font-bold">{evaluation.score}%</span>
+                        <span className="font-bold">{evaluation.score || 0}%</span>
                       </div>
                       <span className="text-xs text-gray-500">
-                        {evaluation.date}
+                        {new Date(evaluation.evaluated_at || evaluation.created_at).toLocaleDateString()}
                       </span>
                     </div>
                   </div>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => navigate(`/intern/evaluations/${evaluation.id}`)}
-                  >
-                    Details
-                  </Button>
+                  <span className={`text-xs px-2 py-1 rounded-full ${
+                    (evaluation.score || 0) >= 90 
+                      ? 'bg-green-100 text-green-800'
+                      : (evaluation.score || 0) >= 80
+                      ? 'bg-blue-100 text-blue-800'
+                      : (evaluation.score || 0) >= 70
+                      ? 'bg-yellow-100 text-yellow-800'
+                      : 'bg-red-100 text-red-800'
+                  }`}>
+                    {(evaluation.score || 0) >= 90 ? 'Excellent' : 
+                     (evaluation.score || 0) >= 80 ? 'Good' : 
+                     (evaluation.score || 0) >= 70 ? 'Average' : 'Needs Improvement'}
+                  </span>
                 </div>
               ))}
-              {recentEvaluations.length === 0 && (
+              {stats.recentEvaluations.length === 0 && (
                 <p className="text-center text-muted-foreground py-4">
                   No evaluations yet
                 </p>
               )}
             </div>
+            {stats.recentEvaluations.length > 0 && (
+              <Button 
+                variant="ghost" 
+                className="w-full mt-4"
+                onClick={() => navigate('/intern/evaluations')}
+              >
+                View All Evaluations
+              </Button>
+            )}
           </CardContent>
         </Card>
       </div>
@@ -6713,15 +6940,17 @@ export default function InternDashboard() {
           <div className="space-y-4">
             <div className="grid grid-cols-3 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold">92%</div>
+                <div className="text-2xl font-bold">
+                  {stats.totalTasks > 0 ? Math.round((stats.completedTasks / stats.totalTasks) * 100) : 0}%
+                </div>
                 <p className="text-sm text-gray-500">Task Completion</p>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold">100%</div>
+                <div className="text-2xl font-bold">{stats.attendanceRate}%</div>
                 <p className="text-sm text-gray-500">Attendance</p>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold">88%</div>
+                <div className="text-2xl font-bold">{stats.averageScore}%</div>
                 <p className="text-sm text-gray-500">Avg. Score</p>
               </div>
             </div>
@@ -6729,20 +6958,15 @@ export default function InternDashboard() {
             <div className="pt-4">
               <div className="flex justify-between text-sm mb-1">
                 <span>Weekly Goals</span>
-                <span>4/5 completed</span>
+                <span>{stats.completedTasks}/{stats.totalTasks} completed</span>
               </div>
               <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div className="h-full bg-green-500 rounded-full" style={{ width: '80%' }}></div>
-              </div>
-            </div>
-            
-            <div className="pt-2">
-              <div className="flex justify-between text-sm mb-1">
-                <span>Skill Development</span>
-                <span>3/4 milestones</span>
-              </div>
-              <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div className="h-full bg-blue-500 rounded-full" style={{ width: '75%' }}></div>
+                <div 
+                  className="h-full bg-green-500 rounded-full transition-all duration-300" 
+                  style={{ 
+                    width: `${stats.totalTasks > 0 ? (stats.completedTasks / stats.totalTasks) * 100 : 0}%` 
+                  }}
+                ></div>
               </div>
             </div>
           </div>
@@ -6750,42 +6974,49 @@ export default function InternDashboard() {
       </Card>
 
       {/* Upcoming Deadlines */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <Clock className="mr-2 h-5 w-5 text-amber-500" />
-            Upcoming Deadlines
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {[
-              { task: 'Complete React Project', deadline: 'Tomorrow', priority: 'High' },
-              { task: 'Submit Weekly Report', deadline: 'In 2 days', priority: 'Medium' },
-              { task: 'Team Presentation', deadline: 'Friday', priority: 'High' },
-            ].map((item, index) => (
-              <div key={index} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg">
-                <div className="flex items-center space-x-3">
-                  <div className={`h-2 w-2 rounded-full ${
-                    item.priority === 'High' ? 'bg-red-500' : 'bg-yellow-500'
-                  }`}></div>
-                  <div>
-                    <p className="font-medium">{item.task}</p>
-                    <p className="text-sm text-gray-500">Due: {item.deadline}</p>
+      {upcomingDeadlines.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <Clock className="mr-2 h-5 w-5 text-amber-500" />
+              Upcoming Deadlines
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {upcomingDeadlines.map((task, index) => (
+                <div 
+                  key={index} 
+                  className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg cursor-pointer"
+                  onClick={() => navigate('/intern/tasks')}
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className={`h-2 w-2 rounded-full ${
+                      task.priority === 'high' || task.priority === 'urgent' 
+                        ? 'bg-red-500' 
+                        : 'bg-yellow-500'
+                    }`}></div>
+                    <div className="flex-1">
+                      <p className="font-medium truncate">{task.title}</p>
+                      <p className="text-sm text-gray-500">Due: {task.dueText}</p>
+                    </div>
                   </div>
+                  <span className={`text-xs px-2 py-1 rounded-full ${getPriorityColor(task.priority)}`}>
+                    {task.priority}
+                  </span>
                 </div>
-                <span className={`text-xs px-2 py-1 rounded-full ${
-                  item.priority === 'High' 
-                    ? 'bg-red-100 text-red-800' 
-                    : 'bg-yellow-100 text-yellow-800'
-                }`}>
-                  {item.priority}
-                </span>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              ))}
+            </div>
+            <Button 
+              variant="ghost" 
+              className="w-full mt-4"
+              onClick={() => navigate('/intern/tasks')}
+            >
+              View All Tasks
+            </Button>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }
@@ -6793,82 +7024,1418 @@ export default function InternDashboard() {
 
 ## File: pages/intern/MyAttendancePage.tsx
 ```tsx
-export default function MyAttendancePage() {
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">My Attendance</h1>
-      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-        <p className="text-yellow-800">
-          My Attendance page is under development. Full functionality coming soon!
-        </p>
+// src/pages/intern/MyTasksPage.tsx
+import React, { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+   Select,
+   SelectContent,
+   SelectItem,
+   SelectTrigger,
+   SelectValue,
+} from "@/components/ui/select";
+import { taskService } from "@/services/taskService";
+import { toast } from "sonner";
+import { format } from "date-fns";
+import {
+   CheckCircle,
+   Clock,
+   AlertCircle,
+   Calendar,
+   Filter,
+} from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+
+export default function MyTasksPage() {
+   const [tasks, setTasks] = useState<any[]>([]);
+   const [filteredTasks, setFilteredTasks] = useState<any[]>([]);
+   const [isLoading, setIsLoading] = useState(true);
+   const [statusFilter, setStatusFilter] = useState("all");
+   const [priorityFilter, setPriorityFilter] = useState("all");
+
+   useEffect(() => {
+      loadTasks();
+   }, []);
+
+   useEffect(() => {
+      filterTasks();
+   }, [tasks, statusFilter, priorityFilter]);
+
+   const loadTasks = async () => {
+      try {
+         setIsLoading(true);
+         const response = await taskService.getMyTasks();
+         // Handle response structure - check for data property or use array directly
+         const tasksData = Array.isArray(response)
+            ? response
+            : response.data || [];
+         setTasks(tasksData);
+         setFilteredTasks(tasksData);
+      } catch (error: any) {
+         console.error("Failed to load tasks:", error);
+         toast.error(error.response?.data?.message || "Failed to load tasks");
+         setTasks([]);
+         setFilteredTasks([]);
+      } finally {
+         setIsLoading(false);
+      }
+   };
+
+   const filterTasks = () => {
+      let filtered = [...tasks];
+
+      if (statusFilter !== "all") {
+         filtered = filtered.filter((task) => task.status === statusFilter);
+      }
+
+      if (priorityFilter !== "all") {
+         filtered = filtered.filter((task) => task.priority === priorityFilter);
+      }
+
+      setFilteredTasks(filtered);
+   };
+
+   const handleUpdateStatus = async (taskId: number, status: string) => {
+      try {
+         await taskService.updateMyTaskStatus(taskId, status as any);
+         toast.success("Task status updated successfully!");
+
+         // Update local state
+         setTasks((prevTasks) =>
+            prevTasks.map((task) =>
+               task.id === taskId ? { ...task, status } : task
+            )
+         );
+      } catch (error: any) {
+         toast.error(
+            error.response?.data?.message || "Failed to update task status"
+         );
+      }
+   };
+
+   const getStatusBadge = (status: string): React.ReactElement => {
+      const badges: Record<string, React.ReactElement> = {
+         pending: (
+            <Badge
+               variant="outline"
+               className="border-yellow-200 text-yellow-700"
+            >
+               Pending
+            </Badge>
+         ),
+         in_progress: (
+            <Badge className="bg-blue-100 text-blue-800 border-blue-200">
+               In Progress
+            </Badge>
+         ),
+         completed: (
+            <Badge className="bg-green-100 text-green-800 border-green-200">
+               Completed
+            </Badge>
+         ),
+         overdue: (
+            <Badge className="bg-red-100 text-red-800 border-red-200">
+               Overdue
+            </Badge>
+         ),
+      };
+      return badges[status] || <Badge variant="outline">{status}</Badge>;
+   };
+
+   const getPriorityBadge = (priority: string): React.ReactElement => {
+      const badges: Record<string, React.ReactElement> = {
+         low: (
+            <Badge className="bg-gray-100 text-gray-800 border-gray-200">
+               Low
+            </Badge>
+         ),
+         medium: (
+            <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
+               Medium
+            </Badge>
+         ),
+         high: (
+            <Badge className="bg-orange-100 text-orange-800 border-orange-200">
+               High
+            </Badge>
+         ),
+         urgent: (
+            <Badge className="bg-red-100 text-red-800 border-red-200">
+               Urgent
+            </Badge>
+         ),
+      };
+      return badges[priority] || <Badge variant="outline">{priority}</Badge>;
+   };
+
+   const getTaskStatus = (task: any): string => {
+      if (task.status === "completed") return "completed";
+      if (task.status === "in_progress") return "in_progress";
+
+      // Check if deadline exists before comparing
+      if (task.deadline) {
+         const dueDate = new Date(task.deadline);
+         const today = new Date();
+         today.setHours(0, 0, 0, 0);
+         dueDate.setHours(0, 0, 0, 0);
+
+         if (dueDate < today && task.status !== "completed") return "overdue";
+      }
+
+      return "pending";
+   };
+
+   if (isLoading) {
+      return (
+         <div className="space-y-6">
+            <div>
+               <Skeleton className="h-10 w-48 mb-2" />
+               <Skeleton className="h-4 w-64" />
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-4">
+               {[1, 2, 3, 4].map((i) => (
+                  <Card key={i}>
+                     <CardContent className="pt-6">
+                        <Skeleton className="h-20 w-full" />
+                     </CardContent>
+                  </Card>
+               ))}
+            </div>
+
+            <Card>
+               <CardHeader>
+                  <Skeleton className="h-6 w-32" />
+               </CardHeader>
+               <CardContent>
+                  <div className="space-y-4">
+                     {[1, 2, 3].map((i) => (
+                        <Skeleton key={i} className="h-24 w-full" />
+                     ))}
+                  </div>
+               </CardContent>
+            </Card>
+         </div>
+      );
+   }
+
+   // Calculate statistics
+   const totalTasks = tasks.length;
+   const pendingTasks = tasks.filter(
+      (t) => getTaskStatus(t) === "pending"
+   ).length;
+   const inProgressTasks = tasks.filter(
+      (t) => t.status === "in_progress"
+   ).length;
+   const completedTasks = tasks.filter((t) => t.status === "completed").length;
+   const overdueTasks = tasks.filter(
+      (t) => getTaskStatus(t) === "overdue"
+   ).length;
+
+   return (
+      <div className="space-y-6">
+         <div>
+            <h1 className="text-3xl font-bold">My Tasks</h1>
+            <p className="text-muted-foreground">
+               View and manage your assigned tasks
+            </p>
+         </div>
+
+         {/* Stats */}
+         <div className="grid gap-6 md:grid-cols-4">
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">Total Tasks</p>
+                        <p className="text-2xl font-bold">{totalTasks}</p>
+                     </div>
+                     <CheckCircle className="h-8 w-8 text-blue-500" />
+                  </div>
+               </CardContent>
+            </Card>
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">Pending</p>
+                        <p className="text-2xl font-bold">{pendingTasks}</p>
+                     </div>
+                     <Clock className="h-8 w-8 text-yellow-500" />
+                  </div>
+               </CardContent>
+            </Card>
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">In Progress</p>
+                        <p className="text-2xl font-bold">{inProgressTasks}</p>
+                     </div>
+                     <Clock className="h-8 w-8 text-blue-500" />
+                  </div>
+               </CardContent>
+            </Card>
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">Completed</p>
+                        <p className="text-2xl font-bold">{completedTasks}</p>
+                     </div>
+                     <CheckCircle className="h-8 w-8 text-green-500" />
+                  </div>
+               </CardContent>
+            </Card>
+         </div>
+
+         {/* Filters */}
+         <Card>
+            <CardContent className="pt-6">
+               <div className="flex flex-col md:flex-row gap-4">
+                  <div className="flex-1">
+                     <Select
+                        value={statusFilter}
+                        onValueChange={setStatusFilter}
+                     >
+                        <SelectTrigger className="w-full md:w-40">
+                           <SelectValue placeholder="Filter by status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                           <SelectItem value="all">All Status</SelectItem>
+                           <SelectItem value="pending">Pending</SelectItem>
+                           <SelectItem value="in_progress">
+                              In Progress
+                           </SelectItem>
+                           <SelectItem value="completed">Completed</SelectItem>
+                           <SelectItem value="overdue">Overdue</SelectItem>
+                        </SelectContent>
+                     </Select>
+                  </div>
+                  <div className="flex-1">
+                     <Select
+                        value={priorityFilter}
+                        onValueChange={setPriorityFilter}
+                     >
+                        <SelectTrigger className="w-full md:w-40">
+                           <SelectValue placeholder="Filter by priority" />
+                        </SelectTrigger>
+                        <SelectContent>
+                           <SelectItem value="all">All Priorities</SelectItem>
+                           <SelectItem value="low">Low</SelectItem>
+                           <SelectItem value="medium">Medium</SelectItem>
+                           <SelectItem value="high">High</SelectItem>
+                           <SelectItem value="urgent">Urgent</SelectItem>
+                        </SelectContent>
+                     </Select>
+                  </div>
+               </div>
+            </CardContent>
+         </Card>
+
+         {/* Tasks List */}
+         <div className="space-y-4">
+            {filteredTasks.length === 0 ? (
+               <Card>
+                  <CardContent className="py-12 text-center">
+                     <CheckCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                     <h3 className="text-lg font-semibold mb-2">
+                        {statusFilter !== "all" || priorityFilter !== "all"
+                           ? "No tasks match your filters"
+                           : "No Tasks Assigned"}
+                     </h3>
+                     <p className="text-gray-500">
+                        {statusFilter !== "all" || priorityFilter !== "all"
+                           ? "Try changing your filter criteria"
+                           : "You don't have any tasks assigned yet"}
+                     </p>
+                  </CardContent>
+               </Card>
+            ) : (
+               filteredTasks.map((task) => {
+                  const taskStatus = getTaskStatus(task);
+                  return (
+                     <Card key={task.id}>
+                        <CardHeader>
+                           <div className="flex items-start justify-between">
+                              <div className="space-y-2 flex-1">
+                                 <CardTitle className="flex items-center gap-2">
+                                    {task.title}
+                                    {taskStatus === "overdue" && (
+                                       <AlertCircle className="h-4 w-4 text-red-500" />
+                                    )}
+                                 </CardTitle>
+                                 <p className="text-sm text-gray-500 line-clamp-2">
+                                    {task.description}
+                                 </p>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                 {getPriorityBadge(task.priority)}
+                                 {getStatusBadge(taskStatus)}
+                              </div>
+                           </div>
+                        </CardHeader>
+                        <CardContent>
+                           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+                                 <div className="flex items-center">
+                                    <Calendar className="h-4 w-4 mr-2" />
+                                    Deadline:{" "}
+                                    {task.deadline
+                                       ? format(
+                                            new Date(task.deadline),
+                                            "MMM dd, yyyy"
+                                         )
+                                       : "No deadline"}
+                                    {taskStatus === "overdue" && (
+                                       <span className="ml-2 text-red-500 font-medium">
+                                          (Overdue)
+                                       </span>
+                                    )}
+                                 </div>
+                                 <div>
+                                    Assigned by:{" "}
+                                    {task.assigned_by_user?.name || "System"}
+                                 </div>
+                              </div>
+                              <Select
+                                 value={task.status}
+                                 onValueChange={(value) =>
+                                    handleUpdateStatus(task.id, value)
+                                 }
+                                 disabled={taskStatus === "overdue"}
+                              >
+                                 <SelectTrigger className="w-40">
+                                    <SelectValue />
+                                 </SelectTrigger>
+                                 <SelectContent>
+                                    <SelectItem value="pending">
+                                       Pending
+                                    </SelectItem>
+                                    <SelectItem value="in_progress">
+                                       In Progress
+                                    </SelectItem>
+                                    <SelectItem value="completed">
+                                       Completed
+                                    </SelectItem>
+                                 </SelectContent>
+                              </Select>
+                           </div>
+                        </CardContent>
+                     </Card>
+                  );
+               })
+            )}
+         </div>
       </div>
-    </div>
-  );
+   );
 }
+
 ```
 
 ## File: pages/intern/MyEvaluationsPage.tsx
 ```tsx
+// pages/intern/MyEvaluationsPage.tsx
+import { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { evaluationService } from "@/services/evaluationService";
+import { toast } from "sonner";
+import { format } from "date-fns";
+import { Star, Award, TrendingUp } from "lucide-react";
+
 export default function MyEvaluationsPage() {
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">My Evaluations</h1>
-      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-        <p className="text-yellow-800">
-          My Evaluations page is under development. Full functionality coming soon!
-        </p>
+   const [evaluations, setEvaluations] = useState<any[]>([]);
+   const [statistics, setStatistics] = useState<any>(null);
+   const [isLoading, setIsLoading] = useState(true);
+
+   useEffect(() => {
+      loadData();
+   }, []);
+
+   const loadData = async () => {
+      try {
+         setIsLoading(true);
+         const [evals, stats] = await Promise.all([
+            evaluationService.getMyEvaluations(),
+            evaluationService.getMyEvaluationStatistics(),
+         ]);
+         setEvaluations(evals.data || []);
+         setStatistics(stats.statistics);
+      } catch (error) {
+         toast.error("Failed to load evaluations");
+      } finally {
+         setIsLoading(false);
+      }
+   };
+
+   const getScoreBadge = (score: number) => {
+      if (score >= 90) return <Badge className="bg-green-100 text-green-800">Excellent</Badge>;
+      if (score >= 80) return <Badge className="bg-blue-100 text-blue-800">Good</Badge>;
+      if (score >= 70) return <Badge className="bg-yellow-100 text-yellow-800">Average</Badge>;
+      return <Badge className="bg-red-100 text-red-800">Needs Improvement</Badge>;
+   };
+
+   if (isLoading) {
+      return <div className="flex items-center justify-center min-h-[400px]">Loading...</div>;
+   }
+
+   return (
+      <div className="space-y-6">
+         <div>
+            <h1 className="text-3xl font-bold">My Evaluations</h1>
+            <p className="text-muted-foreground">View your performance evaluations</p>
+         </div>
+
+         {/* Stats */}
+         <div className="grid gap-6 md:grid-cols-3">
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">Total Evaluations</p>
+                        <p className="text-2xl font-bold">{statistics?.total || 0}</p>
+                     </div>
+                     <Star className="h-8 w-8 text-blue-500" />
+                  </div>
+               </CardContent>
+            </Card>
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">Average Score</p>
+                        <p className="text-2xl font-bold">{statistics?.average_score || 0}%</p>
+                     </div>
+                     <Award className="h-8 w-8 text-green-500" />
+                  </div>
+               </CardContent>
+            </Card>
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">Progress</p>
+                        <p className="text-2xl font-bold">
+                           {statistics?.average_score >= 80 ? "On Track" : "Improving"}
+                        </p>
+                     </div>
+                     <TrendingUp className="h-8 w-8 text-purple-500" />
+                  </div>
+               </CardContent>
+            </Card>
+         </div>
+
+         {/* Evaluations List */}
+         <div className="space-y-4">
+            {evaluations.length === 0 ? (
+               <Card>
+                  <CardContent className="py-12 text-center">
+                     <Star className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                     <h3 className="text-lg font-semibold mb-2">No Evaluations Yet</h3>
+                     <p className="text-gray-500">You haven't been evaluated yet</p>
+                  </CardContent>
+               </Card>
+            ) : (
+               evaluations.map((evaluation) => (
+                  <Card key={evaluation.id}>
+                     <CardHeader>
+                        <div className="flex items-start justify-between">
+                           <div>
+                              <CardTitle className="flex items-center gap-2">
+                                 {evaluation.evaluation_type.replace('_', ' ').toUpperCase()} Evaluation
+                                 {getScoreBadge(evaluation.score)}
+                              </CardTitle>
+                              <p className="text-sm text-gray-500 mt-2">
+                                 Evaluated by: {evaluation.manager?.name}
+                              </p>
+                           </div>
+                           <div className="text-right">
+                              <p className="text-3xl font-bold text-blue-600">{evaluation.score}%</p>
+                              <p className="text-xs text-gray-500">
+                                 {format(new Date(evaluation.evaluated_at), "MMM dd, yyyy")}
+                              </p>
+                           </div>
+                        </div>
+                     </CardHeader>
+                     <CardContent className="space-y-4">
+                        <div>
+                           <Progress value={evaluation.score} className="h-2" />
+                        </div>
+
+                        {evaluation.feedback && (
+                           <div>
+                              <h4 className="font-semibold mb-2">Feedback</h4>
+                              <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded">
+                                 {evaluation.feedback}
+                              </p>
+                           </div>
+                        )}
+
+                        {evaluation.strengths && (
+                           <div>
+                              <h4 className="font-semibold mb-2 text-green-700">Strengths</h4>
+                              <p className="text-sm text-gray-700 bg-green-50 p-3 rounded">
+                                 {evaluation.strengths}
+                              </p>
+                           </div>
+                        )}
+
+                        {evaluation.areas_for_improvement && (
+                           <div>
+                              <h4 className="font-semibold mb-2 text-amber-700">Areas for Improvement</h4>
+                              <p className="text-sm text-gray-700 bg-amber-50 p-3 rounded">
+                                 {evaluation.areas_for_improvement}
+                              </p>
+                           </div>
+                        )}
+                     </CardContent>
+                  </Card>
+               ))
+            )}
+         </div>
       </div>
-    </div>
-  );
+   );
 }
 ```
 
 ## File: pages/intern/MyNotificationsPage.tsx
 ```tsx
+// pages/intern/MyNotificationsPage.tsx
+import { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { notificationService } from "@/services/notificationService";
+import { toast } from "sonner";
+import { format } from "date-fns";
+import { Bell, CheckCircle, Archive } from "lucide-react";
+
 export default function MyNotificationsPage() {
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">My Notifications</h1>
-      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-        <p className="text-yellow-800">
-          My Notifications page is under development. Full functionality coming soon!
-        </p>
+   const [notifications, setNotifications] = useState<any[]>([]);
+   const [isLoading, setIsLoading] = useState(true);
+
+   useEffect(() => {
+      loadNotifications();
+   }, []);
+
+   const loadNotifications = async () => {
+      try {
+         setIsLoading(true);
+         const response = await notificationService.getMyNotifications();
+         setNotifications(response.data || []);
+      } catch (error) {
+         toast.error("Failed to load notifications");
+      } finally {
+         setIsLoading(false);
+      }
+   };
+
+   const handleMarkAsRead = async (id: number) => {
+      try {
+         await notificationService.markNotificationAsRead(id, true);
+         toast.success("Marked as read");
+         loadNotifications();
+      } catch (error) {
+         toast.error("Failed to mark as read");
+      }
+   };
+
+   const handleArchive = async (id: number) => {
+      try {
+         await notificationService.updateMyNotification(id, { is_archived: true });
+         toast.success("Notification archived");
+         loadNotifications();
+      } catch (error) {
+         toast.error("Failed to archive");
+      }
+   };
+
+   const handleMarkAllAsRead = async () => {
+      try {
+         await notificationService.markAllAsRead();
+         toast.success("All marked as read");
+         loadNotifications();
+      } catch (error) {
+         toast.error("Failed to mark all as read");
+      }
+   };
+
+   if (isLoading) {
+      return <div className="flex items-center justify-center min-h-[400px]">Loading...</div>;
+   }
+
+   return (
+      <div className="space-y-6">
+         <div className="flex items-center justify-between">
+            <div>
+               <h1 className="text-3xl font-bold">My Notifications</h1>
+               <p className="text-muted-foreground">View your notifications from managers</p>
+            </div>
+            {notifications.filter(n => !n.is_read).length > 0 && (
+               <Button variant="outline" onClick={handleMarkAllAsRead}>
+                  <CheckCircle className="mr-2 h-4 w-4" />
+                  Mark All as Read
+               </Button>
+            )}
+         </div>
+
+         {/* Stats */}
+         <div className="grid gap-6 md:grid-cols-3">
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">Total</p>
+                        <p className="text-2xl font-bold">{notifications.length}</p>
+                     </div>
+                     <Bell className="h-8 w-8 text-blue-500" />
+                  </div>
+               </CardContent>
+            </Card>
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">Unread</p>
+                        <p className="text-2xl font-bold">{notifications.filter(n => !n.is_read).length}</p>
+                     </div>
+                     <Bell className="h-8 w-8 text-amber-500" />
+                  </div>
+               </CardContent>
+            </Card>
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">Archived</p>
+                        <p className="text-2xl font-bold">{notifications.filter(n => n.is_archived).length}</p>
+                     </div>
+                     <Archive className="h-8 w-8 text-gray-500" />
+                  </div>
+               </CardContent>
+            </Card>
+         </div>
+
+         {/* Notifications List */}
+         <div className="space-y-4">
+            {notifications.length === 0 ? (
+               <Card>
+                  <CardContent className="py-12 text-center">
+                     <Bell className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                     <h3 className="text-lg font-semibold mb-2">No Notifications</h3>
+                     <p className="text-gray-500">You don't have any notifications yet</p>
+                  </CardContent>
+               </Card>
+            ) : (
+               notifications.map((notification) => (
+                  <Card key={notification.id} className={notification.is_read ? "opacity-60" : ""}>
+                     <CardHeader>
+                        <div className="flex items-start justify-between">
+                           <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-2">
+                                 <CardTitle>{notification.title}</CardTitle>
+                                 {!notification.is_read && (
+                                    <Badge className="bg-blue-100 text-blue-800">New</Badge>
+                                 )}
+                                 {notification.is_archived && (
+                                    <Badge variant="outline">Archived</Badge>
+                                 )}
+                              </div>
+                              <p className="text-sm text-gray-600">{notification.message}</p>
+                           </div>
+                        </div>
+                     </CardHeader>
+                     <CardContent>
+                        <div className="flex items-center justify-between">
+                           <div className="text-sm text-gray-500">
+                              From: {notification.sender?.name} • {format(new Date(notification.created_at), "MMM dd, yyyy 'at' hh:mm a")}
+                           </div>
+                           <div className="flex gap-2">
+                              {!notification.is_read && (
+                                 <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleMarkAsRead(notification.id)}
+                                 >
+                                    <CheckCircle className="h-4 w-4 mr-1" />
+                                    Mark as Read
+                                 </Button>
+                              )}
+                              {!notification.is_archived && (
+                                 <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleArchive(notification.id)}
+                                 >
+                                    <Archive className="h-4 w-4 mr-1" />
+                                    Archive
+                                 </Button>
+                              )}
+                           </div>
+                        </div>
+                     </CardContent>
+                  </Card>
+               ))
+            )}
+         </div>
       </div>
-    </div>
-  );
+   );
 }
 ```
 
 ## File: pages/intern/MyReclamationsPage.tsx
 ```tsx
+// pages/intern/MyReclamationsPage.tsx
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { reclamationService } from "@/services/reclamationService";
+import { toast } from "sonner";
+import { format } from "date-fns";
+import { AlertCircle, Plus, MessageSquare } from "lucide-react";
+
 export default function MyReclamationsPage() {
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">My Reclamations</h1>
-      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-        <p className="text-yellow-800">
-          My Reclamations page is under development. Full functionality coming soon!
-        </p>
+   const navigate = useNavigate();
+   const [reclamations, setReclamations] = useState<any[]>([]);
+   const [isLoading, setIsLoading] = useState(true);
+
+   useEffect(() => {
+      loadReclamations();
+   }, []);
+
+   const loadReclamations = async () => {
+      try {
+         setIsLoading(true);
+         const response = await reclamationService.getMyReclamations();
+         setReclamations(response.data || []);
+      } catch (error) {
+         toast.error("Failed to load reclamations");
+      } finally {
+         setIsLoading(false);
+      }
+   };
+
+   const getStatusBadge = (status: string) => {
+      const badges = {
+         pending: <Badge className="bg-yellow-100 text-yellow-800">Pending</Badge>,
+         in_review: <Badge className="bg-blue-100 text-blue-800">In Review</Badge>,
+         resolved: <Badge className="bg-green-100 text-green-800">Resolved</Badge>,
+         archived: <Badge variant="outline">Archived</Badge>,
+      };
+      return badges[status as keyof typeof badges] || <Badge>{status}</Badge>;
+   };
+
+   if (isLoading) {
+      return <div className="flex items-center justify-center min-h-[400px]">Loading...</div>;
+   }
+
+   return (
+      <div className="space-y-6">
+         <div className="flex items-center justify-between">
+            <div>
+               <h1 className="text-3xl font-bold">My Reclamations</h1>
+               <p className="text-muted-foreground">View and track your reclamations</p>
+            </div>
+            <Button onClick={() => navigate("/intern/reclamations/new")}>
+               <Plus className="mr-2 h-4 w-4" />
+               New Reclamation
+            </Button>
+         </div>
+
+         {/* Stats */}
+         <div className="grid gap-6 md:grid-cols-4">
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">Total</p>
+                        <p className="text-2xl font-bold">{reclamations.length}</p>
+                     </div>
+                     <AlertCircle className="h-8 w-8 text-blue-500" />
+                  </div>
+               </CardContent>
+            </Card>
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">Pending</p>
+                        <p className="text-2xl font-bold">{reclamations.filter(r => r.status === 'pending').length}</p>
+                     </div>
+                     <AlertCircle className="h-8 w-8 text-yellow-500" />
+                  </div>
+               </CardContent>
+            </Card>
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">In Review</p>
+                        <p className="text-2xl font-bold">{reclamations.filter(r => r.status === 'in_review').length}</p>
+                     </div>
+                     <MessageSquare className="h-8 w-8 text-blue-500" />
+                  </div>
+               </CardContent>
+            </Card>
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">Resolved</p>
+                        <p className="text-2xl font-bold">{reclamations.filter(r => r.status === 'resolved').length}</p>
+                     </div>
+                     <AlertCircle className="h-8 w-8 text-green-500" />
+                  </div>
+               </CardContent>
+            </Card>
+         </div>
+
+         {/* Reclamations List */}
+         <div className="space-y-4">
+            {reclamations.length === 0 ? (
+               <Card>
+                  <CardContent className="py-12 text-center">
+                     <AlertCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                     <h3 className="text-lg font-semibold mb-2">No Reclamations</h3>
+                     <p className="text-gray-500 mb-4">You haven't submitted any reclamations yet</p>
+                     <Button onClick={() => navigate("/intern/reclamations/new")}>
+                        <Plus className="mr-2 h-4 w-4" />
+                        Submit First Reclamation
+                     </Button>
+                  </CardContent>
+               </Card>
+            ) : (
+               reclamations.map((reclamation) => (
+                  <Card key={reclamation.id}>
+                     <CardHeader>
+                        <div className="flex items-start justify-between">
+                           <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-2">
+                                 <CardTitle>{reclamation.subject}</CardTitle>
+                                 {getStatusBadge(reclamation.status)}
+                              </div>
+                              <p className="text-sm text-gray-600">{reclamation.description}</p>
+                           </div>
+                        </div>
+                     </CardHeader>
+                     <CardContent>
+                        <div className="space-y-4">
+                           {reclamation.response && (
+                              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                                 <h4 className="font-semibold text-blue-900 mb-2">Manager Response</h4>
+                                 <p className="text-sm text-blue-800">{reclamation.response}</p>
+                                 {reclamation.responded_at && (
+                                    <p className="text-xs text-blue-600 mt-2">
+                                       Responded on {format(new Date(reclamation.responded_at), "MMM dd, yyyy")}
+                                    </p>
+                                 )}
+                              </div>
+                           )}
+
+                           <div className="flex items-center justify-between text-sm text-gray-500">
+                              <div>
+                                 Submitted: {format(new Date(reclamation.created_at), "MMM dd, yyyy")}
+                              </div>
+                              {reclamation.resolved_at && (
+                                 <div>
+                                    Resolved: {format(new Date(reclamation.resolved_at), "MMM dd, yyyy")}
+                                 </div>
+                              )}
+                           </div>
+                        </div>
+                     </CardContent>
+                  </Card>
+               ))
+            )}
+         </div>
       </div>
-    </div>
-  );
+   );
 }
 ```
 
 ## File: pages/intern/MyTasksPage.tsx
 ```tsx
-export default function MyTasksPage() {
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">My Tasks</h1>
-      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-        <p className="text-yellow-800">
-          My Tasks page is under development. Full functionality coming soon!
-        </p>
+// src/pages/intern/MyAttendancePage.tsx
+import React, { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { attendanceService } from "@/services/attendanceService";
+import { toast } from "sonner";
+import { format, subDays, startOfMonth, endOfMonth } from "date-fns";
+import {
+   Calendar,
+   CheckCircle,
+   XCircle,
+   Clock,
+   AlertCircle,
+   TrendingUp,
+} from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+
+export default function MyAttendancePage() {
+   const [attendanceRecords, setAttendanceRecords] = useState<any[]>([]);
+   const [statistics, setStatistics] = useState<any>(null);
+   const [isLoading, setIsLoading] = useState(true);
+   const [timeRange, setTimeRange] = useState("month");
+
+   useEffect(() => {
+      loadAttendanceData();
+   }, [timeRange]);
+
+   const loadAttendanceData = async () => {
+      try {
+         setIsLoading(true);
+
+         // Get date range based on selected timeRange
+         const getDateRange = () => {
+            const now = new Date();
+            switch (timeRange) {
+               case "week":
+                  const weekAgo = subDays(now, 7);
+                  return {
+                     start_date: format(weekAgo, "yyyy-MM-dd"),
+                     end_date: format(now, "yyyy-MM-dd"),
+                  };
+               case "month":
+                  return {
+                     start_date: format(startOfMonth(now), "yyyy-MM-dd"),
+                     end_date: format(endOfMonth(now), "yyyy-MM-dd"),
+                  };
+               case "quarter":
+                  const quarterStart = new Date(
+                     now.getFullYear(),
+                     Math.floor(now.getMonth() / 3) * 3,
+                     1
+                  );
+                  const quarterEnd = new Date(
+                     quarterStart.getFullYear(),
+                     quarterStart.getMonth() + 3,
+                     0
+                  );
+                  return {
+                     start_date: format(quarterStart, "yyyy-MM-dd"),
+                     end_date: format(quarterEnd, "yyyy-MM-dd"),
+                  };
+               case "year":
+                  return {
+                     start_date: format(
+                        new Date(now.getFullYear(), 0, 1),
+                        "yyyy-MM-dd"
+                     ),
+                     end_date: format(
+                        new Date(now.getFullYear(), 11, 31),
+                        "yyyy-MM-dd"
+                     ),
+                  };
+               case "all":
+               default:
+                  return {};
+            }
+         };
+
+         const dateRange = getDateRange();
+
+         const [recordsResponse, statsResponse] = await Promise.all([
+            attendanceService.getMyAttendance(dateRange),
+            attendanceService.getMyAttendanceStatistics(),
+         ]);
+
+         // FIX: Handle the response structure correctly based on the service definition
+         // The service returns: Promise<{ statistics: AttendanceStatistics }>
+         // So we need to access the statistics property
+         const records = Array.isArray(recordsResponse)
+            ? recordsResponse
+            : recordsResponse.data || [];
+
+         // For statistics, the service returns { statistics: AttendanceStatistics }
+         const stats = statsResponse.statistics || statsResponse;
+
+         // Sort records by date (newest first)
+         const sortedRecords = records.sort((a: any, b: any) => {
+            const dateA = a.attendance_date || a.date;
+            const dateB = b.attendance_date || b.date;
+            return new Date(dateB).getTime() - new Date(dateA).getTime();
+         });
+
+         setAttendanceRecords(sortedRecords);
+         setStatistics(stats);
+      } catch (error: any) {
+         console.error("Failed to load attendance data:", error);
+         toast.error(
+            error.response?.data?.message || "Failed to load attendance data"
+         );
+         setAttendanceRecords([]);
+         setStatistics(null);
+      } finally {
+         setIsLoading(false);
+      }
+   };
+
+   const getStatusBadge = (status: string): React.ReactElement => {
+      switch (status) {
+         case "present":
+            return (
+               <Badge className="bg-green-100 text-green-800 border-green-200">
+                  Present
+               </Badge>
+            );
+         case "absent":
+            return (
+               <Badge className="bg-red-100 text-red-800 border-red-200">
+                  Absent
+               </Badge>
+            );
+         case "late":
+            return (
+               <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
+                  Late
+               </Badge>
+            );
+         case "excused":
+            return (
+               <Badge className="bg-blue-100 text-blue-800 border-blue-200">
+                  Excused
+               </Badge>
+            );
+         default:
+            return <Badge variant="outline">{status}</Badge>;
+      }
+   };
+
+   const getStatusIcon = (status: string): React.ReactElement | null => {
+      switch (status) {
+         case "present":
+            return <CheckCircle className="h-5 w-5 text-green-500" />;
+         case "absent":
+            return <XCircle className="h-5 w-5 text-red-500" />;
+         case "late":
+            return <Clock className="h-5 w-5 text-yellow-500" />;
+         case "excused":
+            return <AlertCircle className="h-5 w-5 text-blue-500" />;
+         default:
+            return null;
+      }
+   };
+
+   const formatDate = (dateString: string): string => {
+      try {
+         const date = new Date(dateString);
+         const today = new Date();
+         const yesterday = new Date();
+         yesterday.setDate(today.getDate() - 1);
+
+         if (date.toDateString() === today.toDateString()) {
+            return "Today";
+         } else if (date.toDateString() === yesterday.toDateString()) {
+            return "Yesterday";
+         } else {
+            return format(date, "MMM dd, yyyy");
+         }
+      } catch {
+         return "Invalid date";
+      }
+   };
+
+   if (isLoading) {
+      return (
+         <div className="space-y-6">
+            <div>
+               <Skeleton className="h-10 w-48 mb-2" />
+               <Skeleton className="h-4 w-64" />
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-4">
+               {[1, 2, 3, 4].map((i) => (
+                  <Card key={i}>
+                     <CardContent className="pt-6">
+                        <Skeleton className="h-20 w-full" />
+                     </CardContent>
+                  </Card>
+               ))}
+            </div>
+
+            <Card>
+               <CardHeader>
+                  <Skeleton className="h-6 w-32" />
+               </CardHeader>
+               <CardContent>
+                  <div className="space-y-4">
+                     {[1, 2, 3, 4, 5].map((i) => (
+                        <Skeleton key={i} className="h-16 w-full" />
+                     ))}
+                  </div>
+               </CardContent>
+            </Card>
+         </div>
+      );
+   }
+
+   // Calculate statistics if not provided by API
+   const stats = statistics || {
+      total: attendanceRecords.length,
+      present: attendanceRecords.filter((r: any) => r.status === "present")
+         .length,
+      absent: attendanceRecords.filter((r: any) => r.status === "absent")
+         .length,
+      late: attendanceRecords.filter((r: any) => r.status === "late").length,
+      excused: attendanceRecords.filter((r: any) => r.status === "excused")
+         .length,
+      attendance_rate:
+         attendanceRecords.length > 0
+            ? (attendanceRecords.filter((r: any) => r.status === "present")
+                 .length /
+                 attendanceRecords.length) *
+              100
+            : 100,
+   };
+
+   const timeRanges = [
+      { value: "week", label: "This Week" },
+      { value: "month", label: "This Month" },
+      { value: "quarter", label: "This Quarter" },
+      { value: "year", label: "This Year" },
+      { value: "all", label: "All Time" },
+   ];
+
+   return (
+      <div className="space-y-6">
+         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+               <h1 className="text-3xl font-bold">My Attendance</h1>
+               <p className="text-muted-foreground">
+                  Track your attendance records
+               </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+               {timeRanges.map((range) => (
+                  <Button
+                     key={range.value}
+                     variant={timeRange === range.value ? "default" : "outline"}
+                     size="sm"
+                     onClick={() => setTimeRange(range.value)}
+                  >
+                     {range.label}
+                  </Button>
+               ))}
+            </div>
+         </div>
+
+         {/* Stats */}
+         <div className="grid gap-6 md:grid-cols-4">
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">Attendance Rate</p>
+                        <p className="text-2xl font-bold">
+                           {typeof stats.attendance_rate === "number"
+                              ? stats.attendance_rate.toFixed(1)
+                              : 0}
+                           %
+                        </p>
+                     </div>
+                     <TrendingUp className="h-8 w-8 text-green-500" />
+                  </div>
+               </CardContent>
+            </Card>
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">Present</p>
+                        <p className="text-2xl font-bold">
+                           {stats.present || 0}
+                        </p>
+                     </div>
+                     <CheckCircle className="h-8 w-8 text-green-500" />
+                  </div>
+               </CardContent>
+            </Card>
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">Absent</p>
+                        <p className="text-2xl font-bold">
+                           {stats.absent || 0}
+                        </p>
+                     </div>
+                     <XCircle className="h-8 w-8 text-red-500" />
+                  </div>
+               </CardContent>
+            </Card>
+            <Card>
+               <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                     <div>
+                        <p className="text-sm text-gray-500">Late</p>
+                        <p className="text-2xl font-bold">{stats.late || 0}</p>
+                     </div>
+                     <Clock className="h-8 w-8 text-yellow-500" />
+                  </div>
+               </CardContent>
+            </Card>
+         </div>
+
+         {/* Recent Attendance */}
+         <Card>
+            <CardHeader>
+               <CardTitle className="flex items-center">
+                  <Calendar className="mr-2 h-5 w-5 text-blue-500" />
+                  Attendance Records
+               </CardTitle>
+            </CardHeader>
+            <CardContent>
+               {attendanceRecords.length === 0 ? (
+                  <div className="text-center py-12">
+                     <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                        No Attendance Records
+                     </h3>
+                     <p className="text-gray-500">
+                        No attendance records found for the selected time
+                        period.
+                     </p>
+                  </div>
+               ) : (
+                  <div className="space-y-3">
+                     {attendanceRecords.slice(0, 20).map((record) => {
+                        const date = record.attendance_date || record.date;
+                        return (
+                           <div
+                              key={record.id}
+                              className="flex flex-col md:flex-row md:items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors gap-3"
+                           >
+                              <div className="flex items-center space-x-3">
+                                 {getStatusIcon(record.status)}
+                                 <div>
+                                    <p className="font-medium">
+                                       {formatDate(date)}
+                                    </p>
+                                    <p className="text-sm text-gray-500">
+                                       {record.notes || "No notes"}
+                                    </p>
+                                 </div>
+                              </div>
+                              <div className="flex items-center space-x-3">
+                                 {getStatusBadge(record.status)}
+                                 {record.recorded_at && (
+                                    <span className="text-sm text-gray-500">
+                                       Recorded:{" "}
+                                       {format(
+                                          new Date(record.recorded_at),
+                                          "MMM dd, yyyy"
+                                       )}
+                                    </span>
+                                 )}
+                              </div>
+                           </div>
+                        );
+                     })}
+
+                     {attendanceRecords.length > 20 && (
+                        <div className="text-center pt-4">
+                           <p className="text-sm text-gray-500">
+                              Showing 20 of {attendanceRecords.length} records
+                           </p>
+                        </div>
+                     )}
+                  </div>
+               )}
+            </CardContent>
+         </Card>
+
+         {/* Attendance Summary */}
+         <Card>
+            <CardHeader>
+               <CardTitle>Attendance Summary</CardTitle>
+            </CardHeader>
+            <CardContent>
+               <div className="space-y-4">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                     <div className="text-center p-4 bg-green-50 rounded-lg border border-green-100">
+                        <div className="text-xl font-bold text-green-700">
+                           {stats.present || 0}
+                        </div>
+                        <div className="text-sm text-green-600">
+                           Present Days
+                        </div>
+                     </div>
+                     <div className="text-center p-4 bg-red-50 rounded-lg border border-red-100">
+                        <div className="text-xl font-bold text-red-700">
+                           {stats.absent || 0}
+                        </div>
+                        <div className="text-sm text-red-600">Absent Days</div>
+                     </div>
+                     <div className="text-center p-4 bg-yellow-50 rounded-lg border border-yellow-100">
+                        <div className="text-xl font-bold text-yellow-700">
+                           {stats.late || 0}
+                        </div>
+                        <div className="text-sm text-yellow-600">Late Days</div>
+                     </div>
+                     <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-100">
+                        <div className="text-xl font-bold text-blue-700">
+                           {stats.excused || 0}
+                        </div>
+                        <div className="text-sm text-blue-600">
+                           Excused Days
+                        </div>
+                     </div>
+                  </div>
+
+                  <div className="pt-4">
+                     <div className="flex justify-between text-sm mb-1">
+                        <span>Overall Attendance Rate</span>
+                        <span>
+                           {typeof stats.attendance_rate === "number"
+                              ? stats.attendance_rate.toFixed(1)
+                              : 0}
+                           %
+                        </span>
+                     </div>
+                     <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+                        <div
+                           className={`h-full rounded-full transition-all duration-300 ${
+                              (stats.attendance_rate || 0) >= 90
+                                 ? "bg-green-500"
+                                 : (stats.attendance_rate || 0) >= 80
+                                 ? "bg-blue-500"
+                                 : (stats.attendance_rate || 0) >= 70
+                                 ? "bg-yellow-500"
+                                 : "bg-red-500"
+                           }`}
+                           style={{
+                              width: `${Math.min(
+                                 stats.attendance_rate || 0,
+                                 100
+                              )}%`,
+                           }}
+                        ></div>
+                     </div>
+                     <div className="flex justify-between text-xs text-gray-500 mt-1">
+                        <span>0%</span>
+                        <span>100%</span>
+                     </div>
+                  </div>
+
+                  <div className="pt-4 text-sm text-gray-500 text-center">
+                     Last updated:{" "}
+                     {format(new Date(), "MMM dd, yyyy 'at' hh:mm a")}
+                  </div>
+               </div>
+            </CardContent>
+         </Card>
       </div>
-    </div>
-  );
+   );
 }
+
 ```
 
 ## File: pages/intern/NewReclamationPage.tsx
@@ -12511,6 +14078,2094 @@ export default function TasksPage() {
       </div>
    );
 }
+
+```
+
+## File: services/__summary.md
+```md
+# Project: .
+
+## File: __summary.md
+```md
+# Project: .
+
+## File: api.ts
+```ts
+// src/services/api.ts
+import axios from "axios";
+import { config } from "@/config/env";
+
+const API_BASE_URL = config.API_URL;
+
+const api = axios.create({
+   baseURL: API_BASE_URL,
+   headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+   },
+   timeout: 30000,
+});
+
+// Request interceptor
+api.interceptors.request.use((requestConfig) => {
+   const token = localStorage.getItem(config.TOKEN_KEY);  // Use imported config
+   console.log('API Request - Token exists:', !!token);
+   
+   if (token) {
+      requestConfig.headers.Authorization = `Bearer ${token}`;
+   }
+   
+   return requestConfig;
+});
+
+// Response interceptor
+api.interceptors.response.use(
+   (response) => {
+      console.log('API Response:', response.status, response.config.url);
+      return response;
+   },
+   (error) => {
+      console.error('API Error:', error.response?.status, error.config?.url);
+      
+      if (error.response?.status === 401) {
+         // Clear auth data
+         localStorage.removeItem(config.TOKEN_KEY);
+         localStorage.removeItem(config.USER_KEY);
+         
+         // Only redirect if not already on login page
+         if (!window.location.pathname.includes('/login')) {
+            window.location.href = "/login";
+         }
+      }
+      
+      return Promise.reject(error);
+   }
+);
+
+export default api;
+```
+
+## File: attendanceService.ts
+```ts
+import api from "./api";
+
+export interface Attendance {
+   id: number;
+   intern_id: number;
+   recorded_by: number;
+   attendance_date: string;
+   status: "present" | "absent" | "late" | "excused";
+   notes?: string;
+   recorded_at: string;
+   created_at: string;
+   updated_at: string;
+   intern?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+   recorded_by_user?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+}
+
+export interface AttendanceStatistics {
+   total: number;
+   present: number;
+   absent: number;
+   late: number;
+   excused: number;
+   attendance_rate: number;
+}
+
+export interface CreateAttendanceData {
+   intern_id: number;
+   date: string;
+   status: "present" | "absent" | "late" | "excused";
+   notes?: string;
+}
+
+export const attendanceService = {
+   // Manager: Get attendance records
+   getAttendance: async (
+      params: {
+         start_date?: string;
+         end_date?: string;
+         status?: string;
+         intern_id?: number;
+      } = {}
+   ): Promise<{ data: Attendance[] }> => {
+      const response = await api.get("/attendances", { params });
+      return response.data;
+   },
+
+   // Manager: Mark/Create attendance
+   markAttendance: async (
+      data: CreateAttendanceData
+   ): Promise<{ attendance: Attendance }> => {
+      const response = await api.post("/attendances", data);
+      return response.data;
+   },
+
+   // Manager: Update attendance
+   updateAttendance: async (
+      id: number,
+      data: { status: Attendance["status"]; notes?: string }
+   ): Promise<{ attendance: Attendance }> => {
+      const response = await api.put(`/attendances/${id}`, data);
+      return response.data;
+   },
+
+   // Manager: Delete attendance
+   deleteAttendance: async (id: number): Promise<{ message: string }> => {
+      const response = await api.delete(`/attendances/${id}`);
+      return response.data;
+   },
+
+   // Manager: Get attendance statistics
+   getAttendanceStatistics: async (): Promise<{
+      statistics: AttendanceStatistics;
+   }> => {
+      const response = await api.get("/attendance/statistics");
+      return response.data;
+   },
+
+   // Manager: Get interns for attendance (department interns)
+   getDepartmentInterns: async (): Promise<{
+      data: Array<{ id: number; name: string; email: string }>;
+   }> => {
+      const response = await api.get("/interns-for-attendance");
+      return response.data;
+   },
+
+   // Manager: Get attendance summary for reports
+   getAttendanceSummary: async (
+      startDate: string,
+      endDate: string
+   ): Promise<any> => {
+      const response = await api.get("/attendance/statistics", {
+         params: {
+            start_date: startDate,
+            end_date: endDate,
+         },
+      });
+      return response.data;
+   },
+
+   // Intern: Get my attendance
+   getMyAttendance: async (
+      params: {
+         start_date?: string;
+         end_date?: string;
+         status?: string;
+      } = {}
+   ): Promise<{ data: Attendance[] }> => {
+      const response = await api.get("/my-attendance", { params });
+      return response.data;
+   },
+
+   // Intern: Get my attendance statistics
+   getMyAttendanceStatistics: async (): Promise<{
+      statistics: AttendanceStatistics;
+   }> => {
+      const response = await api.get("/my-attendance/statistics");
+      return response.data;
+   },
+
+   // Intern: Get specific attendance record
+   getMyAttendanceById: async (
+      id: number
+   ): Promise<{ attendance: Attendance }> => {
+      const response = await api.get(`/my-attendance/${id}`);
+      return response.data;
+   },
+};
+
+```
+
+## File: authService.ts
+```ts
+// src/services/authService.ts
+import api from "./api";
+import type {
+  LoginRequest,
+  LoginResponse,
+  User,
+  ChangePasswordRequest
+} from "@/types/auth.types";
+import type { ApiResponse } from "@/types/api.types";
+import { config } from "@/config/env";
+
+class AuthService {
+   async login(data: LoginRequest): Promise<LoginResponse> {
+      const response = await api.post<LoginResponse>("/login", data);
+      
+      // Save token and user data
+      const { user, token } = response.data;
+      localStorage.setItem(config.TOKEN_KEY, token);
+      localStorage.setItem(config.USER_KEY, JSON.stringify(user));
+      
+      return response.data;
+   }
+
+   async logout(): Promise<void> {
+      try {
+         await api.post("/logout");
+      } finally {
+         // Always clear local storage
+         localStorage.removeItem(config.TOKEN_KEY);
+         localStorage.removeItem(config.USER_KEY);
+      }
+   }
+
+   async getCurrentUser(): Promise<User> {
+      const response = await api.get<User>("/user");
+      return response.data;
+   }
+
+   async updateProfile(data: Partial<User>): Promise<User> {
+      const response = await api.put<User>("/profile", data);
+      
+      // Update stored user data
+      const updatedUser = response.data;
+      localStorage.setItem(config.USER_KEY, JSON.stringify(updatedUser));
+      
+      return updatedUser;
+   }
+
+   async changePassword(data: ChangePasswordRequest): Promise<ApiResponse> {
+      const response = await api.put<ApiResponse>("/change-password", data);
+      return response.data;
+   }
+
+   async getDashboardData(): Promise<any> {
+      const response = await api.get("/dashboard");
+      return response.data;
+   }
+}
+
+export const authService = new AuthService();
+```
+
+## File: dashboardService.ts
+```ts
+import api from "./api";
+
+export interface DashboardData {
+   total_interns?: number;
+   pending_tasks?: number;
+   todays_attendance?: string;
+   average_score?: number;
+   pending_reclamations?: number;
+   recent_activity?: Array<{
+      user_name: string;
+      action: string;
+      time: string;
+      type: string;
+   }>;
+   total_users?: number;
+   total_managers?: number;
+   active_interns?: number;
+   total_departments?: number;
+   my_tasks?: number;
+   my_evaluations?: number;
+   unread_notifications?: number;
+   attendance_rate?: number;
+}
+
+export const dashboardService = {
+   getDashboard: async (): Promise<{ data: DashboardData }> => {
+      try {
+         const response = await api.get("/dashboard");
+         return response.data;
+      } catch (error) {
+         console.error("Dashboard error:", error);
+         throw error;
+      }
+   },
+
+   getManagerDashboard: async (): Promise<{ data: DashboardData }> => {
+      try {
+         const response = await api.get("/dashboard");
+         return response.data;
+      } catch (error) {
+         console.error("Manager dashboard error:", error);
+         throw error;
+      }
+   },
+
+   getAdminDashboard: async (): Promise<{ data: DashboardData }> => {
+      try {
+         const response = await api.get("/dashboard");
+         return response.data;
+      } catch (error) {
+         console.error("Admin dashboard error:", error);
+         throw error;
+      }
+   },
+
+   getInternDashboard: async (): Promise<{ data: DashboardData }> => {
+      try {
+         const response = await api.get("/dashboard");
+         return response.data;
+      } catch (error) {
+         console.error("Intern dashboard error:", error);
+         throw error;
+      }
+   },
+};
+
+```
+
+## File: evaluationService.ts
+```ts
+import api from "./api";
+
+export interface Evaluation {
+   id: number;
+   intern_id: number;
+   manager_id: number;
+   score: number;
+   comments?: string;
+   feedback?: string;
+   evaluation_type:
+      | "mid_term"
+      | "final"
+      | "monthly"
+      | "weekly"
+      | "quarterly"
+      | "project";
+   strengths?: string;
+   areas_for_improvement?: string;
+   evaluated_at: string;
+   created_at: string;
+   updated_at: string;
+   deleted_at?: string;
+   intern?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+   manager?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+}
+
+export interface CreateEvaluationData {
+   intern_id: number;
+   score: number;
+   feedback: string;
+   evaluation_type: "weekly" | "monthly" | "quarterly" | "final";
+   strengths?: string;
+   areas_for_improvement?: string;
+}
+
+export const evaluationService = {
+   // Manager: Get evaluations
+   getEvaluations: async (
+      params: {
+         evaluation_type?: string;
+         start_date?: string;
+         end_date?: string;
+         intern_id?: number;
+      } = {}
+   ): Promise<{ data: Evaluation[] }> => {
+      const response = await api.get("/evaluations", { params });
+      return response.data;
+   },
+
+   // Manager: Create evaluation
+   createEvaluation: async (
+      data: CreateEvaluationData
+   ): Promise<{ evaluation: Evaluation }> => {
+      const response = await api.post("/evaluations", data);
+      return response.data;
+   },
+
+   // Manager: Get evaluation details
+   getEvaluationById: async (
+      id: number
+   ): Promise<{ evaluation: Evaluation }> => {
+      const response = await api.get(`/evaluations/${id}`);
+      return response.data;
+   },
+
+   // Manager: Update evaluation
+   updateEvaluation: async (
+      id: number,
+      data: Partial<CreateEvaluationData>
+   ): Promise<{ evaluation: Evaluation }> => {
+      const response = await api.put(`/evaluations/${id}`, data);
+      return response.data;
+   },
+
+   // Manager: Delete evaluation
+   deleteEvaluation: async (id: number): Promise<{ message: string }> => {
+      const response = await api.delete(`/evaluations/${id}`);
+      return response.data;
+   },
+
+   // Manager: Get evaluation statistics
+   getEvaluationStatistics: async (): Promise<{
+      statistics: {
+         total: number;
+         average_score: number;
+         by_type: Record<string, number>;
+      };
+   }> => {
+      const response = await api.get("/evaluations/statistics");
+      return response.data;
+   },
+
+   // Manager: Get interns for evaluation (department interns)
+   getInternsForEvaluation: async (): Promise<{
+      data: Array<{ id: number; name: string; email: string }>;
+   }> => {
+      const response = await api.get("/interns-for-evaluation");
+      return response.data;
+   },
+
+   // Intern: Get my evaluations
+   getMyEvaluations: async (
+      params: {
+         evaluation_type?: string;
+         start_date?: string;
+         end_date?: string;
+      } = {}
+   ): Promise<{ data: Evaluation[] }> => {
+      const response = await api.get("/my-evaluations", { params });
+      return response.data;
+   },
+
+   // Intern: Get my evaluation details
+   getMyEvaluationById: async (
+      id: number
+   ): Promise<{ evaluation: Evaluation }> => {
+      const response = await api.get(`/my-evaluations/${id}`);
+      return response.data;
+   },
+
+   // Intern: Get my evaluation statistics
+   getMyEvaluationStatistics: async (): Promise<{
+      statistics: {
+         total: number;
+         average_score: number;
+         by_type: Record<string, number>;
+      };
+   }> => {
+      const response = await api.get("/my-evaluations/statistics");
+      return response.data;
+   },
+};
+
+```
+
+## File: notificationService.ts
+```ts
+import api from "./api";
+
+export interface Notification {
+   id: number;
+   sender_id: number;
+   title: string;
+   message: string;
+   created_at: string;
+   updated_at: string;
+   sender?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+   recipients?: any[];
+   is_read?: boolean;
+   is_archived?: boolean;
+   read_at?: string | null;
+   read_by?: any[];
+}
+
+export interface SendNotificationData {
+   title: string;
+   message: string;
+   recipient_ids: number[];
+}
+
+export const notificationService = {
+   // Manager: Send notification
+   sendNotification: async (
+      data: SendNotificationData
+   ): Promise<{ notification: Notification }> => {
+      const response = await api.post("/notifications/send", data);
+      return response.data;
+   },
+
+   // Manager: Get sent notifications
+   getNotifications: async (
+      params: {
+         search?: string;
+         is_archived?: boolean;
+      } = {}
+   ): Promise<{ data: Notification[] }> => {
+      const response = await api.get("/notifications", { params });
+      return response.data;
+   },
+
+   // Manager: Get notification details
+   getNotificationById: async (
+      id: number
+   ): Promise<{ notification: Notification }> => {
+      const response = await api.get(`/notifications/${id}`);
+      return response.data;
+   },
+
+   // Manager: Delete notification
+   deleteNotification: async (id: number): Promise<{ message: string }> => {
+      const response = await api.delete(`/notifications/${id}`);
+      return response.data;
+   },
+
+   // Manager: Get interns for notifications (department interns)
+   getDepartmentInterns: async (): Promise<{
+      data: Array<{ id: number; name: string; email: string }>;
+   }> => {
+      const response = await api.get("/notifications/interns");
+      return response.data;
+   },
+
+   // Manager: Get interns for notifications (alias)
+   getInternsForNotifications: async (): Promise<{
+      data: Array<{ id: number; name: string; email: string }>;
+   }> => {
+      const response = await api.get("/notifications/interns");
+      return response.data;
+   },
+
+   // Intern: Get my notifications
+   getMyNotifications: async (
+      params: {
+         is_read?: boolean;
+         is_archived?: boolean;
+         search?: string;
+      } = {}
+   ): Promise<{ data: Notification[] }> => {
+      const response = await api.get("/my-notifications", { params });
+      return response.data;
+   },
+
+   // Intern: Get my notification details
+   getMyNotificationById: async (
+      id: number
+   ): Promise<{ notification: Notification }> => {
+      const response = await api.get(`/my-notifications/${id}`);
+      return response.data;
+   },
+
+   // Intern: Update notification (mark as read/archived)
+   updateMyNotification: async (
+      id: number,
+      data: {
+         is_read?: boolean;
+         is_archived?: boolean;
+      }
+   ): Promise<{ notification: Notification }> => {
+      const response = await api.put(`/my-notifications/${id}`, data);
+      return response.data;
+   },
+
+   // Intern: Mark notification as read
+   markNotificationAsRead: async (
+      id: number,
+      isRead: boolean = true
+   ): Promise<{ notification: Notification }> => {
+      const response = await api.put(`/my-notifications/${id}`, {
+         is_read: isRead,
+      });
+      return response.data;
+   },
+
+   // Intern: Mark as read (alias)
+   markAsRead: async (id: number): Promise<{ notification: Notification }> => {
+      const response = await api.put(`/my-notifications/${id}`, {
+         is_read: true,
+      });
+      return response.data;
+   },
+
+   // Intern: Mark all as read
+   markAllAsRead: async (): Promise<{ message: string }> => {
+      const response = await api.post("/my-notifications/mark-all-read");
+      return response.data;
+   },
+
+   // Intern: Delete my notification
+   deleteMyNotification: async (id: number): Promise<{ message: string }> => {
+      const response = await api.delete(`/my-notifications/${id}`);
+      return response.data;
+   },
+};
+
+```
+
+## File: reclamationService.ts
+```ts
+import api from "./api";
+
+export interface Reclamation {
+   id: number;
+   intern_id: number;
+   manager_id: number;
+   subject: string;
+   description: string;
+   status: "pending" | "in_review" | "resolved" | "archived";
+   response?: string;
+   resolved_at?: string;
+   responded_at?: string;
+   created_at: string;
+   updated_at: string;
+   deleted_at?: string;
+   intern?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+   manager?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+}
+
+export interface CreateReclamationData {
+   subject: string;
+   description: string;
+}
+
+export interface RespondToReclamationData {
+   response: string;
+   status: "pending" | "in_review" | "solved" | "archived";
+}
+
+export const reclamationService = {
+   // Manager: Get reclamations (department reclamations)
+   getReclamations: async (
+      params: {
+         status?: string;
+         search?: string;
+         start_date?: string;
+         end_date?: string;
+      } = {}
+   ): Promise<{ data: Reclamation[] }> => {
+      const response = await api.get("/reclamations", { params });
+      return response.data;
+   },
+
+   // Manager: Get department reclamations (same as getReclamations but semantic)
+   getDepartmentReclamations: async (): Promise<{ data: Reclamation[] }> => {
+      const response = await api.get("/reclamations");
+      return response.data;
+   },
+
+   // Manager: Get reclamation details
+   getReclamationById: async (
+      id: number
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.get(`/reclamations/${id}`);
+      return response.data;
+   },
+
+   // Manager: Respond to reclamation
+   respondToReclamation: async (
+      id: number,
+      data: RespondToReclamationData
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.put(`/reclamations/${id}/respond`, data);
+      return response.data;
+   },
+
+   // Manager: Update reclamation (for status updates)
+   updateReclamation: async (
+      id: number,
+      data: { status?: string; resolution_notes?: string }
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.put(`/reclamations/${id}/respond`, data);
+      return response.data;
+   },
+
+   // Manager: Update reclamation status only
+   updateReclamationStatus: async (
+      id: number,
+      status: string
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.put(`/reclamations/${id}/status`, { status });
+      return response.data;
+   },
+
+   // Manager: Delete reclamation
+   deleteReclamation: async (id: number): Promise<{ message: string }> => {
+      const response = await api.delete(`/reclamations/${id}`);
+      return response.data;
+   },
+
+   // Manager: Get reclamation statistics
+   getReclamationStatistics: async (): Promise<{
+      statistics: {
+         total: number;
+         pending: number;
+         in_review: number;
+         resolved: number;
+         archived: number;
+      };
+   }> => {
+      const response = await api.get("/reclamations/statistics");
+      return response.data;
+   },
+
+   // Intern: Create reclamation
+   createReclamation: async (
+      data: CreateReclamationData
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.post("/reclamations", data);
+      return response.data;
+   },
+
+   // Intern: Get my reclamations
+   getMyReclamations: async (
+      params: {
+         status?: string;
+      } = {}
+   ): Promise<{ data: Reclamation[] }> => {
+      const response = await api.get("/my-reclamations", { params });
+      return response.data;
+   },
+
+   // Intern: Get my reclamation details
+   getMyReclamationById: async (
+      id: number
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.get(`/my-reclamations/${id}`);
+      return response.data;
+   },
+
+   // Intern: Delete my reclamation
+   deleteMyReclamation: async (id: number): Promise<{ message: string }> => {
+      const response = await api.delete(`/my-reclamations/${id}`);
+      return response.data;
+   },
+};
+
+```
+
+## File: reportService.ts
+```ts
+import api from "./api";
+
+export interface Report {
+   id: number;
+   type: "attendance" | "performance";
+   period_start: string;
+   period_end: string;
+   department_id: number;
+   data: any;
+   generated_by: number;
+   sent_to_admin: boolean;
+   created_at: string;
+   updated_at: string;
+   department?: {
+      id: number;
+      name: string;
+   };
+   generated_by_user?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+}
+
+export interface GenerateReportData {
+   type: "attendance" | "performance";
+   period_start: string;
+   period_end: string;
+   data?: any;
+}
+
+export const reportService = {
+   // Admin & Manager: Get reports
+   getReports: async (
+      params: {
+         type?: "attendance" | "performance";
+         period_start?: string;
+         period_end?: string;
+         department_id?: number;
+      } = {}
+   ): Promise<{ data: Report[] }> => {
+      const response = await api.get("/reports", { params });
+      return response.data;
+   },
+
+   // Manager: Get manager's reports (same as getReports but semantic naming)
+   getManagerReports: async (): Promise<{ data: Report[] }> => {
+      const response = await api.get("/reports");
+      return response.data;
+   },
+
+   // Manager: Generate report
+   generateReport: async (
+      data: GenerateReportData
+   ): Promise<{ report: Report }> => {
+      const response = await api.post("/reports/generate", data);
+      return response.data;
+   },
+
+   // Manager: Send report to admin
+   sendToAdmin: async (reportId: number): Promise<{ message: string }> => {
+      const response = await api.post(`/reports/${reportId}/send-to-admin`);
+      return response.data;
+   },
+
+   // Admin & Manager: Get report statistics
+   getReportStatistics: async (): Promise<{
+      statistics: {
+         total: number;
+         attendance_reports: number;
+         performance_reports: number;
+         sent_to_admin: number;
+      };
+   }> => {
+      const response = await api.get("/reports/statistics");
+      return response.data;
+   },
+
+   // Admin & Manager: Get report by ID
+   getReportById: async (id: number): Promise<{ report: Report }> => {
+      const response = await api.get(`/reports/${id}`);
+      return response.data;
+   },
+
+   // Manager: Delete report
+   deleteReport: async (id: number): Promise<{ message: string }> => {
+      const response = await api.delete(`/reports/${id}`);
+      return response.data;
+   },
+
+   // Export report (for downloading)
+   exportReport: async (reportId: number): Promise<{ data: any }> => {
+      const response = await api.get(`/reports/${reportId}`);
+      return response;
+   },
+};
+
+```
+
+## File: taskService.ts
+```ts
+import api from "./api";
+
+export interface TaskData {
+   title: string;
+   description: string;
+   assigned_to: number;
+   priority: "low" | "medium" | "high" | "urgent";
+   deadline: string;
+}
+
+export interface Task extends TaskData {
+   id: number;
+   status: "pending" | "in_progress" | "completed" | "overdue";
+   created_at: string;
+   updated_at: string;
+   assigned_to_user?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+}
+
+export const taskService = {
+   async getTasks(params?: {
+      status?: string;
+      assigned_to?: number;
+      page?: number;
+      per_page?: number;
+   }) {
+      const response = await api.get("/tasks", { params });
+      return response.data;
+   },
+
+   async createTask(data: TaskData) {
+      const response = await api.post("/tasks", data);
+      return response.data;
+   },
+
+   async updateTask(id: number, data: Partial<TaskData>) {
+      const response = await api.put(`/tasks/${id}`, data);
+      return response.data;
+   },
+
+   async deleteTask(id: number) {
+      const response = await api.delete(`/tasks/${id}`);
+      return response.data;
+   },
+
+   async getInternsForTasks() {
+      // Use the correct endpoint from documentation
+      try {
+         const response = await api.get("/interns-for-tasks");
+         return response.data;
+      } catch (error) {
+         console.error("Error getting interns for tasks:", error);
+         throw error;
+      }
+   },
+
+   async updateTaskStatus(id: number, status: Task["status"]) {
+      const response = await api.put(`/tasks/${id}/status`, { status });
+      return response.data;
+   },
+
+   async getTaskStatistics() {
+      const response = await api.get("/tasks/statistics");
+      return response.data;
+   },
+
+   async getMyTasks(params?: {
+      status?: string;
+      priority?: string;
+      overdue?: boolean;
+      page?: number;
+      per_page?: number;
+   }) {
+      const response = await api.get("/my-tasks", { params });
+      return response.data;
+   },
+
+   async getMyTask(id: number) {
+      const response = await api.get(`/my-tasks/${id}`);
+      return response.data;
+   },
+
+   async updateMyTaskStatus(id: number, status: Task["status"]) {
+      const response = await api.put(`/my-tasks/${id}/status`, { status });
+      return response.data;
+   },
+};
+```
+
+## File: userService.ts
+```ts
+import api from './api';
+
+export const userService = {
+  // Get all users (Admin only)
+  getUsers: async (params: any = {}): Promise<any> => {
+    const response = await api.get('/users', { params });
+    return response.data;
+  },
+
+  // Create user (Admin only)
+  createUser: async (data: any): Promise<any> => {
+    const response = await api.post('/users', data);
+    return response.data;
+  },
+
+  // Get user details (Admin only)
+  getUser: async (id: number): Promise<any> => {
+    const response = await api.get(`/users/${id}`);
+    return response.data;
+  },
+
+  // Update user (Admin only)
+  updateUser: async (id: number, data: any): Promise<any> => {
+    const response = await api.put(`/users/${id}`, data);
+    return response.data;
+  },
+
+  // Delete user (Admin only)
+  deleteUser: async (id: number): Promise<any> => {
+    const response = await api.delete(`/users/${id}`);
+    return response.data;
+  },
+
+  // Soft delete user (Admin only)
+  softDeleteUser: async (id: number): Promise<any> => {
+    const response = await api.delete(`/users/${id}/soft-delete`);
+    return response.data;
+  },
+
+  // Restore user (Admin only)
+  restoreUser: async (id: number): Promise<any> => {
+    const response = await api.post(`/users/${id}/restore`);
+    return response.data;
+  },
+
+  // Get managers list
+  getManagers: async (): Promise<any> => {
+    const response = await api.get('/managers');
+    return response.data;
+  },
+
+  // Get interns list
+  getInterns: async (params: any = {}): Promise<any> => {
+    const response = await api.get('/interns', { params });
+    return response.data;
+  },
+
+  // Get unassigned interns
+  getUnassignedInterns: async (): Promise<any> => {
+    const response = await api.get('/unassigned-interns');
+    return response.data;
+  },
+
+  // Assign intern (Admin only)
+  assignIntern: async (id: number, data: any): Promise<any> => {
+    const response = await api.post(`/users/${id}/assign`, data);
+    return response.data;
+  }
+};
+```
+
+
+```
+
+## File: api.ts
+```ts
+// src/services/api.ts
+import axios from "axios";
+import { config } from "@/config/env";
+
+const API_BASE_URL = config.API_URL;
+
+const api = axios.create({
+   baseURL: API_BASE_URL,
+   headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+   },
+   timeout: 30000,
+});
+
+// Request interceptor
+api.interceptors.request.use((requestConfig) => {
+   const token = localStorage.getItem(config.TOKEN_KEY);  // Use imported config
+   console.log('API Request - Token exists:', !!token);
+   
+   if (token) {
+      requestConfig.headers.Authorization = `Bearer ${token}`;
+   }
+   
+   return requestConfig;
+});
+
+// Response interceptor
+api.interceptors.response.use(
+   (response) => {
+      console.log('API Response:', response.status, response.config.url);
+      return response;
+   },
+   (error) => {
+      console.error('API Error:', error.response?.status, error.config?.url);
+      
+      if (error.response?.status === 401) {
+         // Clear auth data
+         localStorage.removeItem(config.TOKEN_KEY);
+         localStorage.removeItem(config.USER_KEY);
+         
+         // Only redirect if not already on login page
+         if (!window.location.pathname.includes('/login')) {
+            window.location.href = "/login";
+         }
+      }
+      
+      return Promise.reject(error);
+   }
+);
+
+export default api;
+```
+
+## File: attendanceService.ts
+```ts
+import api from "./api";
+
+export interface Attendance {
+   id: number;
+   intern_id: number;
+   recorded_by: number;
+   attendance_date: string;
+   status: "present" | "absent" | "late" | "excused";
+   notes?: string;
+   recorded_at: string;
+   created_at: string;
+   updated_at: string;
+   intern?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+   recorded_by_user?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+}
+
+export interface AttendanceStatistics {
+   total: number;
+   present: number;
+   absent: number;
+   late: number;
+   excused: number;
+   attendance_rate: number;
+}
+
+export interface CreateAttendanceData {
+   intern_id: number;
+   date: string;
+   status: "present" | "absent" | "late" | "excused";
+   notes?: string;
+}
+
+export const attendanceService = {
+   // Manager: Get attendance records
+   getAttendance: async (
+      params: {
+         start_date?: string;
+         end_date?: string;
+         status?: string;
+         intern_id?: number;
+      } = {}
+   ): Promise<{ data: Attendance[] }> => {
+      const response = await api.get("/attendances", { params });
+      return response.data;
+   },
+
+   // Manager: Mark/Create attendance
+   markAttendance: async (
+      data: CreateAttendanceData
+   ): Promise<{ attendance: Attendance }> => {
+      const response = await api.post("/attendances", data);
+      return response.data;
+   },
+
+   // Manager: Update attendance
+   updateAttendance: async (
+      id: number,
+      data: { status: Attendance["status"]; notes?: string }
+   ): Promise<{ attendance: Attendance }> => {
+      const response = await api.put(`/attendances/${id}`, data);
+      return response.data;
+   },
+
+   // Manager: Delete attendance
+   deleteAttendance: async (id: number): Promise<{ message: string }> => {
+      const response = await api.delete(`/attendances/${id}`);
+      return response.data;
+   },
+
+   // Manager: Get attendance statistics
+   getAttendanceStatistics: async (): Promise<{
+      statistics: AttendanceStatistics;
+   }> => {
+      const response = await api.get("/attendance/statistics");
+      return response.data;
+   },
+
+   // Manager: Get interns for attendance (department interns)
+   getDepartmentInterns: async (): Promise<{
+      data: Array<{ id: number; name: string; email: string }>;
+   }> => {
+      const response = await api.get("/interns-for-attendance");
+      return response.data;
+   },
+
+   // Manager: Get attendance summary for reports
+   getAttendanceSummary: async (
+      startDate: string,
+      endDate: string
+   ): Promise<any> => {
+      const response = await api.get("/attendance/statistics", {
+         params: {
+            start_date: startDate,
+            end_date: endDate,
+         },
+      });
+      return response.data;
+   },
+
+   // Intern: Get my attendance
+   getMyAttendance: async (
+      params: {
+         start_date?: string;
+         end_date?: string;
+         status?: string;
+      } = {}
+   ): Promise<{ data: Attendance[] }> => {
+      const response = await api.get("/my-attendance", { params });
+      return response.data;
+   },
+
+   // Intern: Get my attendance statistics
+   getMyAttendanceStatistics: async (): Promise<{
+      statistics: AttendanceStatistics;
+   }> => {
+      const response = await api.get("/my-attendance/statistics");
+      return response.data;
+   },
+
+   // Intern: Get specific attendance record
+   getMyAttendanceById: async (
+      id: number
+   ): Promise<{ attendance: Attendance }> => {
+      const response = await api.get(`/my-attendance/${id}`);
+      return response.data;
+   },
+};
+
+```
+
+## File: authService.ts
+```ts
+// src/services/authService.ts
+import api from "./api";
+import type {
+  LoginRequest,
+  LoginResponse,
+  User,
+  ChangePasswordRequest
+} from "@/types/auth.types";
+import type { ApiResponse } from "@/types/api.types";
+import { config } from "@/config/env";
+
+class AuthService {
+   async login(data: LoginRequest): Promise<LoginResponse> {
+      const response = await api.post<LoginResponse>("/login", data);
+      
+      // Save token and user data
+      const { user, token } = response.data;
+      localStorage.setItem(config.TOKEN_KEY, token);
+      localStorage.setItem(config.USER_KEY, JSON.stringify(user));
+      
+      return response.data;
+   }
+
+   async logout(): Promise<void> {
+      try {
+         await api.post("/logout");
+      } finally {
+         // Always clear local storage
+         localStorage.removeItem(config.TOKEN_KEY);
+         localStorage.removeItem(config.USER_KEY);
+      }
+   }
+
+   async getCurrentUser(): Promise<User> {
+      const response = await api.get<User>("/user");
+      return response.data;
+   }
+
+   async updateProfile(data: Partial<User>): Promise<User> {
+      const response = await api.put<User>("/profile", data);
+      
+      // Update stored user data
+      const updatedUser = response.data;
+      localStorage.setItem(config.USER_KEY, JSON.stringify(updatedUser));
+      
+      return updatedUser;
+   }
+
+   async changePassword(data: ChangePasswordRequest): Promise<ApiResponse> {
+      const response = await api.put<ApiResponse>("/change-password", data);
+      return response.data;
+   }
+
+   async getDashboardData(): Promise<any> {
+      const response = await api.get("/dashboard");
+      return response.data;
+   }
+}
+
+export const authService = new AuthService();
+```
+
+## File: dashboardService.ts
+```ts
+import api from "./api";
+
+export interface DashboardData {
+   total_interns?: number;
+   pending_tasks?: number;
+   todays_attendance?: string;
+   average_score?: number;
+   pending_reclamations?: number;
+   recent_activity?: Array<{
+      user_name: string;
+      action: string;
+      time: string;
+      type: string;
+   }>;
+   total_users?: number;
+   total_managers?: number;
+   active_interns?: number;
+   total_departments?: number;
+   my_tasks?: number;
+   my_evaluations?: number;
+   unread_notifications?: number;
+   attendance_rate?: number;
+}
+
+export const dashboardService = {
+   getDashboard: async (): Promise<{ data: DashboardData }> => {
+      try {
+         const response = await api.get("/dashboard");
+         return response.data;
+      } catch (error) {
+         console.error("Dashboard error:", error);
+         throw error;
+      }
+   },
+
+   getManagerDashboard: async (): Promise<{ data: DashboardData }> => {
+      try {
+         const response = await api.get("/dashboard");
+         return response.data;
+      } catch (error) {
+         console.error("Manager dashboard error:", error);
+         throw error;
+      }
+   },
+
+   getAdminDashboard: async (): Promise<{ data: DashboardData }> => {
+      try {
+         const response = await api.get("/dashboard");
+         return response.data;
+      } catch (error) {
+         console.error("Admin dashboard error:", error);
+         throw error;
+      }
+   },
+
+   getInternDashboard: async (): Promise<{ data: DashboardData }> => {
+      try {
+         const response = await api.get("/dashboard");
+         return response.data;
+      } catch (error) {
+         console.error("Intern dashboard error:", error);
+         throw error;
+      }
+   },
+};
+
+```
+
+## File: evaluationService.ts
+```ts
+import api from "./api";
+
+export interface Evaluation {
+   id: number;
+   intern_id: number;
+   manager_id: number;
+   score: number;
+   comments?: string;
+   feedback?: string;
+   evaluation_type:
+      | "mid_term"
+      | "final"
+      | "monthly"
+      | "weekly"
+      | "quarterly"
+      | "project";
+   strengths?: string;
+   areas_for_improvement?: string;
+   evaluated_at: string;
+   created_at: string;
+   updated_at: string;
+   deleted_at?: string;
+   intern?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+   manager?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+}
+
+export interface CreateEvaluationData {
+   intern_id: number;
+   score: number;
+   feedback: string;
+   evaluation_type: "weekly" | "monthly" | "quarterly" | "final";
+   strengths?: string;
+   areas_for_improvement?: string;
+}
+
+export const evaluationService = {
+   // Manager: Get evaluations
+   getEvaluations: async (
+      params: {
+         evaluation_type?: string;
+         start_date?: string;
+         end_date?: string;
+         intern_id?: number;
+      } = {}
+   ): Promise<{ data: Evaluation[] }> => {
+      const response = await api.get("/evaluations", { params });
+      return response.data;
+   },
+
+   // Manager: Create evaluation
+   createEvaluation: async (
+      data: CreateEvaluationData
+   ): Promise<{ evaluation: Evaluation }> => {
+      const response = await api.post("/evaluations", data);
+      return response.data;
+   },
+
+   // Manager: Get evaluation details
+   getEvaluationById: async (
+      id: number
+   ): Promise<{ evaluation: Evaluation }> => {
+      const response = await api.get(`/evaluations/${id}`);
+      return response.data;
+   },
+
+   // Manager: Update evaluation
+   updateEvaluation: async (
+      id: number,
+      data: Partial<CreateEvaluationData>
+   ): Promise<{ evaluation: Evaluation }> => {
+      const response = await api.put(`/evaluations/${id}`, data);
+      return response.data;
+   },
+
+   // Manager: Delete evaluation
+   deleteEvaluation: async (id: number): Promise<{ message: string }> => {
+      const response = await api.delete(`/evaluations/${id}`);
+      return response.data;
+   },
+
+   // Manager: Get evaluation statistics
+   getEvaluationStatistics: async (): Promise<{
+      statistics: {
+         total: number;
+         average_score: number;
+         by_type: Record<string, number>;
+      };
+   }> => {
+      const response = await api.get("/evaluations/statistics");
+      return response.data;
+   },
+
+   // Manager: Get interns for evaluation (department interns)
+   getInternsForEvaluation: async (): Promise<{
+      data: Array<{ id: number; name: string; email: string }>;
+   }> => {
+      const response = await api.get("/interns-for-evaluation");
+      return response.data;
+   },
+
+   // Intern: Get my evaluations
+   getMyEvaluations: async (
+      params: {
+         evaluation_type?: string;
+         start_date?: string;
+         end_date?: string;
+      } = {}
+   ): Promise<{ data: Evaluation[] }> => {
+      const response = await api.get("/my-evaluations", { params });
+      return response.data;
+   },
+
+   // Intern: Get my evaluation details
+   getMyEvaluationById: async (
+      id: number
+   ): Promise<{ evaluation: Evaluation }> => {
+      const response = await api.get(`/my-evaluations/${id}`);
+      return response.data;
+   },
+
+   // Intern: Get my evaluation statistics
+   getMyEvaluationStatistics: async (): Promise<{
+      statistics: {
+         total: number;
+         average_score: number;
+         by_type: Record<string, number>;
+      };
+   }> => {
+      const response = await api.get("/my-evaluations/statistics");
+      return response.data;
+   },
+};
+
+```
+
+## File: notificationService.ts
+```ts
+import api from "./api";
+
+export interface Notification {
+   id: number;
+   sender_id: number;
+   title: string;
+   message: string;
+   created_at: string;
+   updated_at: string;
+   sender?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+   recipients?: any[];
+   is_read?: boolean;
+   is_archived?: boolean;
+   read_at?: string | null;
+   read_by?: any[];
+}
+
+export interface SendNotificationData {
+   title: string;
+   message: string;
+   recipient_ids: number[];
+}
+
+export const notificationService = {
+   // Manager: Send notification
+   sendNotification: async (
+      data: SendNotificationData
+   ): Promise<{ notification: Notification }> => {
+      const response = await api.post("/notifications/send", data);
+      return response.data;
+   },
+
+   // Manager: Get sent notifications
+   getNotifications: async (
+      params: {
+         search?: string;
+         is_archived?: boolean;
+      } = {}
+   ): Promise<{ data: Notification[] }> => {
+      const response = await api.get("/notifications", { params });
+      return response.data;
+   },
+
+   // Manager: Get notification details
+   getNotificationById: async (
+      id: number
+   ): Promise<{ notification: Notification }> => {
+      const response = await api.get(`/notifications/${id}`);
+      return response.data;
+   },
+
+   // Manager: Delete notification
+   deleteNotification: async (id: number): Promise<{ message: string }> => {
+      const response = await api.delete(`/notifications/${id}`);
+      return response.data;
+   },
+
+   // Manager: Get interns for notifications (department interns)
+   getDepartmentInterns: async (): Promise<{
+      data: Array<{ id: number; name: string; email: string }>;
+   }> => {
+      const response = await api.get("/notifications/interns");
+      return response.data;
+   },
+
+   // Manager: Get interns for notifications (alias)
+   getInternsForNotifications: async (): Promise<{
+      data: Array<{ id: number; name: string; email: string }>;
+   }> => {
+      const response = await api.get("/notifications/interns");
+      return response.data;
+   },
+
+   // Intern: Get my notifications
+   getMyNotifications: async (
+      params: {
+         is_read?: boolean;
+         is_archived?: boolean;
+         search?: string;
+      } = {}
+   ): Promise<{ data: Notification[] }> => {
+      const response = await api.get("/my-notifications", { params });
+      return response.data;
+   },
+
+   // Intern: Get my notification details
+   getMyNotificationById: async (
+      id: number
+   ): Promise<{ notification: Notification }> => {
+      const response = await api.get(`/my-notifications/${id}`);
+      return response.data;
+   },
+
+   // Intern: Update notification (mark as read/archived)
+   updateMyNotification: async (
+      id: number,
+      data: {
+         is_read?: boolean;
+         is_archived?: boolean;
+      }
+   ): Promise<{ notification: Notification }> => {
+      const response = await api.put(`/my-notifications/${id}`, data);
+      return response.data;
+   },
+
+   // Intern: Mark notification as read
+   markNotificationAsRead: async (
+      id: number,
+      isRead: boolean = true
+   ): Promise<{ notification: Notification }> => {
+      const response = await api.put(`/my-notifications/${id}`, {
+         is_read: isRead,
+      });
+      return response.data;
+   },
+
+   // Intern: Mark as read (alias)
+   markAsRead: async (id: number): Promise<{ notification: Notification }> => {
+      const response = await api.put(`/my-notifications/${id}`, {
+         is_read: true,
+      });
+      return response.data;
+   },
+
+   // Intern: Mark all as read
+   markAllAsRead: async (): Promise<{ message: string }> => {
+      const response = await api.post("/my-notifications/mark-all-read");
+      return response.data;
+   },
+
+   // Intern: Delete my notification
+   deleteMyNotification: async (id: number): Promise<{ message: string }> => {
+      const response = await api.delete(`/my-notifications/${id}`);
+      return response.data;
+   },
+};
+
+```
+
+## File: reclamationService.ts
+```ts
+import api from "./api";
+
+export interface Reclamation {
+   id: number;
+   intern_id: number;
+   manager_id: number;
+   subject: string;
+   description: string;
+   status: "pending" | "in_review" | "resolved" | "archived";
+   response?: string;
+   resolved_at?: string;
+   responded_at?: string;
+   created_at: string;
+   updated_at: string;
+   deleted_at?: string;
+   intern?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+   manager?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+}
+
+export interface CreateReclamationData {
+   subject: string;
+   description: string;
+}
+
+export interface RespondToReclamationData {
+   response: string;
+   status: "pending" | "in_review" | "solved" | "archived";
+}
+
+export const reclamationService = {
+   // Manager: Get reclamations (department reclamations)
+   getReclamations: async (
+      params: {
+         status?: string;
+         search?: string;
+         start_date?: string;
+         end_date?: string;
+      } = {}
+   ): Promise<{ data: Reclamation[] }> => {
+      const response = await api.get("/reclamations", { params });
+      return response.data;
+   },
+
+   // Manager: Get department reclamations (same as getReclamations but semantic)
+   getDepartmentReclamations: async (): Promise<{ data: Reclamation[] }> => {
+      const response = await api.get("/reclamations");
+      return response.data;
+   },
+
+   // Manager: Get reclamation details
+   getReclamationById: async (
+      id: number
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.get(`/reclamations/${id}`);
+      return response.data;
+   },
+
+   // Manager: Respond to reclamation
+   respondToReclamation: async (
+      id: number,
+      data: RespondToReclamationData
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.put(`/reclamations/${id}/respond`, data);
+      return response.data;
+   },
+
+   // Manager: Update reclamation (for status updates)
+   updateReclamation: async (
+      id: number,
+      data: { status?: string; resolution_notes?: string }
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.put(`/reclamations/${id}/respond`, data);
+      return response.data;
+   },
+
+   // Manager: Update reclamation status only
+   updateReclamationStatus: async (
+      id: number,
+      status: string
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.put(`/reclamations/${id}/status`, { status });
+      return response.data;
+   },
+
+   // Manager: Delete reclamation
+   deleteReclamation: async (id: number): Promise<{ message: string }> => {
+      const response = await api.delete(`/reclamations/${id}`);
+      return response.data;
+   },
+
+   // Manager: Get reclamation statistics
+   getReclamationStatistics: async (): Promise<{
+      statistics: {
+         total: number;
+         pending: number;
+         in_review: number;
+         resolved: number;
+         archived: number;
+      };
+   }> => {
+      const response = await api.get("/reclamations/statistics");
+      return response.data;
+   },
+
+   // Intern: Create reclamation
+   createReclamation: async (
+      data: CreateReclamationData
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.post("/reclamations", data);
+      return response.data;
+   },
+
+   // Intern: Get my reclamations
+   getMyReclamations: async (
+      params: {
+         status?: string;
+      } = {}
+   ): Promise<{ data: Reclamation[] }> => {
+      const response = await api.get("/my-reclamations", { params });
+      return response.data;
+   },
+
+   // Intern: Get my reclamation details
+   getMyReclamationById: async (
+      id: number
+   ): Promise<{ reclamation: Reclamation }> => {
+      const response = await api.get(`/my-reclamations/${id}`);
+      return response.data;
+   },
+
+   // Intern: Delete my reclamation
+   deleteMyReclamation: async (id: number): Promise<{ message: string }> => {
+      const response = await api.delete(`/my-reclamations/${id}`);
+      return response.data;
+   },
+};
+
+```
+
+## File: reportService.ts
+```ts
+import api from "./api";
+
+export interface Report {
+   id: number;
+   type: "attendance" | "performance";
+   period_start: string;
+   period_end: string;
+   department_id: number;
+   data: any;
+   generated_by: number;
+   sent_to_admin: boolean;
+   created_at: string;
+   updated_at: string;
+   department?: {
+      id: number;
+      name: string;
+   };
+   generated_by_user?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+}
+
+export interface GenerateReportData {
+   type: "attendance" | "performance";
+   period_start: string;
+   period_end: string;
+   data?: any;
+}
+
+export const reportService = {
+   // Admin & Manager: Get reports
+   getReports: async (
+      params: {
+         type?: "attendance" | "performance";
+         period_start?: string;
+         period_end?: string;
+         department_id?: number;
+      } = {}
+   ): Promise<{ data: Report[] }> => {
+      const response = await api.get("/reports", { params });
+      return response.data;
+   },
+
+   // Manager: Get manager's reports (same as getReports but semantic naming)
+   getManagerReports: async (): Promise<{ data: Report[] }> => {
+      const response = await api.get("/reports");
+      return response.data;
+   },
+
+   // Manager: Generate report
+   generateReport: async (
+      data: GenerateReportData
+   ): Promise<{ report: Report }> => {
+      const response = await api.post("/reports/generate", data);
+      return response.data;
+   },
+
+   // Manager: Send report to admin
+   sendToAdmin: async (reportId: number): Promise<{ message: string }> => {
+      const response = await api.post(`/reports/${reportId}/send-to-admin`);
+      return response.data;
+   },
+
+   // Admin & Manager: Get report statistics
+   getReportStatistics: async (): Promise<{
+      statistics: {
+         total: number;
+         attendance_reports: number;
+         performance_reports: number;
+         sent_to_admin: number;
+      };
+   }> => {
+      const response = await api.get("/reports/statistics");
+      return response.data;
+   },
+
+   // Admin & Manager: Get report by ID
+   getReportById: async (id: number): Promise<{ report: Report }> => {
+      const response = await api.get(`/reports/${id}`);
+      return response.data;
+   },
+
+   // Manager: Delete report
+   deleteReport: async (id: number): Promise<{ message: string }> => {
+      const response = await api.delete(`/reports/${id}`);
+      return response.data;
+   },
+
+   // Export report (for downloading)
+   exportReport: async (reportId: number): Promise<{ data: any }> => {
+      const response = await api.get(`/reports/${reportId}`);
+      return response;
+   },
+};
+
+```
+
+## File: taskService.ts
+```ts
+import api from "./api";
+
+export interface TaskData {
+   title: string;
+   description: string;
+   assigned_to: number;
+   priority: "low" | "medium" | "high" | "urgent";
+   deadline: string;
+}
+
+export interface Task extends TaskData {
+   id: number;
+   status: "pending" | "in_progress" | "completed" | "overdue";
+   created_at: string;
+   updated_at: string;
+   assigned_to_user?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+}
+
+export const taskService = {
+   async getTasks(params?: {
+      status?: string;
+      assigned_to?: number;
+      page?: number;
+      per_page?: number;
+   }) {
+      const response = await api.get("/tasks", { params });
+      return response.data;
+   },
+
+   async createTask(data: TaskData) {
+      const response = await api.post("/tasks", data);
+      return response.data;
+   },
+
+   async updateTask(id: number, data: Partial<TaskData>) {
+      const response = await api.put(`/tasks/${id}`, data);
+      return response.data;
+   },
+
+   async deleteTask(id: number) {
+      const response = await api.delete(`/tasks/${id}`);
+      return response.data;
+   },
+
+   async getInternsForTasks() {
+      // Use the correct endpoint from documentation
+      try {
+         const response = await api.get("/interns-for-tasks");
+         return response.data;
+      } catch (error) {
+         console.error("Error getting interns for tasks:", error);
+         throw error;
+      }
+   },
+
+   async updateTaskStatus(id: number, status: Task["status"]) {
+      const response = await api.put(`/tasks/${id}/status`, { status });
+      return response.data;
+   },
+
+   async getTaskStatistics() {
+      const response = await api.get("/tasks/statistics");
+      return response.data;
+   },
+
+   async getMyTasks(params?: {
+      status?: string;
+      priority?: string;
+      overdue?: boolean;
+      page?: number;
+      per_page?: number;
+   }) {
+      const response = await api.get("/my-tasks", { params });
+      return response.data;
+   },
+
+   async getMyTask(id: number) {
+      const response = await api.get(`/my-tasks/${id}`);
+      return response.data;
+   },
+
+   async updateMyTaskStatus(id: number, status: Task["status"]) {
+      const response = await api.put(`/my-tasks/${id}/status`, { status });
+      return response.data;
+   },
+};
+```
+
+## File: userService.ts
+```ts
+import api from './api';
+
+export const userService = {
+  // Get all users (Admin only)
+  getUsers: async (params: any = {}): Promise<any> => {
+    const response = await api.get('/users', { params });
+    return response.data;
+  },
+
+  // Create user (Admin only)
+  createUser: async (data: any): Promise<any> => {
+    const response = await api.post('/users', data);
+    return response.data;
+  },
+
+  // Get user details (Admin only)
+  getUser: async (id: number): Promise<any> => {
+    const response = await api.get(`/users/${id}`);
+    return response.data;
+  },
+
+  // Update user (Admin only)
+  updateUser: async (id: number, data: any): Promise<any> => {
+    const response = await api.put(`/users/${id}`, data);
+    return response.data;
+  },
+
+  // Delete user (Admin only)
+  deleteUser: async (id: number): Promise<any> => {
+    const response = await api.delete(`/users/${id}`);
+    return response.data;
+  },
+
+  // Soft delete user (Admin only)
+  softDeleteUser: async (id: number): Promise<any> => {
+    const response = await api.delete(`/users/${id}/soft-delete`);
+    return response.data;
+  },
+
+  // Restore user (Admin only)
+  restoreUser: async (id: number): Promise<any> => {
+    const response = await api.post(`/users/${id}/restore`);
+    return response.data;
+  },
+
+  // Get managers list
+  getManagers: async (): Promise<any> => {
+    const response = await api.get('/managers');
+    return response.data;
+  },
+
+  // Get interns list
+  getInterns: async (params: any = {}): Promise<any> => {
+    const response = await api.get('/interns', { params });
+    return response.data;
+  },
+
+  // Get unassigned interns
+  getUnassignedInterns: async (): Promise<any> => {
+    const response = await api.get('/unassigned-interns');
+    return response.data;
+  },
+
+  // Assign intern (Admin only)
+  assignIntern: async (id: number, data: any): Promise<any> => {
+    const response = await api.post(`/users/${id}/assign`, data);
+    return response.data;
+  }
+};
+```
+
 
 ```
 

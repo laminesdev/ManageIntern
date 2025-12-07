@@ -172,7 +172,6 @@ export default function AdminDashboard() {
                   <Plus className="mr-2 h-4 w-4" />
                   Manage Users
                </Button>
-               {/* REMOVED: View Analytics button */}
             </div>
          </div>
 
@@ -274,20 +273,11 @@ export default function AdminDashboard() {
                   <Button
                      className="w-full justify-start"
                      variant="outline"
-                     onClick={() => navigate("/admin/assign-interns")}
-                  >
-                     <Briefcase className="mr-2 h-4 w-4" />
-                     Assign Interns
-                  </Button>
-                  <Button
-                     className="w-full justify-start"
-                     variant="outline"
                      onClick={() => navigate("/admin/reports")}
                   >
                      <BarChart3 className="mr-2 h-4 w-4" />
                      View Reports
                   </Button>
-                  {/* REMOVED: System Analytics button */}
                </div>
             </CardContent>
          </Card>

@@ -8,7 +8,6 @@ import LoginPage from "./pages/auth/LoginPage";
 import AdminDashboard from "./pages/admin/Dashboard";
 import UserManagement from "./pages/admin/UserManagement";
 import AdminReports from "./pages/admin/Reports";
-import AssignInterns from "./pages/admin/AssignInterns";
 import ViewAttendanceReports from "./pages/admin/reports/ViewAttendanceReports";
 import ViewPerformanceReports from "./pages/admin/reports/ViewPerformanceReports";
 
@@ -67,7 +66,6 @@ export default function App() {
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="users" element={<UserManagement />} />
-            <Route path="assign-interns" element={<AssignInterns />} />
             <Route path="reports" element={<AdminReports />} />
             <Route
                path="reports/attendance"
@@ -77,7 +75,6 @@ export default function App() {
                path="reports/performance"
                element={<ViewPerformanceReports />}
             />
-            {/* REMOVED: Analytics route */}
          </Route>
 
          {/* Manager Routes */}
@@ -112,7 +109,10 @@ export default function App() {
             />
             <Route path="reclamations" element={<ReclamationsPage />} />
             <Route path="reports" element={<ManagerReports />} />
-            <Route path="reclamations/:id" element={<ReclamationDetailsPage />} />
+            <Route
+               path="reclamations/:id"
+               element={<ReclamationDetailsPage />}
+            />
          </Route>
 
          {/* Intern Routes */}
