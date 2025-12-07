@@ -37,5 +37,5 @@ export interface FormattedStat {
    value: string | number;
    label: string;
    icon: string;
-   color: "blue" | "green" | "orange" | "purple" | "red";
+   color: "red" | "red" | "red" | "red" | "red";
 }

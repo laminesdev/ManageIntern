@@ -104,12 +104,10 @@ export default function TasksPage() {
             return <Badge variant="outline">Pending</Badge>;
          case "in_progress":
             return (
-               <Badge className="bg-blue-100 text-blue-800">In Progress</Badge>
+               <Badge className="bg-red-100 text-red-800">In Progress</Badge>
             );
          case "completed":
-            return (
-               <Badge className="bg-green-100 text-green-800">Completed</Badge>
-            );
+            return <Badge className="bg-red-100 text-red-800">Completed</Badge>;
          case "overdue":
             return <Badge className="bg-red-100 text-red-800">Overdue</Badge>;
          default:
@@ -126,9 +124,7 @@ export default function TasksPage() {
                <Badge className="bg-yellow-100 text-yellow-800">Medium</Badge>
             );
          case "high":
-            return (
-               <Badge className="bg-orange-100 text-orange-800">High</Badge>
-            );
+            return <Badge className="bg-red-100 text-red-800">High</Badge>;
          case "urgent":
             return <Badge className="bg-red-100 text-red-800">Urgent</Badge>;
          default:
@@ -139,11 +135,11 @@ export default function TasksPage() {
    const getStatusIcon = (status: Task["status"]) => {
       switch (status) {
          case "completed":
-            return <CheckCircle className="h-4 w-4 text-green-500" />;
+            return <CheckCircle className="h-4 w-4 text-red-500" />;
          case "overdue":
             return <AlertCircle className="h-4 w-4 text-red-500" />;
          default:
-            return <Clock className="h-4 w-4 text-blue-500" />;
+            return <Clock className="h-4 w-4 text-red-500" />;
       }
    };
 
@@ -267,7 +263,7 @@ export default function TasksPage() {
                         <p className="text-sm text-gray-500">Total Tasks</p>
                         <p className="text-2xl font-bold">{tasks.length}</p>
                      </div>
-                     <Filter className="h-8 w-8 text-blue-500" />
+                     <Filter className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>
@@ -296,7 +292,7 @@ export default function TasksPage() {
                            }
                         </p>
                      </div>
-                     <CheckCircle className="h-8 w-8 text-green-500" />
+                     <CheckCircle className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>

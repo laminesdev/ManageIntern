@@ -100,12 +100,12 @@ export default function MyTasksPage() {
             </Badge>
          ),
          in_progress: (
-            <Badge className="bg-blue-100 text-blue-800 border-blue-200">
+            <Badge className="bg-red-100 text-red-800 border-red-200">
                In Progress
             </Badge>
          ),
          completed: (
-            <Badge className="bg-green-100 text-green-800 border-green-200">
+            <Badge className="bg-red-100 text-red-800 border-red-200">
                Completed
             </Badge>
          ),
@@ -131,7 +131,7 @@ export default function MyTasksPage() {
             </Badge>
          ),
          high: (
-            <Badge className="bg-orange-100 text-orange-800 border-orange-200">
+            <Badge className="bg-red-100 text-red-800 border-red-200">
                High
             </Badge>
          ),
@@ -226,7 +226,7 @@ export default function MyTasksPage() {
                         <p className="text-sm text-gray-500">Total Tasks</p>
                         <p className="text-2xl font-bold">{totalTasks}</p>
                      </div>
-                     <CheckCircle className="h-8 w-8 text-blue-500" />
+                     <CheckCircle className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>
@@ -248,7 +248,7 @@ export default function MyTasksPage() {
                         <p className="text-sm text-gray-500">In Progress</p>
                         <p className="text-2xl font-bold">{inProgressTasks}</p>
                      </div>
-                     <Clock className="h-8 w-8 text-blue-500" />
+                     <Clock className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>
@@ -259,7 +259,7 @@ export default function MyTasksPage() {
                         <p className="text-sm text-gray-500">Completed</p>
                         <p className="text-2xl font-bold">{completedTasks}</p>
                      </div>
-                     <CheckCircle className="h-8 w-8 text-green-500" />
+                     <CheckCircle className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>

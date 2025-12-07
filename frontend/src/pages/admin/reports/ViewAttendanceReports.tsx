@@ -119,9 +119,7 @@ export default function ViewAttendanceReports() {
    const getStatusBadge = (status: string) => {
       switch (status) {
          case "present":
-            return (
-               <Badge className="bg-green-100 text-green-800">Present</Badge>
-            );
+            return <Badge className="bg-red-100 text-red-800">Present</Badge>;
          case "absent":
             return <Badge className="bg-red-100 text-red-800">Absent</Badge>;
          case "late":
@@ -129,7 +127,7 @@ export default function ViewAttendanceReports() {
                <Badge className="bg-yellow-100 text-yellow-800">Late</Badge>
             );
          case "excused":
-            return <Badge className="bg-blue-100 text-blue-800">Excused</Badge>;
+            return <Badge className="bg-red-100 text-red-800">Excused</Badge>;
          default:
             return <Badge variant="outline">{status}</Badge>;
       }
@@ -228,7 +226,7 @@ export default function ViewAttendanceReports() {
                               <CardTitle className="flex items-center gap-2">
                                  Attendance Report
                                  {report.sent_to_admin && (
-                                    <Badge className="bg-blue-100 text-blue-800">
+                                    <Badge className="bg-red-100 text-red-800">
                                        Sent to Admin
                                     </Badge>
                                  )}
@@ -266,7 +264,7 @@ export default function ViewAttendanceReports() {
                                     </div>
                                  </div>
                                  <div className="text-center">
-                                    <div className="text-2xl font-bold text-green-600">
+                                    <div className="text-2xl font-bold text-red-600">
                                        {report.data.present || 0}
                                     </div>
                                     <div className="text-sm text-gray-500">
@@ -297,11 +295,11 @@ export default function ViewAttendanceReports() {
 
                               {/* Summary */}
                               {report.data.summary && (
-                                 <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                                    <h4 className="font-semibold text-blue-900 mb-2">
+                                 <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                                    <h4 className="font-semibold text-red-900 mb-2">
                                        Summary
                                     </h4>
-                                    <p className="text-sm text-blue-800">
+                                    <p className="text-sm text-red-800">
                                        {report.data.summary}
                                     </p>
                                  </div>

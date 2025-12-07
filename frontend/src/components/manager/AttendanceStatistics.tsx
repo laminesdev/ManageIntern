@@ -19,13 +19,13 @@ export default function AttendanceStatistics({
    const getStatusColor = (status: string) => {
       switch (status) {
          case "present":
-            return "text-green-600";
+            return "text-red-600";
          case "absent":
             return "text-red-600";
          case "late":
             return "text-yellow-600";
          case "excused":
-            return "text-blue-600";
+            return "text-red-600";
          default:
             return "text-gray-600";
       }
@@ -34,13 +34,13 @@ export default function AttendanceStatistics({
    const getStatusIcon = (status: string) => {
       switch (status) {
          case "present":
-            return <CheckCircle className="h-5 w-5 text-green-500" />;
+            return <CheckCircle className="h-5 w-5 text-red-500" />;
          case "absent":
             return <XCircle className="h-5 w-5 text-red-500" />;
          case "late":
             return <Clock className="h-5 w-5 text-yellow-500" />;
          case "excused":
-            return <AlertCircle className="h-5 w-5 text-blue-500" />;
+            return <AlertCircle className="h-5 w-5 text-red-500" />;
          default:
             return null;
       }

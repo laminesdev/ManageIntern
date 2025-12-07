@@ -156,9 +156,7 @@ export default function AttendancePage() {
    const getStatusBadge = (status: Attendance["status"]) => {
       switch (status) {
          case "present":
-            return (
-               <Badge className="bg-green-100 text-green-800">Present</Badge>
-            );
+            return <Badge className="bg-red-100 text-red-800">Present</Badge>;
          case "absent":
             return <Badge className="bg-red-100 text-red-800">Absent</Badge>;
          case "late":
@@ -166,7 +164,7 @@ export default function AttendancePage() {
                <Badge className="bg-yellow-100 text-yellow-800">Late</Badge>
             );
          case "excused":
-            return <Badge className="bg-blue-100 text-blue-800">Excused</Badge>;
+            return <Badge className="bg-red-100 text-red-800">Excused</Badge>;
          default:
             return <Badge variant="outline">{status}</Badge>;
       }
@@ -175,13 +173,13 @@ export default function AttendancePage() {
    const getStatusIcon = (status: Attendance["status"]) => {
       switch (status) {
          case "present":
-            return <CheckCircle className="h-4 w-4 text-green-500" />;
+            return <CheckCircle className="h-4 w-4 text-red-500" />;
          case "absent":
             return <XCircle className="h-4 w-4 text-red-500" />;
          case "late":
             return <Clock className="h-4 w-4 text-yellow-500" />;
          case "excused":
-            return <CheckCircle className="h-4 w-4 text-blue-500" />;
+            return <CheckCircle className="h-4 w-4 text-red-500" />;
       }
    };
 
@@ -410,7 +408,7 @@ export default function AttendancePage() {
                                     <SelectContent>
                                        <SelectItem value="present">
                                           <div className="flex items-center">
-                                             <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                                             <CheckCircle className="h-4 w-4 text-red-500 mr-2" />
                                              Present
                                           </div>
                                        </SelectItem>
@@ -428,7 +426,7 @@ export default function AttendancePage() {
                                        </SelectItem>
                                        <SelectItem value="excused">
                                           <div className="flex items-center">
-                                             <CheckCircle className="h-4 w-4 text-blue-500 mr-2" />
+                                             <CheckCircle className="h-4 w-4 text-red-500 mr-2" />
                                              Excused
                                           </div>
                                        </SelectItem>
@@ -478,7 +476,7 @@ export default function AttendancePage() {
                            {todayAttendance.length}/{interns.length}
                         </p>
                      </div>
-                     <UserCheck className="h-8 w-8 text-blue-500" />
+                     <UserCheck className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>
@@ -487,7 +485,7 @@ export default function AttendancePage() {
                   <div className="flex items-center justify-between">
                      <div>
                         <p className="text-sm text-gray-500">Present Today</p>
-                        <p className="text-2xl font-bold text-green-600">
+                        <p className="text-2xl font-bold text-red-600">
                            {
                               todayAttendance.filter(
                                  (a) => a.status === "present"
@@ -495,7 +493,7 @@ export default function AttendancePage() {
                            }
                         </p>
                      </div>
-                     <CheckCircle className="h-8 w-8 text-green-500" />
+                     <CheckCircle className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>
@@ -533,7 +531,7 @@ export default function AttendancePage() {
                               : "0%"}
                         </p>
                      </div>
-                     <Filter className="h-8 w-8 text-purple-500" />
+                     <Filter className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>

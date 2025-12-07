@@ -93,7 +93,7 @@ export default function AdminDashboard() {
          title: "Total Users",
          value: stats.totalUsers?.toString() || "0",
          icon: Users,
-         color: "bg-purple-500",
+         color: "bg-red-500",
          description: `${stats.admins || 0} admins, ${
             stats.managers || 0
          } managers, ${stats.interns || 0} interns`,
@@ -102,14 +102,14 @@ export default function AdminDashboard() {
          title: "Managers",
          value: stats.managers?.toString() || "0",
          icon: Briefcase,
-         color: "bg-blue-500",
+         color: "bg-red-500",
          description: "Department managers",
       },
       {
          title: "Interns",
          value: stats.interns?.toString() || "0",
          icon: Users,
-         color: "bg-green-500",
+         color: "bg-red-500",
          description: "Active interns",
       },
       {

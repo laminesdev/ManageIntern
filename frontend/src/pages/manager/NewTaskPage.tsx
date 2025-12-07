@@ -409,21 +409,21 @@ export default function NewTaskPage() {
                </CardHeader>
                <CardContent>
                   <div className="space-y-4">
-                     <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
-                        <h4 className="font-semibold text-blue-900 mb-2">
+                     <div className="p-3 bg-red-50 rounded-lg border border-red-200">
+                        <h4 className="font-semibold text-red-900 mb-2">
                            Department Restriction
                         </h4>
-                        <p className="text-sm text-blue-800">
+                        <p className="text-sm text-red-800">
                            You can only assign tasks to interns in your
                            department.
                         </p>
                      </div>
 
-                     <div className="p-3 bg-green-50 rounded-lg border border-green-200">
-                        <h4 className="font-semibold text-green-900 mb-2">
+                     <div className="p-3 bg-red-50 rounded-lg border border-red-200">
+                        <h4 className="font-semibold text-red-900 mb-2">
                            Deadline Validation
                         </h4>
-                        <p className="text-sm text-green-800">
+                        <p className="text-sm text-red-800">
                            Deadline cannot be in the past.
                         </p>
                      </div>
@@ -433,7 +433,7 @@ export default function NewTaskPage() {
                         <span
                            className={`font-semibold ${
                               interns.length > 0
-                                 ? "text-green-600"
+                                 ? "text-red-600"
                                  : "text-red-600"
                            }`}
                         >

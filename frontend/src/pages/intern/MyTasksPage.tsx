@@ -119,7 +119,7 @@ export default function MyAttendancePage() {
       switch (status) {
          case "present":
             return (
-               <Badge className="bg-green-100 text-green-800 border-green-200">
+               <Badge className="bg-red-100 text-red-800 border-red-200">
                   Present
                </Badge>
             );
@@ -137,7 +137,7 @@ export default function MyAttendancePage() {
             );
          case "excused":
             return (
-               <Badge className="bg-blue-100 text-blue-800 border-blue-200">
+               <Badge className="bg-red-100 text-red-800 border-red-200">
                   Excused
                </Badge>
             );
@@ -149,13 +149,13 @@ export default function MyAttendancePage() {
    const getStatusIcon = (status: string): React.ReactElement | null => {
       switch (status) {
          case "present":
-            return <CheckCircle className="h-5 w-5 text-green-500" />;
+            return <CheckCircle className="h-5 w-5 text-red-500" />;
          case "absent":
             return <XCircle className="h-5 w-5 text-red-500" />;
          case "late":
             return <Clock className="h-5 w-5 text-yellow-500" />;
          case "excused":
-            return <AlertCircle className="h-5 w-5 text-blue-500" />;
+            return <AlertCircle className="h-5 w-5 text-red-500" />;
          default:
             return null;
       }
@@ -278,7 +278,7 @@ export default function MyAttendancePage() {
                            %
                         </p>
                      </div>
-                     <TrendingUp className="h-8 w-8 text-green-500" />
+                     <TrendingUp className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>
@@ -291,7 +291,7 @@ export default function MyAttendancePage() {
                            {stats.present || 0}
                         </p>
                      </div>
-                     <CheckCircle className="h-8 w-8 text-green-500" />
+                     <CheckCircle className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>
@@ -325,7 +325,7 @@ export default function MyAttendancePage() {
          <Card>
             <CardHeader>
                <CardTitle className="flex items-center">
-                  <Calendar className="mr-2 h-5 w-5 text-blue-500" />
+                  <Calendar className="mr-2 h-5 w-5 text-red-500" />
                   Attendance Records
                </CardTitle>
             </CardHeader>
@@ -397,13 +397,11 @@ export default function MyAttendancePage() {
             <CardContent>
                <div className="space-y-4">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                     <div className="text-center p-4 bg-green-50 rounded-lg border border-green-100">
-                        <div className="text-xl font-bold text-green-700">
+                     <div className="text-center p-4 bg-red-50 rounded-lg border border-red-100">
+                        <div className="text-xl font-bold text-red-700">
                            {stats.present || 0}
                         </div>
-                        <div className="text-sm text-green-600">
-                           Present Days
-                        </div>
+                        <div className="text-sm text-red-600">Present Days</div>
                      </div>
                      <div className="text-center p-4 bg-red-50 rounded-lg border border-red-100">
                         <div className="text-xl font-bold text-red-700">
@@ -417,13 +415,11 @@ export default function MyAttendancePage() {
                         </div>
                         <div className="text-sm text-yellow-600">Late Days</div>
                      </div>
-                     <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-100">
-                        <div className="text-xl font-bold text-blue-700">
+                     <div className="text-center p-4 bg-red-50 rounded-lg border border-red-100">
+                        <div className="text-xl font-bold text-red-700">
                            {stats.excused || 0}
                         </div>
-                        <div className="text-sm text-blue-600">
-                           Excused Days
-                        </div>
+                        <div className="text-sm text-red-600">Excused Days</div>
                      </div>
                   </div>
 
@@ -441,9 +437,9 @@ export default function MyAttendancePage() {
                         <div
                            className={`h-full rounded-full transition-all duration-300 ${
                               (stats.attendance_rate || 0) >= 90
-                                 ? "bg-green-500"
+                                 ? "bg-red-500"
                                  : (stats.attendance_rate || 0) >= 80
-                                 ? "bg-blue-500"
+                                 ? "bg-red-500"
                                  : (stats.attendance_rate || 0) >= 70
                                  ? "bg-yellow-500"
                                  : "bg-red-500"

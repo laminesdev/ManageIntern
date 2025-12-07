@@ -90,7 +90,7 @@ export const useDashboardStore = create<
                value: safeStats.totalUsers,
                label: "Total Users",
                icon: "👥",
-               color: "blue",
+               color: "red",
             },
             activeInterns: {
                value: safeStats.activeInterns,
@@ -102,13 +102,13 @@ export const useDashboardStore = create<
                value: safeStats.pendingTasks,
                label: "Pending Tasks",
                icon: "📝",
-               color: "orange",
+               color: "red",
             },
             reportsGenerated: {
                value: safeStats.reportsGenerated,
                label: "Reports",
                icon: "📊",
-               color: "purple",
+               color: "red",
             },
          } as Record<string, FormattedStat>;
       }
@@ -119,13 +119,13 @@ export const useDashboardStore = create<
                value: safeStats.myInterns,
                label: "My Interns",
                icon: "👥",
-               color: "blue",
+               color: "red",
             },
             pendingTasks: {
                value: safeStats.managerPendingTasks,
                label: "Pending Tasks",
                icon: "📝",
-               color: "orange",
+               color: "red",
             },
             attendanceToday: {
                value: safeStats.attendanceToday,
@@ -137,7 +137,7 @@ export const useDashboardStore = create<
                value: formatPercentage(safeStats.averageScore),
                label: "Avg Score",
                icon: "⭐",
-               color: "purple",
+               color: "red",
             },
             pendingReclamations: {
                value: safeStats.pendingReclamations,
@@ -154,7 +154,7 @@ export const useDashboardStore = create<
             value: safeStats.myTasks,
             label: "My Tasks",
             icon: "📝",
-            color: "blue",
+            color: "red",
          },
          averageScore: {
             value: formatPercentage(safeStats.internAverageScore),
@@ -166,13 +166,13 @@ export const useDashboardStore = create<
             value: safeStats.unreadNotifications,
             label: "Notifications",
             icon: "🔔",
-            color: "orange",
+            color: "red",
          },
          attendanceRate: {
             value: formatPercentage(safeStats.attendanceRate),
             label: "Attendance",
             icon: "📅",
-            color: "purple",
+            color: "red",
          },
       } as Record<string, FormattedStat>;
    },

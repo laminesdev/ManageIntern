@@ -34,21 +34,34 @@ export default function MyEvaluationsPage() {
    };
 
    const getScoreBadge = (score: number) => {
-      if (score >= 90) return <Badge className="bg-green-100 text-green-800">Excellent</Badge>;
-      if (score >= 80) return <Badge className="bg-blue-100 text-blue-800">Good</Badge>;
-      if (score >= 70) return <Badge className="bg-yellow-100 text-yellow-800">Average</Badge>;
-      return <Badge className="bg-red-100 text-red-800">Needs Improvement</Badge>;
+      if (score >= 90)
+         return <Badge className="bg-red-100 text-red-800">Excellent</Badge>;
+      if (score >= 80)
+         return <Badge className="bg-red-100 text-red-800">Good</Badge>;
+      if (score >= 70)
+         return (
+            <Badge className="bg-yellow-100 text-yellow-800">Average</Badge>
+         );
+      return (
+         <Badge className="bg-red-100 text-red-800">Needs Improvement</Badge>
+      );
    };
 
    if (isLoading) {
-      return <div className="flex items-center justify-center min-h-[400px]">Loading...</div>;
+      return (
+         <div className="flex items-center justify-center min-h-[400px]">
+            Loading...
+         </div>
+      );
    }
 
    return (
       <div className="space-y-6">
          <div>
             <h1 className="text-3xl font-bold">My Evaluations</h1>
-            <p className="text-muted-foreground">View your performance evaluations</p>
+            <p className="text-muted-foreground">
+               View your performance evaluations
+            </p>
          </div>
 
          {/* Stats */}
@@ -57,10 +70,14 @@ export default function MyEvaluationsPage() {
                <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                      <div>
-                        <p className="text-sm text-gray-500">Total Evaluations</p>
-                        <p className="text-2xl font-bold">{statistics?.total || 0}</p>
+                        <p className="text-sm text-gray-500">
+                           Total Evaluations
+                        </p>
+                        <p className="text-2xl font-bold">
+                           {statistics?.total || 0}
+                        </p>
                      </div>
-                     <Star className="h-8 w-8 text-blue-500" />
+                     <Star className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>
@@ -69,9 +86,11 @@ export default function MyEvaluationsPage() {
                   <div className="flex items-center justify-between">
                      <div>
                         <p className="text-sm text-gray-500">Average Score</p>
-                        <p className="text-2xl font-bold">{statistics?.average_score || 0}%</p>
+                        <p className="text-2xl font-bold">
+                           {statistics?.average_score || 0}%
+                        </p>
                      </div>
-                     <Award className="h-8 w-8 text-green-500" />
+                     <Award className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>
@@ -81,10 +100,12 @@ export default function MyEvaluationsPage() {
                      <div>
                         <p className="text-sm text-gray-500">Progress</p>
                         <p className="text-2xl font-bold">
-                           {statistics?.average_score >= 80 ? "On Track" : "Improving"}
+                           {statistics?.average_score >= 80
+                              ? "On Track"
+                              : "Improving"}
                         </p>
                      </div>
-                     <TrendingUp className="h-8 w-8 text-purple-500" />
+                     <TrendingUp className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>
@@ -96,8 +117,12 @@ export default function MyEvaluationsPage() {
                <Card>
                   <CardContent className="py-12 text-center">
                      <Star className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                     <h3 className="text-lg font-semibold mb-2">No Evaluations Yet</h3>
-                     <p className="text-gray-500">You haven't been evaluated yet</p>
+                     <h3 className="text-lg font-semibold mb-2">
+                        No Evaluations Yet
+                     </h3>
+                     <p className="text-gray-500">
+                        You haven't been evaluated yet
+                     </p>
                   </CardContent>
                </Card>
             ) : (
@@ -107,7 +132,10 @@ export default function MyEvaluationsPage() {
                         <div className="flex items-start justify-between">
                            <div>
                               <CardTitle className="flex items-center gap-2">
-                                 {evaluation.evaluation_type.replace('_', ' ').toUpperCase()} Evaluation
+                                 {evaluation.evaluation_type
+                                    .replace("_", " ")
+                                    .toUpperCase()}{" "}
+                                 Evaluation
                                  {getScoreBadge(evaluation.score)}
                               </CardTitle>
                               <p className="text-sm text-gray-500 mt-2">
@@ -115,9 +143,14 @@ export default function MyEvaluationsPage() {
                               </p>
                            </div>
                            <div className="text-right">
-                              <p className="text-3xl font-bold text-blue-600">{evaluation.score}%</p>
+                              <p className="text-3xl font-bold text-red-600">
+                                 {evaluation.score}%
+                              </p>
                               <p className="text-xs text-gray-500">
-                                 {format(new Date(evaluation.evaluated_at), "MMM dd, yyyy")}
+                                 {format(
+                                    new Date(evaluation.evaluated_at),
+                                    "MMM dd, yyyy"
+                                 )}
                               </p>
                            </div>
                         </div>
@@ -138,8 +171,10 @@ export default function MyEvaluationsPage() {
 
                         {evaluation.strengths && (
                            <div>
-                              <h4 className="font-semibold mb-2 text-green-700">Strengths</h4>
-                              <p className="text-sm text-gray-700 bg-green-50 p-3 rounded">
+                              <h4 className="font-semibold mb-2 text-red-700">
+                                 Strengths
+                              </h4>
+                              <p className="text-sm text-gray-700 bg-red-50 p-3 rounded">
                                  {evaluation.strengths}
                               </p>
                            </div>
@@ -147,7 +182,9 @@ export default function MyEvaluationsPage() {
 
                         {evaluation.areas_for_improvement && (
                            <div>
-                              <h4 className="font-semibold mb-2 text-amber-700">Areas for Improvement</h4>
+                              <h4 className="font-semibold mb-2 text-amber-700">
+                                 Areas for Improvement
+                              </h4>
                               <p className="text-sm text-gray-700 bg-amber-50 p-3 rounded">
                                  {evaluation.areas_for_improvement}
                               </p>

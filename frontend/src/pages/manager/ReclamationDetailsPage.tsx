@@ -114,13 +114,9 @@ export default function ReclamationDetailsPage() {
                <Badge className="bg-yellow-100 text-yellow-800">Pending</Badge>
             );
          case "in_review":
-            return (
-               <Badge className="bg-blue-100 text-blue-800">In Review</Badge>
-            );
+            return <Badge className="bg-red-100 text-red-800">In Review</Badge>;
          case "solved": // FIXED
-            return (
-               <Badge className="bg-green-100 text-green-800">Solved</Badge>
-            );
+            return <Badge className="bg-red-100 text-red-800">Solved</Badge>;
          case "archived":
             return (
                <Badge className="bg-gray-100 text-gray-800">Archived</Badge>
@@ -134,7 +130,7 @@ export default function ReclamationDetailsPage() {
       return (
          <div className="flex items-center justify-center min-h-[400px]">
             <div className="text-center">
-               <Loader2 className="h-12 w-12 animate-spin text-blue-500 mx-auto mb-4" />
+               <Loader2 className="h-12 w-12 animate-spin text-red-500 mx-auto mb-4" />
                <p className="text-gray-500">Loading reclamation...</p>
             </div>
          </div>
@@ -214,7 +210,7 @@ export default function ReclamationDetailsPage() {
                   {reclamation.response && (
                      <div>
                         <h3 className="font-semibold mb-2">Your Response</h3>
-                        <p className="text-gray-700 bg-blue-50 p-4 rounded-lg whitespace-pre-wrap border border-blue-200">
+                        <p className="text-gray-700 bg-red-50 p-4 rounded-lg whitespace-pre-wrap border border-red-200">
                            {reclamation.response}
                         </p>
                         {reclamation.responded_at && (

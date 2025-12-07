@@ -187,19 +187,17 @@ export default function EvaluationsPage() {
    };
 
    const getScoreColor = (score: number) => {
-      if (score >= 90) return "text-green-600";
-      if (score >= 80) return "text-blue-600";
+      if (score >= 90) return "text-red-600";
+      if (score >= 80) return "text-red-600";
       if (score >= 70) return "text-yellow-600";
       return "text-red-600";
    };
 
    const getScoreBadge = (score: number) => {
       if (score >= 90)
-         return (
-            <Badge className="bg-green-100 text-green-800">Excellent</Badge>
-         );
+         return <Badge className="bg-red-100 text-red-800">Excellent</Badge>;
       if (score >= 80)
-         return <Badge className="bg-blue-100 text-blue-800">Good</Badge>;
+         return <Badge className="bg-red-100 text-red-800">Good</Badge>;
       if (score >= 70)
          return (
             <Badge className="bg-yellow-100 text-yellow-800">Average</Badge>
@@ -451,7 +449,7 @@ export default function EvaluationsPage() {
                            {evaluations.length}
                         </p>
                      </div>
-                     <TrendingUp className="h-8 w-8 text-blue-500" />
+                     <TrendingUp className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>
@@ -471,7 +469,7 @@ export default function EvaluationsPage() {
                               : "0%"}
                         </p>
                      </div>
-                     <Award className="h-8 w-8 text-green-500" />
+                     <Award className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>
@@ -486,7 +484,7 @@ export default function EvaluationsPage() {
                            {new Set(evaluations.map((e) => e.intern_id)).size}
                         </p>
                      </div>
-                     <Star className="h-8 w-8 text-purple-500" />
+                     <Star className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>

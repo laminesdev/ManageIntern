@@ -40,7 +40,9 @@ export default function MyNotificationsPage() {
 
    const handleArchive = async (id: number) => {
       try {
-         await notificationService.updateMyNotification(id, { is_archived: true });
+         await notificationService.updateMyNotification(id, {
+            is_archived: true,
+         });
          toast.success("Notification archived");
          loadNotifications();
       } catch (error) {
@@ -59,7 +61,11 @@ export default function MyNotificationsPage() {
    };
 
    if (isLoading) {
-      return <div className="flex items-center justify-center min-h-[400px]">Loading...</div>;
+      return (
+         <div className="flex items-center justify-center min-h-[400px]">
+            Loading...
+         </div>
+      );
    }
 
    return (
@@ -67,9 +73,11 @@ export default function MyNotificationsPage() {
          <div className="flex items-center justify-between">
             <div>
                <h1 className="text-3xl font-bold">My Notifications</h1>
-               <p className="text-muted-foreground">View your notifications from managers</p>
+               <p className="text-muted-foreground">
+                  View your notifications from managers
+               </p>
             </div>
-            {notifications.filter(n => !n.is_read).length > 0 && (
+            {notifications.filter((n) => !n.is_read).length > 0 && (
                <Button variant="outline" onClick={handleMarkAllAsRead}>
                   <CheckCircle className="mr-2 h-4 w-4" />
                   Mark All as Read
@@ -84,9 +92,11 @@ export default function MyNotificationsPage() {
                   <div className="flex items-center justify-between">
                      <div>
                         <p className="text-sm text-gray-500">Total</p>
-                        <p className="text-2xl font-bold">{notifications.length}</p>
+                        <p className="text-2xl font-bold">
+                           {notifications.length}
+                        </p>
                      </div>
-                     <Bell className="h-8 w-8 text-blue-500" />
+                     <Bell className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>
@@ -95,7 +105,9 @@ export default function MyNotificationsPage() {
                   <div className="flex items-center justify-between">
                      <div>
                         <p className="text-sm text-gray-500">Unread</p>
-                        <p className="text-2xl font-bold">{notifications.filter(n => !n.is_read).length}</p>
+                        <p className="text-2xl font-bold">
+                           {notifications.filter((n) => !n.is_read).length}
+                        </p>
                      </div>
                      <Bell className="h-8 w-8 text-amber-500" />
                   </div>
@@ -106,7 +118,9 @@ export default function MyNotificationsPage() {
                   <div className="flex items-center justify-between">
                      <div>
                         <p className="text-sm text-gray-500">Archived</p>
-                        <p className="text-2xl font-bold">{notifications.filter(n => n.is_archived).length}</p>
+                        <p className="text-2xl font-bold">
+                           {notifications.filter((n) => n.is_archived).length}
+                        </p>
                      </div>
                      <Archive className="h-8 w-8 text-gray-500" />
                   </div>
@@ -120,40 +134,57 @@ export default function MyNotificationsPage() {
                <Card>
                   <CardContent className="py-12 text-center">
                      <Bell className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                     <h3 className="text-lg font-semibold mb-2">No Notifications</h3>
-                     <p className="text-gray-500">You don't have any notifications yet</p>
+                     <h3 className="text-lg font-semibold mb-2">
+                        No Notifications
+                     </h3>
+                     <p className="text-gray-500">
+                        You don't have any notifications yet
+                     </p>
                   </CardContent>
                </Card>
             ) : (
                notifications.map((notification) => (
-                  <Card key={notification.id} className={notification.is_read ? "opacity-60" : ""}>
+                  <Card
+                     key={notification.id}
+                     className={notification.is_read ? "opacity-60" : ""}
+                  >
                      <CardHeader>
                         <div className="flex items-start justify-between">
                            <div className="flex-1">
                               <div className="flex items-center gap-2 mb-2">
                                  <CardTitle>{notification.title}</CardTitle>
                                  {!notification.is_read && (
-                                    <Badge className="bg-blue-100 text-blue-800">New</Badge>
+                                    <Badge className="bg-red-100 text-red-800">
+                                       New
+                                    </Badge>
                                  )}
                                  {notification.is_archived && (
                                     <Badge variant="outline">Archived</Badge>
                                  )}
                               </div>
-                              <p className="text-sm text-gray-600">{notification.message}</p>
+                              <p className="text-sm text-gray-600">
+                                 {notification.message}
+                              </p>
                            </div>
                         </div>
                      </CardHeader>
                      <CardContent>
                         <div className="flex items-center justify-between">
                            <div className="text-sm text-gray-500">
-                              From: {notification.sender?.name} • {format(new Date(notification.created_at), "MMM dd, yyyy 'at' hh:mm a")}
+                              From: {notification.sender?.name} •{" "}
+                              {format(
+                                 new Date(notification.created_at),
+                                 "MMM dd, yyyy 'at' hh:mm a"
+                              )}
                            </div>
                            <div className="flex gap-2">
                               {!notification.is_read && (
                                  <Button
                                     variant="ghost"
                                     size="sm"
-                                    onClick={() => handleMarkAsRead(notification.id)}
+                                    onClick={() =>
+                                       handleMarkAsRead(notification.id)
+                                    }
                                  >
                                     <CheckCircle className="h-4 w-4 mr-1" />
                                     Mark as Read
@@ -163,7 +194,9 @@ export default function MyNotificationsPage() {
                                  <Button
                                     variant="ghost"
                                     size="sm"
-                                    onClick={() => handleArchive(notification.id)}
+                                    onClick={() =>
+                                       handleArchive(notification.id)
+                                    }
                                  >
                                     <Archive className="h-4 w-4 mr-1" />
                                     Archive

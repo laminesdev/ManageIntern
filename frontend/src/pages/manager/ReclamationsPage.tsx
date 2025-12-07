@@ -95,13 +95,9 @@ export default function ReclamationsPage() {
                <Badge className="bg-yellow-100 text-yellow-800">Pending</Badge>
             );
          case "in_review":
-            return (
-               <Badge className="bg-blue-100 text-blue-800">In Review</Badge>
-            );
+            return <Badge className="bg-red-100 text-red-800">In Review</Badge>;
          case "resolved": // FIXED
-            return (
-               <Badge className="bg-green-100 text-green-800">Resolved</Badge>
-            );
+            return <Badge className="bg-red-100 text-red-800">Resolved</Badge>;
          case "archived":
             return (
                <Badge className="bg-gray-100 text-gray-800">Archived</Badge>
@@ -165,7 +161,7 @@ export default function ReclamationsPage() {
                         <p className="text-sm text-gray-500">Total</p>
                         <p className="text-2xl font-bold">{stats.total}</p>
                      </div>
-                     <AlertCircle className="h-8 w-8 text-blue-500" />
+                     <AlertCircle className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>
@@ -187,11 +183,11 @@ export default function ReclamationsPage() {
                   <div className="flex items-center justify-between">
                      <div>
                         <p className="text-sm text-gray-500">In Review</p>
-                        <p className="text-2xl font-bold text-blue-600">
+                        <p className="text-2xl font-bold text-red-600">
                            {stats.in_review}
                         </p>
                      </div>
-                     <Eye className="h-8 w-8 text-blue-500" />
+                     <Eye className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>
@@ -200,11 +196,11 @@ export default function ReclamationsPage() {
                   <div className="flex items-center justify-between">
                      <div>
                         <p className="text-sm text-gray-500">Resolved</p>
-                        <p className="text-2xl font-bold text-green-600">
+                        <p className="text-2xl font-bold text-red-600">
                            {stats.resolved}
                         </p>
                      </div>
-                     <MessageSquare className="h-8 w-8 text-green-500" />
+                     <MessageSquare className="h-8 w-8 text-red-500" />
                   </div>
                </CardContent>
             </Card>

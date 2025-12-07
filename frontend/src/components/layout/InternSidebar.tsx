@@ -51,7 +51,7 @@ export default function InternSidebar() {
                      cn(
                         "flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors",
                         isActive
-                           ? "bg-green-50 text-green-600 border-l-4 border-green-600"
+                           ? "bg-red-50 text-red-600 border-l-4 border-red-600"
                            : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                      )
                   }
@@ -64,7 +64,7 @@ export default function InternSidebar() {
 
          {/* Performance Stats */}
          <div className="p-4 mt-8">
-            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4">
+            <div className="bg-gradient-to-r from-red-50 to-emerald-50 rounded-xl p-4">
                <h3 className="text-sm font-semibold text-gray-900 mb-2">
                   This Week
                </h3>

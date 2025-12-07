@@ -330,8 +330,8 @@ export default function ViewPerformanceReports() {
    };
 
    const getScoreColor = (score: number) => {
-      if (score >= 90) return "text-green-600";
-      if (score >= 80) return "text-blue-600";
+      if (score >= 90) return "text-red-600";
+      if (score >= 80) return "text-red-600";
       if (score >= 70) return "text-yellow-600";
       return "text-red-600";
    };
@@ -449,7 +449,7 @@ export default function ViewPerformanceReports() {
                                     <CardTitle className="flex items-center gap-2">
                                        Performance Report
                                        {report.sent_to_admin && (
-                                          <Badge className="bg-blue-100 text-blue-800">
+                                          <Badge className="bg-red-100 text-red-800">
                                              Sent to Admin
                                           </Badge>
                                        )}
@@ -567,11 +567,11 @@ export default function ViewPerformanceReports() {
                               )}
 
                               {/* Summary */}
-                              <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                                 <h4 className="font-semibold text-blue-900 mb-2">
+                              <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                                 <h4 className="font-semibold text-red-900 mb-2">
                                     Summary
                                  </h4>
-                                 <p className="text-sm text-blue-800">
+                                 <p className="text-sm text-red-800">
                                     {generateSummary(report.analysis)}
                                  </p>
                               </div>
@@ -698,7 +698,7 @@ export default function ViewPerformanceReports() {
                               <div className="text-gray-500">Total Reports</div>
                            </div>
                            <div className="text-center p-6 bg-gray-50 rounded-lg">
-                              <div className="text-3xl font-bold text-blue-600">
+                              <div className="text-3xl font-bold text-red-600">
                                  {departmentStats.length}
                               </div>
                               <div className="text-gray-500">
@@ -749,7 +749,7 @@ export default function ViewPerformanceReports() {
                                                 ? "bg-gray-100 text-gray-800"
                                                 : index === 2
                                                 ? "bg-amber-100 text-amber-800"
-                                                : "bg-blue-50 text-blue-800"
+                                                : "bg-red-50 text-red-800"
                                           }`}
                                        >
                                           {index + 1}

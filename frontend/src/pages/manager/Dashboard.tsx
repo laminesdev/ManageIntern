@@ -69,14 +69,20 @@ export default function ManagerDashboard() {
             evaluationsResponse,
             reclamationsResponse,
          ] = await Promise.all([
-            taskService.getTasks({ status: "pending" }).catch(() => ({ data: [] })),
+            taskService
+               .getTasks({ status: "pending" })
+               .catch(() => ({ data: [] })),
             taskService.getInternsForTasks().catch(() => ({ data: [] })),
-            attendanceService.getAttendance({
-               start_date: format(new Date(), "yyyy-MM-dd"),
-               end_date: format(new Date(), "yyyy-MM-dd"),
-            }).catch(() => ({ data: [] })),
+            attendanceService
+               .getAttendance({
+                  start_date: format(new Date(), "yyyy-MM-dd"),
+                  end_date: format(new Date(), "yyyy-MM-dd"),
+               })
+               .catch(() => ({ data: [] })),
             evaluationService.getEvaluations().catch(() => ({ data: [] })),
-            reclamationService.getReclamations({ status: "pending" }).catch(() => ({ data: [] })),
+            reclamationService
+               .getReclamations({ status: "pending" })
+               .catch(() => ({ data: [] })),
          ]);
 
          // Calculate statistics
@@ -89,11 +95,14 @@ export default function ManagerDashboard() {
          // Calculate average score
          const avgScore =
             evaluations.length > 0
-               ? evaluations.reduce((sum: number, e: any) => sum + e.score, 0) / evaluations.length
+               ? evaluations.reduce((sum: number, e: any) => sum + e.score, 0) /
+                 evaluations.length
                : 0;
 
          // Calculate today's attendance
-         const presentCount = todayAttendance.filter((a: any) => a.status === "present").length;
+         const presentCount = todayAttendance.filter(
+            (a: any) => a.status === "present"
+         ).length;
          const attendanceString = `${presentCount}/${interns.length}`;
 
          // Generate recent activity
@@ -165,7 +174,8 @@ export default function ManagerDashboard() {
    const handleQuickAction = async (path: string) => {
       if (path === "/manager/attendance") {
          try {
-            const internsResponse = await attendanceService.getDepartmentInterns();
+            const internsResponse =
+               await attendanceService.getDepartmentInterns();
             if (!internsResponse.data || internsResponse.data.length === 0) {
                toast.error("No interns available in your department");
                return;
@@ -207,8 +217,10 @@ export default function ManagerDashboard() {
             </div>
             <div className="flex items-center justify-center py-12">
                <div className="text-center">
-                  <Loader2 className="h-12 w-12 animate-spin text-blue-500 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Loading Dashboard</h3>
+                  <Loader2 className="h-12 w-12 animate-spin text-red-500 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                     Loading Dashboard
+                  </h3>
                   <p className="text-gray-500">Fetching your team data...</p>
                </div>
             </div>
@@ -221,7 +233,7 @@ export default function ManagerDashboard() {
          title: "My Interns",
          value: stats.total_interns.toString(),
          icon: Users,
-         color: "bg-blue-500",
+         color: "bg-red-500",
          description: "In your department",
          trend: `${stats.total_interns} total`,
          trendUp: true,
@@ -239,7 +251,7 @@ export default function ManagerDashboard() {
          title: "Today's Attendance",
          value: stats.todays_attendance,
          icon: Calendar,
-         color: "bg-green-500",
+         color: "bg-red-500",
          description: "Present today",
          trend: "Current status",
          trendUp: true,
@@ -248,7 +260,7 @@ export default function ManagerDashboard() {
          title: "Average Score",
          value: `${stats.average_score}%`,
          icon: Star,
-         color: "bg-purple-500",
+         color: "bg-red-500",
          description: "Team average",
          trend: "Performance",
          trendUp: true,
@@ -261,7 +273,7 @@ export default function ManagerDashboard() {
          description: "Create and assign a task to intern",
          icon: Plus,
          path: "/manager/tasks/new",
-         color: "bg-blue-100 text-blue-600",
+         color: "bg-red-100 text-red-600",
          enabled: true,
       },
       {
@@ -269,7 +281,7 @@ export default function ManagerDashboard() {
          description: "Record today's attendance",
          icon: Calendar,
          path: "/manager/attendance",
-         color: "bg-green-100 text-green-600",
+         color: "bg-red-100 text-red-600",
          enabled: stats.total_interns > 0,
       },
       {
@@ -285,7 +297,7 @@ export default function ManagerDashboard() {
          description: "Generate performance reports",
          icon: BarChart3,
          path: "/manager/reports",
-         color: "bg-purple-100 text-purple-600",
+         color: "bg-red-100 text-red-600",
          enabled: true,
       },
    ];
@@ -294,8 +306,12 @@ export default function ManagerDashboard() {
       <div className="space-y-6">
          <div className="flex items-center justify-between">
             <div>
-               <h1 className="text-3xl font-bold tracking-tight">Welcome back, {user?.name}!</h1>
-               <p className="text-muted-foreground">Here's what's happening with your team today</p>
+               <h1 className="text-3xl font-bold tracking-tight">
+                  Welcome back, {user?.name}!
+               </h1>
+               <p className="text-muted-foreground">
+                  Here's what's happening with your team today
+               </p>
             </div>
             <div className="flex items-center space-x-3">
                <Button
@@ -304,7 +320,9 @@ export default function ManagerDashboard() {
                   onClick={handleRefresh}
                   disabled={isRefreshing}
                >
-                  <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
+                  <RefreshCw
+                     className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`}
+                  />
                </Button>
                <Button onClick={() => navigate("/manager/tasks/new")}>
                   <Plus className="mr-2 h-4 w-4" />
@@ -317,25 +335,34 @@ export default function ManagerDashboard() {
             {statCards.map((stat) => {
                const Icon = stat.icon;
                return (
-                  <Card key={stat.title} className="hover:shadow-lg transition-shadow">
+                  <Card
+                     key={stat.title}
+                     className="hover:shadow-lg transition-shadow"
+                  >
                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
-                        <div className={`p-2 rounded-full ${stat.color} text-white`}>
+                        <CardTitle className="text-sm font-medium">
+                           {stat.title}
+                        </CardTitle>
+                        <div
+                           className={`p-2 rounded-full ${stat.color} text-white`}
+                        >
                            <Icon className="h-4 w-4" />
                         </div>
                      </CardHeader>
                      <CardContent>
                         <div className="text-2xl font-bold">{stat.value}</div>
-                        <div className="text-xs text-muted-foreground mt-1">{stat.description}</div>
+                        <div className="text-xs text-muted-foreground mt-1">
+                           {stat.description}
+                        </div>
                         <div className="flex items-center mt-2">
                            <TrendingUp
                               className={`h-3 w-3 mr-1 ${
-                                 stat.trendUp ? "text-green-500" : "text-red-500"
+                                 stat.trendUp ? "text-red-500" : "text-red-500"
                               }`}
                            />
                            <span
                               className={`text-xs ${
-                                 stat.trendUp ? "text-green-600" : "text-red-600"
+                                 stat.trendUp ? "text-red-600" : "text-red-600"
                               }`}
                            >
                               {stat.trend}
@@ -357,11 +384,13 @@ export default function ManagerDashboard() {
                   return (
                      <button
                         key={action.title}
-                        onClick={() => !isDisabled && handleQuickAction(action.path)}
+                        onClick={() =>
+                           !isDisabled && handleQuickAction(action.path)
+                        }
                         className={`p-4 bg-white border rounded-lg transition-all text-left group ${
                            isDisabled
                               ? "opacity-50 cursor-not-allowed"
-                              : "hover:border-blue-300 hover:shadow-sm"
+                              : "hover:border-red-300 hover:shadow-sm"
                         }`}
                         disabled={isDisabled}
                      >
@@ -370,14 +399,21 @@ export default function ManagerDashboard() {
                               <Icon className="h-5 w-5" />
                            </div>
                            {!isDisabled && (
-                              <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
+                              <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-red-500 transition-colors" />
                            )}
                         </div>
-                        <h3 className="font-medium text-gray-900">{action.title}</h3>
-                        <p className="text-sm text-gray-500 mt-1">{action.description}</p>
-                        {isDisabled && action.path === "/manager/attendance" && (
-                           <p className="text-xs text-red-500 mt-2">No interns available</p>
-                        )}
+                        <h3 className="font-medium text-gray-900">
+                           {action.title}
+                        </h3>
+                        <p className="text-sm text-gray-500 mt-1">
+                           {action.description}
+                        </p>
+                        {isDisabled &&
+                           action.path === "/manager/attendance" && (
+                              <p className="text-xs text-red-500 mt-2">
+                                 No interns available
+                              </p>
+                           )}
                      </button>
                   );
                })}
@@ -405,10 +441,15 @@ export default function ManagerDashboard() {
                                     {stats.pending_reclamations} Reclamation
                                     {stats.pending_reclamations > 1 ? "s" : ""}
                                  </p>
-                                 <p className="text-sm text-amber-700">Waiting for your review</p>
+                                 <p className="text-sm text-amber-700">
+                                    Waiting for your review
+                                 </p>
                               </div>
                            </div>
-                           <Button size="sm" onClick={() => navigate("/manager/reclamations")}>
+                           <Button
+                              size="sm"
+                              onClick={() => navigate("/manager/reclamations")}
+                           >
                               Review
                            </Button>
                         </div>
@@ -416,7 +457,9 @@ export default function ManagerDashboard() {
                   ) : (
                      <div className="text-center py-8">
                         <CheckSquare className="h-12 w-12 text-gray-300 mx-auto mb-2" />
-                        <p className="text-sm text-muted-foreground">No pending reclamations</p>
+                        <p className="text-sm text-muted-foreground">
+                           No pending reclamations
+                        </p>
                         <p className="text-xs text-gray-400 mt-1">
                            All reclamations have been addressed
                         </p>
@@ -428,57 +471,69 @@ export default function ManagerDashboard() {
             <Card>
                <CardHeader>
                   <CardTitle className="flex items-center">
-                     <Clock className="mr-2 h-5 w-5 text-purple-500" />
+                     <Clock className="mr-2 h-5 w-5 text-red-500" />
                      Recent Activity
                   </CardTitle>
                </CardHeader>
                <CardContent>
                   {stats.recent_activity && stats.recent_activity.length > 0 ? (
                      <div className="space-y-3">
-                        {stats.recent_activity.slice(0, 4).map((activity, index) => {
-                           let ActivityIcon = CheckSquare;
-                           let iconColor = "text-blue-600";
-                           let bgColor = "bg-blue-100";
+                        {stats.recent_activity
+                           .slice(0, 4)
+                           .map((activity, index) => {
+                              let ActivityIcon = CheckSquare;
+                              let iconColor = "text-red-600";
+                              let bgColor = "bg-red-100";
 
-                           if (activity.type === "reclamation") {
-                              ActivityIcon = AlertCircle;
-                              iconColor = "text-amber-600";
-                              bgColor = "bg-amber-100";
-                           } else if (activity.type === "attendance") {
-                              ActivityIcon = Calendar;
-                              iconColor = "text-green-600";
-                              bgColor = "bg-green-100";
-                           } else if (activity.type === "evaluation") {
-                              ActivityIcon = Star;
-                              iconColor = "text-purple-600";
-                              bgColor = "bg-purple-100";
-                           }
+                              if (activity.type === "reclamation") {
+                                 ActivityIcon = AlertCircle;
+                                 iconColor = "text-amber-600";
+                                 bgColor = "bg-amber-100";
+                              } else if (activity.type === "attendance") {
+                                 ActivityIcon = Calendar;
+                                 iconColor = "text-red-600";
+                                 bgColor = "bg-red-100";
+                              } else if (activity.type === "evaluation") {
+                                 ActivityIcon = Star;
+                                 iconColor = "text-red-600";
+                                 bgColor = "bg-red-100";
+                              }
 
-                           return (
-                              <div
-                                 key={index}
-                                 className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors"
-                              >
-                                 <div className="flex items-center space-x-3">
-                                    <div
-                                       className={`h-8 w-8 rounded-full ${bgColor} flex items-center justify-center`}
-                                    >
-                                       <ActivityIcon className={`h-4 w-4 ${iconColor}`} />
+                              return (
+                                 <div
+                                    key={index}
+                                    className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors"
+                                 >
+                                    <div className="flex items-center space-x-3">
+                                       <div
+                                          className={`h-8 w-8 rounded-full ${bgColor} flex items-center justify-center`}
+                                       >
+                                          <ActivityIcon
+                                             className={`h-4 w-4 ${iconColor}`}
+                                          />
+                                       </div>
+                                       <div>
+                                          <p className="font-medium text-sm">
+                                             {activity.user_name}
+                                          </p>
+                                          <p className="text-xs text-gray-500">
+                                             {activity.action}
+                                          </p>
+                                       </div>
                                     </div>
-                                    <div>
-                                       <p className="font-medium text-sm">{activity.user_name}</p>
-                                       <p className="text-xs text-gray-500">{activity.action}</p>
-                                    </div>
+                                    <span className="text-xs text-gray-400">
+                                       {activity.time}
+                                    </span>
                                  </div>
-                                 <span className="text-xs text-gray-400">{activity.time}</span>
-                              </div>
-                           );
-                        })}
+                              );
+                           })}
                      </div>
                   ) : (
                      <div className="text-center py-8">
                         <Clock className="h-12 w-12 text-gray-300 mx-auto mb-2" />
-                        <p className="text-sm text-muted-foreground">No recent activity</p>
+                        <p className="text-sm text-muted-foreground">
+                           No recent activity
+                        </p>
                         <p className="text-xs text-gray-400 mt-1">
                            Activity will appear here as your team works
                         </p>
@@ -495,38 +550,59 @@ export default function ManagerDashboard() {
             <CardContent>
                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div
-                     className="text-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors cursor-pointer"
+                     className="text-center p-4 bg-red-50 rounded-lg hover:bg-red-100 transition-colors cursor-pointer"
                      onClick={() => navigate("/manager/tasks")}
                   >
-                     <div className="text-2xl font-bold text-blue-600">{stats.total_interns}</div>
-                     <div className="text-sm text-gray-600 mt-1">Total Interns</div>
-                     <div className="text-xs text-blue-500 mt-1">View All →</div>
+                     <div className="text-2xl font-bold text-red-600">
+                        {stats.total_interns}
+                     </div>
+                     <div className="text-sm text-gray-600 mt-1">
+                        Total Interns
+                     </div>
+                     <div className="text-xs text-red-500 mt-1">View All →</div>
                   </div>
                   <div
-                     className="text-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors cursor-pointer"
+                     className="text-center p-4 bg-red-50 rounded-lg hover:bg-red-100 transition-colors cursor-pointer"
                      onClick={() => navigate("/manager/attendance")}
                   >
-                     <div className="text-2xl font-bold text-green-600">
-                        {stats.todays_attendance.split("/")[0]}/{stats.todays_attendance.split("/")[1]}
+                     <div className="text-2xl font-bold text-red-600">
+                        {stats.todays_attendance.split("/")[0]}/
+                        {stats.todays_attendance.split("/")[1]}
                      </div>
-                     <div className="text-sm text-gray-600 mt-1">Present Today</div>
-                     <div className="text-xs text-green-500 mt-1">Mark Attendance →</div>
+                     <div className="text-sm text-gray-600 mt-1">
+                        Present Today
+                     </div>
+                     <div className="text-xs text-red-500 mt-1">
+                        Mark Attendance →
+                     </div>
                   </div>
                   <div
-                     className="text-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors cursor-pointer"
+                     className="text-center p-4 bg-red-50 rounded-lg hover:bg-red-100 transition-colors cursor-pointer"
                      onClick={() => navigate("/manager/evaluations")}
                   >
-                     <div className="text-2xl font-bold text-purple-600">{stats.average_score}%</div>
-                     <div className="text-sm text-gray-600 mt-1">Average Score</div>
-                     <div className="text-xs text-purple-500 mt-1">View Evaluations →</div>
+                     <div className="text-2xl font-bold text-red-600">
+                        {stats.average_score}%
+                     </div>
+                     <div className="text-sm text-gray-600 mt-1">
+                        Average Score
+                     </div>
+                     <div className="text-xs text-red-500 mt-1">
+                        View Evaluations →
+                     </div>
                   </div>
                   <div
                      className="text-center p-4 bg-amber-50 rounded-lg hover:bg-amber-100 transition-colors cursor-pointer"
                      onClick={() => navigate("/manager/tasks")}
                   >
-                     <div className="text-2xl font-bold text-amber-600">{stats.pending_tasks}</div>
-                     <div className="text-sm text-gray-600 mt-1">Pending Tasks</div>
-                     <div className="text-xs text-amber-500 mt-1">Manage Tasks →</div>
+                     <div className="text-2xl font-bold text-amber-600">
+                        {stats.pending_tasks}
+                     </div>
+                     <div className="text-sm text-gray-600 mt-1">
+                        Pending Tasks
+                     </div>
+                     <div className="text-xs text-amber-500 mt-1">
+                        Manage Tasks →
+                     </div>
                   </div>
                </div>
             </CardContent>

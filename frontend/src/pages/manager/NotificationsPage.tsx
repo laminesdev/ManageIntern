@@ -57,7 +57,7 @@ export default function NotificationsPage() {
    if (isLoading) {
       return (
          <div className="flex items-center justify-center min-h-[400px]">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+            <Loader2 className="h-8 w-8 animate-spin text-red-500" />
          </div>
       );
    }
@@ -107,7 +107,7 @@ export default function NotificationsPage() {
                            className={`p-4 rounded-lg border ${
                               notification.read_by?.length > 0
                                  ? "bg-gray-50 border-gray-200"
-                                 : "bg-blue-50 border-blue-200"
+                                 : "bg-red-50 border-red-200"
                            }`}
                         >
                            <div className="flex items-start justify-between">
@@ -117,7 +117,7 @@ export default function NotificationsPage() {
                                        {notification.title}
                                     </h4>
                                     {notification.read_by?.length === 0 && (
-                                       <Badge className="bg-blue-100 text-blue-800">
+                                       <Badge className="bg-red-100 text-red-800">
                                           New
                                        </Badge>
                                     )}

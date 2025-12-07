@@ -355,7 +355,7 @@ export interface FormattedStat {
    value: string | number;
    label: string;
    icon: string;
-   color: "blue" | "green" | "orange" | "purple" | "red";
+   color: "red" | "green" | "red" | "red" | "red";
 }
 
 // ==================== STORE STATE TYPES ====================

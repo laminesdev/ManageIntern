@@ -25,8 +25,8 @@ export default function AdminSidebar() {
       <aside className="w-64 border-r bg-white min-h-[calc(100vh-70px)] hidden md:block">
          <div className="p-6 border-b">
             <div className="flex items-center space-x-3">
-               <div className="p-2 bg-purple-100 rounded-lg">
-                  <Shield className="h-6 w-6 text-purple-600" />
+               <div className="p-2 bg-red-100 rounded-lg">
+                  <Shield className="h-6 w-6 text-red-600" />
                </div>
                <div>
                   <h2 className="font-semibold text-gray-900">Administrator</h2>
@@ -44,7 +44,7 @@ export default function AdminSidebar() {
                      cn(
                         "flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors",
                         isActive
-                           ? "bg-purple-50 text-purple-600 border-l-4 border-purple-600"
+                           ? "bg-red-50 text-red-600 border-l-4 border-red-600"
                            : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                      )
                   }
