@@ -64,7 +64,9 @@ export const notificationService = {
       data: Array<{ id: number; name: string; email: string }>;
    }> => {
       const response = await api.get("/notifications/interns");
-      return response.data;
+      // API returns array directly, wrap it for consistency
+      const interns = Array.isArray(response.data) ? response.data : (response.data?.data || []);
+      return { data: interns };
    },
 
    // Manager: Get interns for notifications (alias)
@@ -72,7 +74,9 @@ export const notificationService = {
       data: Array<{ id: number; name: string; email: string }>;
    }> => {
       const response = await api.get("/notifications/interns");
-      return response.data;
+      // API returns array directly, wrap it for consistency
+      const interns = Array.isArray(response.data) ? response.data : (response.data?.data || []);
+      return { data: interns };
    },
 
    // Intern: Get my notifications

@@ -33,7 +33,7 @@ export interface AttendanceStatistics {
 
 export interface CreateAttendanceData {
    intern_id: number;
-   date: string;
+   attendance_date: string;
    status: "present" | "absent" | "late" | "excused";
    notes?: string;
 }
@@ -88,7 +88,9 @@ export const attendanceService = {
       data: Array<{ id: number; name: string; email: string }>;
    }> => {
       const response = await api.get("/interns-for-attendance");
-      return response.data;
+      // API returns array directly, wrap it in { data: [...] } for consistency
+      const interns = Array.isArray(response.data) ? response.data : (response.data?.data || []);
+      return { data: interns };
    },
 
    // Manager: Get attendance summary for reports

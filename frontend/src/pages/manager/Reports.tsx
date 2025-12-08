@@ -573,14 +573,20 @@ export default function ManagerReports() {
                                     {getReportTypeBadge(report.type)}
                                  </TableCell>
                                  <TableCell>
-                                    {format(
-                                       new Date(report.period_start),
-                                       "MMM dd"
-                                    )}{" "}
-                                    -{" "}
-                                    {format(
-                                       new Date(report.period_end),
-                                       "MMM dd, yyyy"
+                                    {report.period_start && report.period_end ? (
+                                       <>
+                                          {format(
+                                             new Date(report.period_start),
+                                             "MMM dd"
+                                          )}{" "}
+                                          -{" "}
+                                          {format(
+                                             new Date(report.period_end),
+                                             "MMM dd, yyyy"
+                                          )}
+                                       </>
+                                    ) : (
+                                       "N/A"
                                     )}
                                  </TableCell>
                                  <TableCell>
@@ -594,10 +600,10 @@ export default function ManagerReports() {
                                     </div>
                                  </TableCell>
                                  <TableCell>
-                                    {format(
+                                    {report.generated_at ? format(
                                        new Date(report.generated_at),
                                        "MMM dd, yyyy"
-                                    )}
+                                    ) : "N/A"}
                                  </TableCell>
                                  <TableCell>
                                     {getStatusBadge(report.sent_to_admin)}

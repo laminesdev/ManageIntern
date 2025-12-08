@@ -37,7 +37,7 @@ import { reclamationService } from "@/services/reclamationService";
 
 const responseSchema = z.object({
    response: z.string().min(10, "Response must be at least 10 characters"),
-   status: z.enum(["pending", "in_review", "solved", "archived"]), // FIXED
+   status: z.enum(["pending", "solved", "archived"]),
 });
 
 type ResponseFormData = z.infer<typeof responseSchema>;
@@ -53,7 +53,7 @@ export default function ReclamationDetailsPage() {
       resolver: zodResolver(responseSchema),
       defaultValues: {
          response: "",
-         status: "in_review",
+         status: "solved",
       },
    });
 
@@ -74,10 +74,14 @@ export default function ReclamationDetailsPage() {
          setReclamation(response.reclamation);
 
          if (response.reclamation.response) {
-            const formStatus =
-               response.reclamation.status === "resolved"
-                  ? "solved"
-                  : response.reclamation.status;
+            let formStatus: "pending" | "solved" | "archived" = "solved";
+            if (response.reclamation.status === "pending") {
+               formStatus = "pending";
+            } else if (response.reclamation.status === "archived") {
+               formStatus = "archived";
+            } else {
+               formStatus = "solved";
+            }
 
             form.reset({
                response: response.reclamation.response,
@@ -254,9 +258,6 @@ export default function ReclamationDetailsPage() {
                                           <SelectItem value="pending">
                                              Pending
                                           </SelectItem>
-                                          <SelectItem value="in_review">
-                                             In Review
-                                          </SelectItem>
                                           <SelectItem value="solved">
                                              Solved
                                           </SelectItem>
@@ -349,31 +350,46 @@ export default function ReclamationDetailsPage() {
                      </div>
                   )}
 
-                  <div className="pt-4 border-t">
-                     <p className="text-sm text-gray-500 mb-2">Quick Actions</p>
-                     <div className="space-y-2">
-                        <Button
-                           variant="outline"
-                           size="sm"
-                           className="w-full"
-                           onClick={() => {
-                              form.setValue("status", "solved");
-                           }}
-                        >
-                           Mark as Resolved
-                        </Button>
-                        <Button
-                           variant="outline"
-                           size="sm"
-                           className="w-full"
-                           onClick={() => {
-                              form.setValue("status", "archived");
-                           }}
-                        >
-                           Archive
-                        </Button>
+                  {reclamation.status === "pending" && (
+                     <div className="pt-4 border-t">
+                        <p className="text-sm text-gray-500 mb-2">Quick Actions</p>
+                        <p className="text-xs text-muted-foreground mb-2">
+                           These buttons will set the status in the form. Fill in your response and submit.
+                        </p>
+                        <div className="space-y-2">
+                           <Button
+                              variant="outline"
+                              size="sm"
+                              className="w-full"
+                              onClick={() => {
+                                 form.setValue("status", "solved");
+                                 toast.info("Status set to 'Solved'. Please add your response and submit.");
+                              }}
+                           >
+                              <CheckCircle className="mr-2 h-4 w-4" />
+                              Mark as Resolved
+                           </Button>
+                           <Button
+                              variant="outline"
+                              size="sm"
+                              className="w-full"
+                              onClick={() => {
+                                 form.setValue("status", "archived");
+                                 toast.info("Status set to 'Archived'. Please add your response and submit.");
+                              }}
+                           >
+                              Archive
+                           </Button>
+                        </div>
                      </div>
-                  </div>
+                  )}
+                  {reclamation.status !== "pending" && (
+                     <div className="pt-4 border-t">
+                        <p className="text-sm text-muted-foreground">
+                           This reclamation has already been processed and cannot be modified.
+                        </p>
+                     </div>
+                  )}
                </CardContent>
             </Card>
          </div>

@@ -103,7 +103,9 @@ export const evaluationService = {
       data: Array<{ id: number; name: string; email: string }>;
    }> => {
       const response = await api.get("/interns-for-evaluation");
-      return response.data;
+      // API returns array directly, wrap it for consistency
+      const interns = Array.isArray(response.data) ? response.data : (response.data?.data || []);
+      return { data: interns };
    },
 
    // Intern: Get my evaluations

@@ -50,7 +50,9 @@ export const taskService = {
       // Use the correct endpoint from documentation
       try {
          const response = await api.get("/interns-for-tasks");
-         return response.data;
+         // API returns array directly, wrap it for consistency
+         const interns = Array.isArray(response.data) ? response.data : (response.data?.data || []);
+         return { data: interns };
       } catch (error) {
          console.error("Error getting interns for tasks:", error);
          throw error;

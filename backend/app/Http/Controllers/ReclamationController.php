@@ -62,6 +62,13 @@ class ReclamationController extends Controller
     {
         $user = $request->user();
         
+        // Check if intern is assigned to a manager
+        if (!$user->manager_id) {
+            return response()->json([
+                'message' => 'You must be assigned to a department and manager before submitting a reclamation.'
+            ], 422);
+        }
+        
         $validated = $request->validated();
         $validated['intern_id'] = $user->id;
         $validated['manager_id'] = $user->manager_id;

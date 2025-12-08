@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Home, Users, FileText, Shield } from "lucide-react";
+import { Home, Users, FileText, Shield, Building } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -12,6 +12,11 @@ const navItems = [
       path: "/admin/users",
       label: "User Management",
       icon: Users,
+   },
+   {
+      path: "/admin/departments",
+      label: "Departments",
+      icon: Building,
    },
    {
       path: "/admin/reports",

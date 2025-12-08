@@ -32,7 +32,7 @@ export interface CreateReclamationData {
 
 export interface RespondToReclamationData {
    response: string;
-   status: "pending" | "in_review" | "solved" | "archived";
+   status: "pending" | "solved" | "archived";
 }
 
 export const reclamationService = {
@@ -60,7 +60,11 @@ export const reclamationService = {
       id: number
    ): Promise<{ reclamation: Reclamation }> => {
       const response = await api.get(`/reclamations/${id}`);
-      return response.data;
+      // Handle both { reclamation: ... } and direct object response
+      if (response.data?.reclamation) {
+         return response.data;
+      }
+      return { reclamation: response.data };
    },
 
    // Manager: Respond to reclamation

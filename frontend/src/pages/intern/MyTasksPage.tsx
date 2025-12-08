@@ -1,180 +1,133 @@
-// src/pages/intern/MyAttendancePage.tsx
-import React, { useState, useEffect } from "react";
+// src/pages/intern/MyTasksPage.tsx
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { attendanceService } from "@/services/attendanceService";
-import { toast } from "sonner";
-import { format, subDays, startOfMonth, endOfMonth } from "date-fns";
 import {
-   Calendar,
+   Select,
+   SelectContent,
+   SelectItem,
+   SelectTrigger,
+   SelectValue,
+} from "@/components/ui/select";
+import { taskService } from "@/services/taskService";
+import { toast } from "sonner";
+import { format } from "date-fns";
+import {
    CheckCircle,
-   XCircle,
    Clock,
    AlertCircle,
-   TrendingUp,
+   ListTodo,
+   Loader2,
+   RefreshCw,
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function MyAttendancePage() {
-   const [attendanceRecords, setAttendanceRecords] = useState<any[]>([]);
+interface Task {
+   id: number;
+   title: string;
+   description: string;
+   status: "pending" | "in_progress" | "completed" | "cancelled";
+   priority: "low" | "medium" | "high";
+   deadline: string;
+   assigned_by: number;
+   assigned_to: number;
+   completed_at?: string;
+   created_at: string;
+   updated_at: string;
+   assignedBy?: {
+      id: number;
+      name: string;
+      email: string;
+   };
+}
+
+export default function MyTasksPage() {
+   const [tasks, setTasks] = useState<Task[]>([]);
    const [statistics, setStatistics] = useState<any>(null);
    const [isLoading, setIsLoading] = useState(true);
-   const [timeRange, setTimeRange] = useState("month");
+   const [statusFilter, setStatusFilter] = useState("all");
+   const [updatingTaskId, setUpdatingTaskId] = useState<number | null>(null);
 
    useEffect(() => {
-      loadAttendanceData();
-   }, [timeRange]);
+      loadTasks();
+   }, [statusFilter]);
 
-   const loadAttendanceData = async () => {
+   const loadTasks = async () => {
       try {
          setIsLoading(true);
+         const params: any = {};
+         if (statusFilter !== "all") {
+            params.status = statusFilter;
+         }
 
-         // Get date range based on selected timeRange
-         const getDateRange = () => {
-            const now = new Date();
-            switch (timeRange) {
-               case "week":
-                  const weekAgo = subDays(now, 7);
-                  return {
-                     start_date: format(weekAgo, "yyyy-MM-dd"),
-                     end_date: format(now, "yyyy-MM-dd"),
-                  };
-               case "month":
-                  return {
-                     start_date: format(startOfMonth(now), "yyyy-MM-dd"),
-                     end_date: format(endOfMonth(now), "yyyy-MM-dd"),
-                  };
-               case "quarter":
-                  const quarterStart = new Date(
-                     now.getFullYear(),
-                     Math.floor(now.getMonth() / 3) * 3,
-                     1
-                  );
-                  const quarterEnd = new Date(
-                     quarterStart.getFullYear(),
-                     quarterStart.getMonth() + 3,
-                     0
-                  );
-                  return {
-                     start_date: format(quarterStart, "yyyy-MM-dd"),
-                     end_date: format(quarterEnd, "yyyy-MM-dd"),
-                  };
-               case "year":
-                  return {
-                     start_date: format(
-                        new Date(now.getFullYear(), 0, 1),
-                        "yyyy-MM-dd"
-                     ),
-                     end_date: format(
-                        new Date(now.getFullYear(), 11, 31),
-                        "yyyy-MM-dd"
-                     ),
-                  };
-               case "all":
-               default:
-                  return {};
-            }
-         };
+         const response = await taskService.getMyTasks(params);
+         
+         // Handle different response structures
+         const tasksData = response.tasks?.data || response.tasks || response.data || response || [];
+         const statsData = response.statistics || null;
 
-         const dateRange = getDateRange();
-
-         const [recordsResponse, statsResponse] = await Promise.all([
-            attendanceService.getMyAttendance(dateRange),
-            attendanceService.getMyAttendanceStatistics(),
-         ]);
-
-         // FIX: Handle the response structure correctly based on the service definition
-         // The service returns: Promise<{ statistics: AttendanceStatistics }>
-         // So we need to access the statistics property
-         const records = Array.isArray(recordsResponse)
-            ? recordsResponse
-            : recordsResponse.data || [];
-
-         // For statistics, the service returns { statistics: AttendanceStatistics }
-         const stats = statsResponse.statistics || statsResponse;
-
-         // Sort records by date (newest first)
-         const sortedRecords = records.sort((a: any, b: any) => {
-            const dateA = a.attendance_date || a.date;
-            const dateB = b.attendance_date || b.date;
-            return new Date(dateB).getTime() - new Date(dateA).getTime();
-         });
-
-         setAttendanceRecords(sortedRecords);
-         setStatistics(stats);
+         setTasks(Array.isArray(tasksData) ? tasksData : []);
+         setStatistics(statsData);
       } catch (error: any) {
-         console.error("Failed to load attendance data:", error);
-         toast.error(
-            error.response?.data?.message || "Failed to load attendance data"
-         );
-         setAttendanceRecords([]);
-         setStatistics(null);
+         console.error("Failed to load tasks:", error);
+         toast.error(error.response?.data?.message || "Failed to load tasks");
+         setTasks([]);
       } finally {
          setIsLoading(false);
       }
    };
 
-   const getStatusBadge = (status: string): React.ReactElement => {
+   const handleUpdateStatus = async (taskId: number, newStatus: "pending" | "in_progress" | "completed" | "overdue") => {
+      try {
+         setUpdatingTaskId(taskId);
+         await taskService.updateTaskStatus(taskId, newStatus);
+         toast.success("Task status updated successfully!");
+         await loadTasks();
+      } catch (error: any) {
+         console.error("Failed to update task status:", error);
+         toast.error(error.response?.data?.message || "Failed to update task status");
+      } finally {
+         setUpdatingTaskId(null);
+      }
+   };
+
+   const getStatusBadge = (status: string) => {
       switch (status) {
-         case "present":
-            return (
-               <Badge className="bg-red-100 text-red-800 border-red-200">
-                  Present
-               </Badge>
-            );
-         case "absent":
-            return (
-               <Badge className="bg-red-100 text-red-800 border-red-200">
-                  Absent
-               </Badge>
-            );
-         case "late":
-            return (
-               <Badge className="bg-red-100 text-red-800 border-red-200">
-                  Late
-               </Badge>
-            );
-         case "excused":
-            return (
-               <Badge className="bg-red-100 text-red-800 border-red-200">
-                  Excused
-               </Badge>
-            );
+         case "pending":
+            return <Badge variant="outline" className="bg-yellow-100 text-yellow-800 border-yellow-200">Pending</Badge>;
+         case "in_progress":
+            return <Badge variant="outline" className="bg-blue-100 text-blue-800 border-blue-200">In Progress</Badge>;
+         case "completed":
+            return <Badge variant="outline" className="bg-green-100 text-green-800 border-green-200">Completed</Badge>;
+         case "cancelled":
+            return <Badge variant="outline" className="bg-gray-100 text-gray-800 border-gray-200">Cancelled</Badge>;
          default:
             return <Badge variant="outline">{status}</Badge>;
       }
    };
 
-   const getStatusIcon = (status: string): React.ReactElement | null => {
-      switch (status) {
-         case "present":
-            return <CheckCircle className="h-5 w-5 text-red-500" />;
-         case "absent":
-            return <XCircle className="h-5 w-5 text-red-500" />;
-         case "late":
-            return <Clock className="h-5 w-5 text-red-500" />;
-         case "excused":
-            return <AlertCircle className="h-5 w-5 text-red-500" />;
+   const getPriorityBadge = (priority: string) => {
+      switch (priority) {
+         case "high":
+            return <Badge className="bg-red-500 text-white">High</Badge>;
+         case "medium":
+            return <Badge className="bg-orange-500 text-white">Medium</Badge>;
+         case "low":
+            return <Badge className="bg-green-500 text-white">Low</Badge>;
          default:
-            return null;
+            return <Badge variant="outline">{priority}</Badge>;
       }
    };
 
-   const formatDate = (dateString: string): string => {
-      try {
-         const date = new Date(dateString);
-         const today = new Date();
-         const yesterday = new Date();
-         yesterday.setDate(today.getDate() - 1);
+   const isOverdue = (deadline: string, status: string) => {
+      if (status === "completed" || status === "cancelled") return false;
+      return new Date(deadline) < new Date();
+   };
 
-         if (date.toDateString() === today.toDateString()) {
-            return "Today";
-         } else if (date.toDateString() === yesterday.toDateString()) {
-            return "Yesterday";
-         } else {
-            return format(date, "MMM dd, yyyy");
-         }
+   const formatDate = (dateString: string) => {
+      try {
+         return format(new Date(dateString), "MMM dd, yyyy");
       } catch {
          return "Invalid date";
       }
@@ -187,7 +140,6 @@ export default function MyAttendancePage() {
                <Skeleton className="h-10 w-48 mb-2" />
                <Skeleton className="h-4 w-64" />
             </div>
-
             <div className="grid gap-6 md:grid-cols-4">
                {[1, 2, 3, 4].map((i) => (
                   <Card key={i}>
@@ -197,15 +149,14 @@ export default function MyAttendancePage() {
                   </Card>
                ))}
             </div>
-
             <Card>
                <CardHeader>
                   <Skeleton className="h-6 w-32" />
                </CardHeader>
                <CardContent>
                   <div className="space-y-4">
-                     {[1, 2, 3, 4, 5].map((i) => (
-                        <Skeleton key={i} className="h-16 w-full" />
+                     {[1, 2, 3].map((i) => (
+                        <Skeleton key={i} className="h-24 w-full" />
                      ))}
                   </div>
                </CardContent>
@@ -214,53 +165,36 @@ export default function MyAttendancePage() {
       );
    }
 
-   // Calculate statistics if not provided by API
    const stats = statistics || {
-      total: attendanceRecords.length,
-      present: attendanceRecords.filter((r: any) => r.status === "present")
-         .length,
-      absent: attendanceRecords.filter((r: any) => r.status === "absent")
-         .length,
-      late: attendanceRecords.filter((r: any) => r.status === "late").length,
-      excused: attendanceRecords.filter((r: any) => r.status === "excused")
-         .length,
-      attendance_rate:
-         attendanceRecords.length > 0
-            ? (attendanceRecords.filter((r: any) => r.status === "present")
-                 .length /
-                 attendanceRecords.length) *
-              100
-            : 100,
+      total: tasks.length,
+      pending: tasks.filter((t) => t.status === "pending").length,
+      in_progress: tasks.filter((t) => t.status === "in_progress").length,
+      completed: tasks.filter((t) => t.status === "completed").length,
+      overdue: tasks.filter((t) => isOverdue(t.deadline, t.status)).length,
    };
-
-   const timeRanges = [
-      { value: "week", label: "This Week" },
-      { value: "month", label: "This Month" },
-      { value: "quarter", label: "This Quarter" },
-      { value: "year", label: "This Year" },
-      { value: "all", label: "All Time" },
-   ];
 
    return (
       <div className="space-y-6">
          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-               <h1 className="text-3xl font-bold">My Attendance</h1>
-               <p className="text-muted-foreground">
-                  Track your attendance records
-               </p>
+               <h1 className="text-3xl font-bold">My Tasks</h1>
+               <p className="text-muted-foreground">View and manage your assigned tasks</p>
             </div>
-            <div className="flex flex-wrap gap-2">
-               {timeRanges.map((range) => (
-                  <Button
-                     key={range.value}
-                     variant={timeRange === range.value ? "default" : "outline"}
-                     size="sm"
-                     onClick={() => setTimeRange(range.value)}
-                  >
-                     {range.label}
-                  </Button>
-               ))}
+            <div className="flex items-center gap-2">
+               <Select value={statusFilter} onValueChange={setStatusFilter}>
+                  <SelectTrigger className="w-[180px]">
+                     <SelectValue placeholder="Filter by status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                     <SelectItem value="all">All Tasks</SelectItem>
+                     <SelectItem value="pending">Pending</SelectItem>
+                     <SelectItem value="in_progress">In Progress</SelectItem>
+                     <SelectItem value="completed">Completed</SelectItem>
+                  </SelectContent>
+               </Select>
+               <Button variant="outline" size="icon" onClick={loadTasks}>
+                  <RefreshCw className="h-4 w-4" />
+               </Button>
             </div>
          </div>
 
@@ -270,15 +204,10 @@ export default function MyAttendancePage() {
                <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                      <div>
-                        <p className="text-sm text-gray-500">Attendance Rate</p>
-                        <p className="text-2xl font-bold">
-                           {typeof stats.attendance_rate === "number"
-                              ? stats.attendance_rate.toFixed(1)
-                              : 0}
-                           %
-                        </p>
+                        <p className="text-sm text-gray-500">Total Tasks</p>
+                        <p className="text-2xl font-bold">{stats.total}</p>
                      </div>
-                     <TrendingUp className="h-8 w-8 text-red-500" />
+                     <ListTodo className="h-8 w-8 text-blue-500" />
                   </div>
                </CardContent>
             </Card>
@@ -286,12 +215,10 @@ export default function MyAttendancePage() {
                <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                      <div>
-                        <p className="text-sm text-gray-500">Present</p>
-                        <p className="text-2xl font-bold">
-                           {stats.present || 0}
-                        </p>
+                        <p className="text-sm text-gray-500">Pending</p>
+                        <p className="text-2xl font-bold">{stats.pending}</p>
                      </div>
-                     <CheckCircle className="h-8 w-8 text-red-500" />
+                     <Clock className="h-8 w-8 text-yellow-500" />
                   </div>
                </CardContent>
             </Card>
@@ -299,12 +226,10 @@ export default function MyAttendancePage() {
                <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                      <div>
-                        <p className="text-sm text-gray-500">Absent</p>
-                        <p className="text-2xl font-bold">
-                           {stats.absent || 0}
-                        </p>
+                        <p className="text-sm text-gray-500">In Progress</p>
+                        <p className="text-2xl font-bold">{stats.in_progress}</p>
                      </div>
-                     <XCircle className="h-8 w-8 text-red-500" />
+                     <Loader2 className="h-8 w-8 text-blue-500" />
                   </div>
                </CardContent>
             </Card>
@@ -312,157 +237,111 @@ export default function MyAttendancePage() {
                <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                      <div>
-                        <p className="text-sm text-gray-500">Late</p>
-                        <p className="text-2xl font-bold">{stats.late || 0}</p>
+                        <p className="text-sm text-gray-500">Completed</p>
+                        <p className="text-2xl font-bold">{stats.completed}</p>
                      </div>
-                     <Clock className="h-8 w-8 text-red-500" />
+                     <CheckCircle className="h-8 w-8 text-green-500" />
                   </div>
                </CardContent>
             </Card>
          </div>
 
-         {/* Recent Attendance */}
+         {/* Tasks List */}
          <Card>
             <CardHeader>
                <CardTitle className="flex items-center">
-                  <Calendar className="mr-2 h-5 w-5 text-red-500" />
-                  Attendance Records
+                  <ListTodo className="mr-2 h-5 w-5 text-blue-500" />
+                  Tasks List
                </CardTitle>
             </CardHeader>
             <CardContent>
-               {attendanceRecords.length === 0 ? (
+               {tasks.length === 0 ? (
                   <div className="text-center py-12">
-                     <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                        No Attendance Records
-                     </h3>
+                     <ListTodo className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                     <h3 className="text-lg font-semibold text-gray-900 mb-2">No Tasks Found</h3>
                      <p className="text-gray-500">
-                        No attendance records found for the selected time
-                        period.
+                        {statusFilter !== "all"
+                           ? `No ${statusFilter.replace("_", " ")} tasks found.`
+                           : "You don't have any tasks assigned yet."}
                      </p>
                   </div>
                ) : (
-                  <div className="space-y-3">
-                     {attendanceRecords.slice(0, 20).map((record) => {
-                        const date = record.attendance_date || record.date;
-                        return (
-                           <div
-                              key={record.id}
-                              className="flex flex-col md:flex-row md:items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors gap-3"
-                           >
-                              <div className="flex items-center space-x-3">
-                                 {getStatusIcon(record.status)}
-                                 <div>
-                                    <p className="font-medium">
-                                       {formatDate(date)}
-                                    </p>
-                                    <p className="text-sm text-gray-500">
-                                       {record.notes || "No notes"}
-                                    </p>
+                  <div className="space-y-4">
+                     {tasks.map((task) => (
+                        <div
+                           key={task.id}
+                           className={`p-4 border rounded-lg hover:bg-gray-50 transition-colors ${
+                              isOverdue(task.deadline, task.status) ? "border-red-300 bg-red-50" : ""
+                           }`}
+                        >
+                           <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                              <div className="flex-1">
+                                 <div className="flex items-center gap-2 mb-2">
+                                    <h3 className="font-semibold text-lg">{task.title}</h3>
+                                    {getPriorityBadge(task.priority)}
+                                    {getStatusBadge(task.status)}
+                                    {isOverdue(task.deadline, task.status) && (
+                                       <Badge className="bg-red-500 text-white">
+                                          <AlertCircle className="h-3 w-3 mr-1" />
+                                          Overdue
+                                       </Badge>
+                                    )}
+                                 </div>
+                                 <p className="text-gray-600 mb-2">{task.description}</p>
+                                 <div className="flex flex-wrap gap-4 text-sm text-gray-500">
+                                    <span>
+                                       <strong>Deadline:</strong> {formatDate(task.deadline)}
+                                    </span>
+                                    {task.assignedBy && (
+                                       <span>
+                                          <strong>Assigned by:</strong> {task.assignedBy.name}
+                                       </span>
+                                    )}
+                                    {task.completed_at && (
+                                       <span>
+                                          <strong>Completed:</strong> {formatDate(task.completed_at)}
+                                       </span>
+                                    )}
                                  </div>
                               </div>
-                              <div className="flex items-center space-x-3">
-                                 {getStatusBadge(record.status)}
-                                 {record.recorded_at && (
-                                    <span className="text-sm text-gray-500">
-                                       Recorded:{" "}
-                                       {format(
-                                          new Date(record.recorded_at),
-                                          "MMM dd, yyyy"
+                              <div className="flex items-center gap-2">
+                                 {task.status !== "completed" && task.status !== "cancelled" && (
+                                    <>
+                                       {task.status === "pending" && (
+                                          <Button
+                                             size="sm"
+                                             variant="outline"
+                                             onClick={() => handleUpdateStatus(task.id, "in_progress")}
+                                             disabled={updatingTaskId === task.id}
+                                          >
+                                             {updatingTaskId === task.id ? (
+                                                <Loader2 className="h-4 w-4 animate-spin" />
+                                             ) : (
+                                                "Start Task"
+                                             )}
+                                          </Button>
                                        )}
-                                    </span>
+                                       {task.status === "in_progress" && (
+                                          <Button
+                                             size="sm"
+                                             onClick={() => handleUpdateStatus(task.id, "completed")}
+                                             disabled={updatingTaskId === task.id}
+                                          >
+                                             {updatingTaskId === task.id ? (
+                                                <Loader2 className="h-4 w-4 animate-spin" />
+                                             ) : (
+                                                "Mark Complete"
+                                             )}
+                                          </Button>
+                                       )}
+                                    </>
                                  )}
                               </div>
                            </div>
-                        );
-                     })}
-
-                     {attendanceRecords.length > 20 && (
-                        <div className="text-center pt-4">
-                           <p className="text-sm text-gray-500">
-                              Showing 20 of {attendanceRecords.length} records
-                           </p>
                         </div>
-                     )}
+                     ))}
                   </div>
                )}
-            </CardContent>
-         </Card>
-
-         {/* Attendance Summary */}
-         <Card>
-            <CardHeader>
-               <CardTitle>Attendance Summary</CardTitle>
-            </CardHeader>
-            <CardContent>
-               <div className="space-y-4">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                     <div className="text-center p-4 bg-red-50 rounded-lg border border-red-100">
-                        <div className="text-xl font-bold text-red-700">
-                           {stats.present || 0}
-                        </div>
-                        <div className="text-sm text-red-600">Present Days</div>
-                     </div>
-                     <div className="text-center p-4 bg-red-50 rounded-lg border border-red-100">
-                        <div className="text-xl font-bold text-red-700">
-                           {stats.absent || 0}
-                        </div>
-                        <div className="text-sm text-red-600">Absent Days</div>
-                     </div>
-                     <div className="text-center p-4 bg-red-50 rounded-lg border border-red-100">
-                        <div className="text-xl font-bold text-red-700">
-                           {stats.late || 0}
-                        </div>
-                        <div className="text-sm text-red-600">Late Days</div>
-                     </div>
-                     <div className="text-center p-4 bg-red-50 rounded-lg border border-red-100">
-                        <div className="text-xl font-bold text-red-700">
-                           {stats.excused || 0}
-                        </div>
-                        <div className="text-sm text-red-600">Excused Days</div>
-                     </div>
-                  </div>
-
-                  <div className="pt-4">
-                     <div className="flex justify-between text-sm mb-1">
-                        <span>Overall Attendance Rate</span>
-                        <span>
-                           {typeof stats.attendance_rate === "number"
-                              ? stats.attendance_rate.toFixed(1)
-                              : 0}
-                           %
-                        </span>
-                     </div>
-                     <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
-                        <div
-                           className={`h-full rounded-full transition-all duration-300 ${
-                              (stats.attendance_rate || 0) >= 90
-                                 ? "bg-red-500"
-                                 : (stats.attendance_rate || 0) >= 80
-                                 ? "bg-red-500"
-                                 : (stats.attendance_rate || 0) >= 70
-                                 ? "bg-red-500"
-                                 : "bg-red-500"
-                           }`}
-                           style={{
-                              width: `${Math.min(
-                                 stats.attendance_rate || 0,
-                                 100
-                              )}%`,
-                           }}
-                        ></div>
-                     </div>
-                     <div className="flex justify-between text-xs text-gray-500 mt-1">
-                        <span>0%</span>
-                        <span>100%</span>
-                     </div>
-                  </div>
-
-                  <div className="pt-4 text-sm text-gray-500 text-center">
-                     Last updated:{" "}
-                     {format(new Date(), "MMM dd, yyyy 'at' hh:mm a")}
-                  </div>
-               </div>
             </CardContent>
          </Card>
       </div>

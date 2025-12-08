@@ -55,7 +55,36 @@ class UserController extends Controller
             $validated['password'] = Hash::make($validated['password']);
         }
 
+        // If creating an intern with a department, automatically assign the department's manager
+        if (isset($validated['role']) && $validated['role'] === 'intern' && isset($validated['department_id'])) {
+            $department = Department::with('manager')->find($validated['department_id']);
+            if ($department && $department->manager_id) {
+                $validated['manager_id'] = $department->manager_id;
+            }
+        }
+
+        // If creating a manager with a department, update the department to have this manager
+        if (isset($validated['role']) && $validated['role'] === 'manager' && isset($validated['department_id'])) {
+            $department = Department::find($validated['department_id']);
+            if ($department) {
+                // Check if department already has a manager
+                if ($department->manager_id) {
+                    return response()->json([
+                        'message' => 'This department already has a manager assigned.'
+                    ], 422);
+                }
+            }
+        }
+
         $user = User::create($validated);
+
+        // If manager was created with a department, update the department's manager_id
+        if ($user->role === 'manager' && $user->department_id) {
+            $department = Department::find($user->department_id);
+            if ($department && !$department->manager_id) {
+                $department->update(['manager_id' => $user->id]);
+            }
+        }
 
         return response()->json([
             'message' => 'User created successfully',
@@ -122,9 +151,9 @@ class UserController extends Controller
     }
 
     /**
-     * Assign intern to department and manager
+     * Assign intern to department and automatically assign manager
      */
-    public function assignIntern(AssignInternRequest $request, User $user): JsonResponse
+    public function assignIntern(Request $request, User $user): JsonResponse
     {
         // Validate user is an intern
         if (!$user->isIntern()) {
@@ -140,7 +169,17 @@ class UserController extends Controller
             ], 422);
         }
 
-        $validated = $request->validated();
+        // Validate request
+        $validated = $request->validate([
+            'department_id' => 'required|exists:departments,id',
+        ]);
+
+        // Get department with manager
+        $department = \App\Models\Department::with('manager')->findOrFail($validated['department_id']);
+
+        // Automatically assign the department's manager
+        $validated['manager_id'] = $department->manager_id;
+
         $user->update($validated);
 
         return response()->json([

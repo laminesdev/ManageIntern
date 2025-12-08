@@ -25,7 +25,7 @@ class Department extends Model
 
     public function manager(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'manager_id');
+        return $this->belongsTo(User::class, 'manager_id')->withDefault();
     }
 
     public function users(): HasMany

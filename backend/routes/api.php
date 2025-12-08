@@ -10,6 +10,7 @@ use App\Http\Controllers\ReclamationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/users/{user}/assign', [UserController::class, 'assignIntern']);
         Route::delete('/users/{user}/soft-delete', [UserController::class, 'softDelete']);
         Route::post('/users/{user}/restore', [UserController::class, 'restore']);
+
+        // Department management
+        Route::apiResource('departments', DepartmentController::class);
+        Route::get('/departments/{department}/managers', [DepartmentController::class, 'getManagers']);
 
         // Get lists for dropdowns
         Route::get('/managers', [UserController::class, 'getManagers']);

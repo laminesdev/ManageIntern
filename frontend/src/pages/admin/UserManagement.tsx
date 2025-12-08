@@ -47,8 +47,10 @@ import {
    Eye,
    EyeOff,
    RefreshCw,
+   UserPlus,
 } from "lucide-react";
 import { userService } from "@/services/userService";
+import { departmentService } from "@/services/departmentService";
 
 // Schema definitions
 const userSchema = z.object({
@@ -67,6 +69,10 @@ const editUserSchema = z.object({
    role: z.enum(["admin", "manager", "intern"]),
    department_id: z.string().optional(),
    manager_id: z.string().optional(),
+});
+
+const assignInternSchema = z.object({
+   department_id: z.number().min(1, "Please select a department"),
 });
 
 type UserFormData = z.infer<typeof userSchema>;
@@ -94,6 +100,7 @@ interface Department {
    id: number;
    name: string;
    description?: string;
+   manager_id?: number;
 }
 
 interface Manager {
@@ -115,6 +122,7 @@ export default function UserManagement() {
    const [showPassword, setShowPassword] = useState(false);
    const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+   const [isAssignDialogOpen, setIsAssignDialogOpen] = useState(false);
    const [selectedUser, setSelectedUser] = useState<User | null>(null);
    const [departments, setDepartments] = useState<Department[]>([]);
    const [managers, setManagers] = useState<Manager[]>([]);
@@ -143,6 +151,19 @@ export default function UserManagement() {
       },
    });
 
+   const assignForm = useForm<z.infer<typeof assignInternSchema>>({
+      resolver: zodResolver(assignInternSchema),
+      defaultValues: {
+         department_id: 0,
+      },
+   });
+
+   // Watch form values for conditional rendering
+   const watchAddRole = addForm.watch("role");
+   const watchAddDepartment = addForm.watch("department_id");
+   const watchEditRole = editForm.watch("role");
+   const watchEditDepartment = editForm.watch("department_id");
+
    useEffect(() => {
       loadInitialData();
    }, []);
@@ -155,15 +176,9 @@ export default function UserManagement() {
 
    const loadUsers = async () => {
       try {
-         console.log("Loading users...");
          const response = await userService.getUsers();
-         console.log("Users response:", response);
-
-         // Handle different response structures
          const usersData = response.data || response;
          setUsers(Array.isArray(usersData) ? usersData : []);
-
-         console.log("Loaded users:", usersData);
       } catch (error) {
          console.error("Failed to load users:", error);
          toast.error("Failed to load users");
@@ -172,64 +187,19 @@ export default function UserManagement() {
 
    const loadDepartments = async () => {
       try {
-         console.log("Loading departments...");
-
-         // First try to get departments from the users list
-         // This is a fallback if there's no departments endpoint
-         const response = await userService.getUsers();
-         const usersData = response.data || response;
-
-         // Extract unique departments from users
-         const deptMap = new Map<number, Department>();
-         usersData.forEach((user: User) => {
-            if (user.department && user.department.id) {
-               deptMap.set(user.department.id, {
-                  id: user.department.id,
-                  name: user.department.name,
-               });
-            }
-         });
-
-         const extractedDepts = Array.from(deptMap.values());
-         console.log("Extracted departments from users:", extractedDepts);
-
-         if (extractedDepts.length > 0) {
-            setDepartments(extractedDepts);
-         } else {
-            // Fallback to mock data only if no departments found
-            console.log("No departments found, using fallback");
-            setDepartments([
-               { id: 1, name: "Engineering" },
-               { id: 2, name: "Marketing" },
-               { id: 3, name: "Sales" },
-               { id: 4, name: "Human Resources" },
-               { id: 5, name: "Finance" },
-            ]);
-         }
+         const response = await departmentService.getDepartments();
+         setDepartments(response);
       } catch (error) {
          console.error("Failed to load departments:", error);
-         // Use fallback departments
-         setDepartments([
-            { id: 1, name: "Engineering" },
-            { id: 2, name: "Marketing" },
-            { id: 3, name: "Sales" },
-            { id: 4, name: "Human Resources" },
-            { id: 5, name: "Finance" },
-         ]);
+         toast.error("Failed to load departments");
       }
    };
 
    const loadManagers = async () => {
       try {
-         console.log("Loading managers...");
          const response = await userService.getManagers();
-         console.log("Managers response:", response);
-
-         // Handle different response structures
          const managersData = response.data || response;
          setManagers(Array.isArray(managersData) ? managersData : []);
-
-         console.log("Loaded managers:", managersData);
       } catch (error) {
          console.error("Failed to load managers:", error);
          toast.error("Failed to load managers");
@@ -240,7 +210,6 @@ export default function UserManagement() {
       try {
          setIsLoading(true);
 
-         // Convert form data to API format
          const cleanData = {
             name: data.name,
             email: data.email,
@@ -254,8 +223,6 @@ export default function UserManagement() {
                data.manager_id === "none" ? undefined : Number(data.manager_id),
          };
 
-         console.log("Submitting user data:", cleanData);
-
          await userService.createUser(cleanData);
          toast.success("User created successfully!");
          setIsAddDialogOpen(false);
@@ -268,9 +235,14 @@ export default function UserManagement() {
             manager_id: "none",
          });
          await loadUsers();
+         await loadManagers();
+         await loadDepartments();
       } catch (error: any) {
          console.error("Create user error:", error);
-         if (error.response?.status === 422) {
+         const message = error.response?.data?.message;
+         if (message) {
+            toast.error(message);
+         } else if (error.response?.status === 422) {
             const errors = error.response.data?.errors;
             if (errors) {
                Object.entries(errors).forEach(([field, messages]) => {
@@ -278,9 +250,7 @@ export default function UserManagement() {
                });
             }
          } else {
-            toast.error(
-               error.response?.data?.message || "Failed to create user"
-            );
+            toast.error("Failed to create user");
          }
       } finally {
          setIsLoading(false);
@@ -293,7 +263,6 @@ export default function UserManagement() {
       try {
          setIsLoading(true);
 
-         // Convert form data to API format
          const cleanData: any = {
             name: data.name,
             email: data.email,
@@ -306,21 +275,23 @@ export default function UserManagement() {
                data.manager_id === "none" ? undefined : Number(data.manager_id),
          };
 
-         // Only include password if it's not empty
          if (data.password && data.password.trim() !== "") {
             cleanData.password = data.password;
          }
-
-         console.log("Updating user data:", cleanData);
 
          await userService.updateUser(selectedUser.id, cleanData);
          toast.success("User updated successfully!");
          setIsEditDialogOpen(false);
          setSelectedUser(null);
          await loadUsers();
+         await loadManagers();
+         await loadDepartments();
       } catch (error: any) {
          console.error("Update user error:", error);
-         if (error.response?.status === 422) {
+         const message = error.response?.data?.message;
+         if (message) {
+            toast.error(message);
+         } else if (error.response?.status === 422) {
             const errors = error.response.data?.errors;
             if (errors) {
                Object.entries(errors).forEach(([field, messages]) => {
@@ -328,9 +299,7 @@ export default function UserManagement() {
                });
             }
          } else {
-            toast.error(
-               error.response?.data?.message || "Failed to update user"
-            );
+            toast.error("Failed to update user");
          }
       } finally {
          setIsLoading(false);
@@ -351,7 +320,6 @@ export default function UserManagement() {
    };
 
    const openEditDialog = (user: User) => {
-      console.log("Opening edit dialog for user:", user);
       setSelectedUser(user);
 
       editForm.reset({
@@ -368,12 +336,50 @@ export default function UserManagement() {
       setIsEditDialogOpen(true);
    };
 
+   const openAssignDialog = (user: User) => {
+      setSelectedUser(user);
+      assignForm.reset({
+         department_id: 0,
+      });
+      setIsAssignDialogOpen(true);
+   };
+
+   const handleAssignIntern = async (data: z.infer<typeof assignInternSchema>) => {
+      if (!selectedUser) return;
+
+      try {
+         setIsLoading(true);
+         await userService.assignIntern(selectedUser.id, { department_id: data.department_id });
+         toast.success("Intern assigned successfully!");
+         setIsAssignDialogOpen(false);
+         setSelectedUser(null);
+         await loadUsers();
+      } catch (error: any) {
+         console.error("Assign intern error:", error);
+         const message = error.response?.data?.message;
+         if (message) {
+            toast.error(message);
+         } else {
+            toast.error("Failed to assign intern");
+         }
+      } finally {
+         setIsLoading(false);
+      }
+   };
+
    const filteredUsers = users.filter(
       (user) =>
          user.name?.toLowerCase().includes(search.toLowerCase()) ||
          user.email?.toLowerCase().includes(search.toLowerCase()) ||
          user.role?.toLowerCase().includes(search.toLowerCase())
    );
+
+   // Check if manager field should be shown
+   const shouldShowManagerFieldAdd = watchAddRole === "admin";
+   const shouldShowManagerFieldEdit = watchEditRole === "admin";
+
+   // Get departments that don't have a manager yet (for manager role)
+   const availableDepartmentsForManager = departments.filter(dept => !dept.manager_id);
 
    if (isLoadingData) {
       return (
@@ -410,8 +416,7 @@ export default function UserManagement() {
                      <DialogHeader>
                         <DialogTitle>Add New User</DialogTitle>
                         <DialogDescription>
-                           Create a new user account with their details and
-                           role.
+                           Create a new user account with their details and role.
                         </DialogDescription>
                      </DialogHeader>
                      <Form {...addForm}>
@@ -426,10 +431,7 @@ export default function UserManagement() {
                                  <FormItem>
                                     <FormLabel>Full Name *</FormLabel>
                                     <FormControl>
-                                       <Input
-                                          placeholder="John Doe"
-                                          {...field}
-                                       />
+                                       <Input placeholder="John Doe" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                  </FormItem>
@@ -463,11 +465,7 @@ export default function UserManagement() {
                                     <div className="relative">
                                        <FormControl>
                                           <Input
-                                             type={
-                                                showPassword
-                                                   ? "text"
-                                                   : "password"
-                                             }
+                                             type={showPassword ? "text" : "password"}
                                              placeholder="••••••••"
                                              {...field}
                                           />
@@ -477,9 +475,7 @@ export default function UserManagement() {
                                           variant="ghost"
                                           size="icon"
                                           className="absolute right-0 top-0 h-full"
-                                          onClick={() =>
-                                             setShowPassword(!showPassword)
-                                          }
+                                          onClick={() => setShowPassword(!showPassword)}
                                        >
                                           {showPassword ? (
                                              <EyeOff className="h-4 w-4" />
@@ -500,7 +496,11 @@ export default function UserManagement() {
                                  <FormItem>
                                     <FormLabel>Role *</FormLabel>
                                     <Select
-                                       onValueChange={field.onChange}
+                                       onValueChange={(value) => {
+                                          field.onChange(value);
+                                          addForm.setValue("department_id", "none");
+                                          addForm.setValue("manager_id", "none");
+                                       }}
                                        defaultValue={field.value}
                                     >
                                        <FormControl>
@@ -509,15 +509,9 @@ export default function UserManagement() {
                                           </SelectTrigger>
                                        </FormControl>
                                        <SelectContent>
-                                          <SelectItem value="admin">
-                                             Administrator
-                                          </SelectItem>
-                                          <SelectItem value="manager">
-                                             Manager
-                                          </SelectItem>
-                                          <SelectItem value="intern">
-                                             Intern
-                                          </SelectItem>
+                                          <SelectItem value="admin">Administrator</SelectItem>
+                                          <SelectItem value="manager">Manager</SelectItem>
+                                          <SelectItem value="intern">Intern</SelectItem>
                                        </SelectContent>
                                     </Select>
                                     <FormMessage />
@@ -525,73 +519,76 @@ export default function UserManagement() {
                               )}
                            />
 
-                           <FormField
-                              control={addForm.control}
-                              name="department_id"
-                              render={({ field }) => (
-                                 <FormItem>
-                                    <FormLabel>Department</FormLabel>
-                                    <Select
-                                       onValueChange={field.onChange}
-                                       value={field.value}
-                                    >
-                                       <FormControl>
-                                          <SelectTrigger>
-                                             <SelectValue placeholder="Select department (optional)" />
-                                          </SelectTrigger>
-                                       </FormControl>
-                                       <SelectContent>
-                                          <SelectItem value="none">
-                                             None
-                                          </SelectItem>
-                                          {departments.map((dept) => (
-                                             <SelectItem
-                                                key={dept.id}
-                                                value={dept.id.toString()}
-                                             >
-                                                {dept.name}
-                                             </SelectItem>
-                                          ))}
-                                       </SelectContent>
-                                    </Select>
-                                    <FormMessage />
-                                 </FormItem>
-                              )}
-                           />
+                           {/* Department field - shown for managers and interns */}
+                           {(watchAddRole === "manager" || watchAddRole === "intern") && (
+                              <FormField
+                                 control={addForm.control}
+                                 name="department_id"
+                                 render={({ field }) => (
+                                    <FormItem>
+                                       <FormLabel>
+                                          Department {watchAddRole === "intern" ? "(will auto-assign manager)" : "(optional)"}
+                                       </FormLabel>
+                                       <Select
+                                          onValueChange={field.onChange}
+                                          value={field.value}
+                                       >
+                                          <FormControl>
+                                             <SelectTrigger>
+                                                <SelectValue placeholder="Select department" />
+                                             </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent>
+                                             <SelectItem value="none">None</SelectItem>
+                                             {(watchAddRole === "manager" ? availableDepartmentsForManager : departments).map((dept) => (
+                                                <SelectItem key={dept.id} value={dept.id.toString()}>
+                                                   {dept.name}
+                                                </SelectItem>
+                                             ))}
+                                          </SelectContent>
+                                       </Select>
+                                       <FormMessage />
+                                       {watchAddRole === "intern" && watchAddDepartment !== "none" && (
+                                          <p className="text-sm text-muted-foreground">
+                                             Manager will be automatically assigned based on department
+                                          </p>
+                                       )}
+                                    </FormItem>
+                                 )}
+                              />
+                           )}
 
-                           <FormField
-                              control={addForm.control}
-                              name="manager_id"
-                              render={({ field }) => (
-                                 <FormItem>
-                                    <FormLabel>Manager</FormLabel>
-                                    <Select
-                                       onValueChange={field.onChange}
-                                       value={field.value}
-                                    >
-                                       <FormControl>
-                                          <SelectTrigger>
-                                             <SelectValue placeholder="Select manager (optional)" />
-                                          </SelectTrigger>
-                                       </FormControl>
-                                       <SelectContent>
-                                          <SelectItem value="none">
-                                             None
-                                          </SelectItem>
-                                          {managers.map((manager) => (
-                                             <SelectItem
-                                                key={manager.id}
-                                                value={manager.id.toString()}
-                                             >
-                                                {manager.name} ({manager.email})
-                                             </SelectItem>
-                                          ))}
-                                       </SelectContent>
-                                    </Select>
-                                    <FormMessage />
-                                 </FormItem>
-                              )}
-                           />
+                           {/* Manager field - only shown for admin role */}
+                           {shouldShowManagerFieldAdd && (
+                              <FormField
+                                 control={addForm.control}
+                                 name="manager_id"
+                                 render={({ field }) => (
+                                    <FormItem>
+                                       <FormLabel>Manager</FormLabel>
+                                       <Select
+                                          onValueChange={field.onChange}
+                                          value={field.value}
+                                       >
+                                          <FormControl>
+                                             <SelectTrigger>
+                                                <SelectValue placeholder="Select manager (optional)" />
+                                             </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent>
+                                             <SelectItem value="none">None</SelectItem>
+                                             {managers.map((manager) => (
+                                                <SelectItem key={manager.id} value={manager.id.toString()}>
+                                                   {manager.name} ({manager.email})
+                                                </SelectItem>
+                                             ))}
+                                          </SelectContent>
+                                       </Select>
+                                       <FormMessage />
+                                    </FormItem>
+                                 )}
+                              />
+                           )}
 
                            <DialogFooter>
                               <Button type="submit" disabled={isLoading}>
@@ -654,9 +651,7 @@ export default function UserManagement() {
                         ) : (
                            filteredUsers.map((user) => (
                               <TableRow key={user.id}>
-                                 <TableCell className="font-medium">
-                                    {user.name}
-                                 </TableCell>
+                                 <TableCell className="font-medium">{user.name}</TableCell>
                                  <TableCell>{user.email}</TableCell>
                                  <TableCell>
                                     <span
@@ -668,34 +663,34 @@ export default function UserManagement() {
                                              : "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
                                        }`}
                                     >
-                                       {user.role.charAt(0).toUpperCase() +
-                                          user.role.slice(1)}
+                                       {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
                                     </span>
                                  </TableCell>
                                  <TableCell>
                                     {user.department ? (
-                                       <span className="text-sm">
-                                          {user.department.name}
-                                       </span>
+                                       <span className="text-sm">{user.department.name}</span>
                                     ) : (
-                                       <span className="text-sm text-muted-foreground">
-                                          -
-                                       </span>
+                                       <span className="text-sm text-muted-foreground">-</span>
                                     )}
                                  </TableCell>
                                  <TableCell>
                                     {user.manager ? (
-                                       <span className="text-sm">
-                                          {user.manager.name}
-                                       </span>
+                                       <span className="text-sm">{user.manager.name}</span>
                                     ) : (
-                                       <span className="text-sm text-muted-foreground">
-                                          -
-                                       </span>
+                                       <span className="text-sm text-muted-foreground">-</span>
                                     )}
                                  </TableCell>
                                  <TableCell className="text-right">
                                     <div className="flex items-center justify-end space-x-2">
+                                       {user.role === "intern" && !user.department_id && (
+                                          <Button
+                                             variant="ghost"
+                                             size="sm"
+                                             onClick={() => openAssignDialog(user)}
+                                          >
+                                             <UserPlus className="h-4 w-4 text-blue-500" />
+                                          </Button>
+                                       )}
                                        <Button
                                           variant="ghost"
                                           size="sm"
@@ -706,9 +701,7 @@ export default function UserManagement() {
                                        <Button
                                           variant="ghost"
                                           size="sm"
-                                          onClick={() =>
-                                             handleDeleteUser(user.id)
-                                          }
+                                          onClick={() => handleDeleteUser(user.id)}
                                           disabled={user.role === "admin"}
                                        >
                                           <Trash2 className="h-4 w-4 text-red-500" />
@@ -775,9 +768,7 @@ export default function UserManagement() {
                         name="password"
                         render={({ field }) => (
                            <FormItem>
-                              <FormLabel>
-                                 New Password (leave blank to keep current)
-                              </FormLabel>
+                              <FormLabel>New Password (leave blank to keep current)</FormLabel>
                               <div className="relative">
                                  <FormControl>
                                     <Input
@@ -792,9 +783,7 @@ export default function UserManagement() {
                                     variant="ghost"
                                     size="icon"
                                     className="absolute right-0 top-0 h-full"
-                                    onClick={() =>
-                                       setShowPassword(!showPassword)
-                                    }
+                                    onClick={() => setShowPassword(!showPassword)}
                                  >
                                     {showPassword ? (
                                        <EyeOff className="h-4 w-4" />
@@ -814,25 +803,16 @@ export default function UserManagement() {
                         render={({ field }) => (
                            <FormItem>
                               <FormLabel>Role *</FormLabel>
-                              <Select
-                                 onValueChange={field.onChange}
-                                 value={field.value}
-                              >
+                              <Select onValueChange={field.onChange} value={field.value}>
                                  <FormControl>
                                     <SelectTrigger>
                                        <SelectValue placeholder="Select role" />
                                     </SelectTrigger>
                                  </FormControl>
                                  <SelectContent>
-                                    <SelectItem value="admin">
-                                       Administrator
-                                    </SelectItem>
-                                    <SelectItem value="manager">
-                                       Manager
-                                    </SelectItem>
-                                    <SelectItem value="intern">
-                                       Intern
-                                    </SelectItem>
+                                    <SelectItem value="admin">Administrator</SelectItem>
+                                    <SelectItem value="manager">Manager</SelectItem>
+                                    <SelectItem value="intern">Intern</SelectItem>
                                  </SelectContent>
                               </Select>
                               <FormMessage />
@@ -840,69 +820,63 @@ export default function UserManagement() {
                         )}
                      />
 
-                     <FormField
-                        control={editForm.control}
-                        name="department_id"
-                        render={({ field }) => (
-                           <FormItem>
-                              <FormLabel>Department</FormLabel>
-                              <Select
-                                 onValueChange={field.onChange}
-                                 value={field.value}
-                              >
-                                 <FormControl>
-                                    <SelectTrigger>
-                                       <SelectValue placeholder="Select department (optional)" />
-                                    </SelectTrigger>
-                                 </FormControl>
-                                 <SelectContent>
-                                    <SelectItem value="none">None</SelectItem>
-                                    {departments.map((dept) => (
-                                       <SelectItem
-                                          key={dept.id}
-                                          value={dept.id.toString()}
-                                       >
-                                          {dept.name}
-                                       </SelectItem>
-                                    ))}
-                                 </SelectContent>
-                              </Select>
-                              <FormMessage />
-                           </FormItem>
-                        )}
-                     />
+                     {/* Department field - shown for managers and interns */}
+                     {(watchEditRole === "manager" || watchEditRole === "intern") && (
+                        <FormField
+                           control={editForm.control}
+                           name="department_id"
+                           render={({ field }) => (
+                              <FormItem>
+                                 <FormLabel>Department</FormLabel>
+                                 <Select onValueChange={field.onChange} value={field.value}>
+                                    <FormControl>
+                                       <SelectTrigger>
+                                          <SelectValue placeholder="Select department" />
+                                       </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                       <SelectItem value="none">None</SelectItem>
+                                       {departments.map((dept) => (
+                                          <SelectItem key={dept.id} value={dept.id.toString()}>
+                                             {dept.name}
+                                          </SelectItem>
+                                       ))}
+                                    </SelectContent>
+                                 </Select>
+                                 <FormMessage />
+                              </FormItem>
+                           )}
+                        />
+                     )}
 
-                     <FormField
-                        control={editForm.control}
-                        name="manager_id"
-                        render={({ field }) => (
-                           <FormItem>
-                              <FormLabel>Manager</FormLabel>
-                              <Select
-                                 onValueChange={field.onChange}
-                                 value={field.value}
-                              >
-                                 <FormControl>
-                                    <SelectTrigger>
-                                       <SelectValue placeholder="Select manager (optional)" />
-                                    </SelectTrigger>
-                                 </FormControl>
-                                 <SelectContent>
-                                    <SelectItem value="none">None</SelectItem>
-                                    {managers.map((manager) => (
-                                       <SelectItem
-                                          key={manager.id}
-                                          value={manager.id.toString()}
-                                       >
-                                          {manager.name} ({manager.email})
-                                       </SelectItem>
-                                    ))}
-                                 </SelectContent>
-                              </Select>
-                              <FormMessage />
-                           </FormItem>
-                        )}
-                     />
+                     {/* Manager field - only shown for admin role */}
+                     {shouldShowManagerFieldEdit && (
+                        <FormField
+                           control={editForm.control}
+                           name="manager_id"
+                           render={({ field }) => (
+                              <FormItem>
+                                 <FormLabel>Manager</FormLabel>
+                                 <Select onValueChange={field.onChange} value={field.value}>
+                                    <FormControl>
+                                       <SelectTrigger>
+                                          <SelectValue placeholder="Select manager (optional)" />
+                                       </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                       <SelectItem value="none">None</SelectItem>
+                                       {managers.map((manager) => (
+                                          <SelectItem key={manager.id} value={manager.id.toString()}>
+                                             {manager.name} ({manager.email})
+                                          </SelectItem>
+                                       ))}
+                                    </SelectContent>
+                                 </Select>
+                                 <FormMessage />
+                              </FormItem>
+                           )}
+                        />
+                     )}
 
                      <DialogFooter>
                         <Button
@@ -920,6 +894,72 @@ export default function UserManagement() {
                               </>
                            ) : (
                               "Update User"
+                           )}
+                        </Button>
+                     </DialogFooter>
+                  </form>
+               </Form>
+            </DialogContent>
+         </Dialog>
+
+         {/* Assign Intern Dialog */}
+         <Dialog open={isAssignDialogOpen} onOpenChange={setIsAssignDialogOpen}>
+            <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
+               <DialogHeader>
+                  <DialogTitle>Assign Intern to Department</DialogTitle>
+                  <DialogDescription>
+                     Select a department to assign {selectedUser?.name} to. The intern will be automatically assigned to the department's manager.
+                  </DialogDescription>
+               </DialogHeader>
+               <Form {...assignForm}>
+                  <form
+                     onSubmit={assignForm.handleSubmit(handleAssignIntern)}
+                     className="space-y-4"
+                  >
+                     <FormField
+                        control={assignForm.control}
+                        name="department_id"
+                        render={({ field }) => (
+                           <FormItem>
+                              <FormLabel>Department *</FormLabel>
+                              <Select
+                                 onValueChange={(value) => field.onChange(Number(value))}
+                                 value={field.value?.toString()}
+                              >
+                                 <FormControl>
+                                    <SelectTrigger>
+                                       <SelectValue placeholder="Select department" />
+                                    </SelectTrigger>
+                                 </FormControl>
+                                 <SelectContent>
+                                    {departments.filter(d => d.manager_id).map((dept) => (
+                                       <SelectItem key={dept.id} value={dept.id.toString()}>
+                                          {dept.name}
+                                       </SelectItem>
+                                    ))}
+                                 </SelectContent>
+                              </Select>
+                              <FormMessage />
+                           </FormItem>
+                        )}
+                     />
+
+                     <DialogFooter>
+                        <Button
+                           type="button"
+                           variant="outline"
+                           onClick={() => setIsAssignDialogOpen(false)}
+                        >
+                           Cancel
+                        </Button>
+                        <Button type="submit" disabled={isLoading}>
+                           {isLoading ? (
+                              <>
+                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                 Assigning...
+                              </>
+                           ) : (
+                              "Assign Intern"
                            )}
                         </Button>
                      </DialogFooter>

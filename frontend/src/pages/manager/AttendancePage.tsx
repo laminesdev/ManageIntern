@@ -187,7 +187,7 @@ export default function AttendancePage() {
          const existingRecord = attendance.find(
             (record) =>
                record.intern_id === data.intern_id &&
-               isSameDay(new Date(record.date), data.date)
+               isSameDay(new Date(record.attendance_date), data.date)
          );
 
          if (existingRecord) {
@@ -196,8 +196,10 @@ export default function AttendancePage() {
          }
 
          const attendanceData = {
-            ...data,
-            date: format(data.date, "yyyy-MM-dd"),
+            intern_id: data.intern_id,
+            attendance_date: format(data.date, "yyyy-MM-dd"),
+            status: data.status,
+            notes: data.notes,
          };
 
          await attendanceService.markAttendance(attendanceData);
@@ -258,7 +260,7 @@ export default function AttendancePage() {
 
    const today = new Date();
    const todayAttendance = attendance.filter((record) =>
-      isSameDay(new Date(record.date), today)
+      isSameDay(new Date(record.attendance_date), today)
    );
 
    if (isLoading) {
@@ -653,7 +655,7 @@ export default function AttendancePage() {
                                  {record.intern?.name || "Unknown"}
                               </TableCell>
                               <TableCell>
-                                 {format(new Date(record.date), "MMM dd, yyyy")}
+                                 {format(new Date(record.attendance_date), "MMM dd, yyyy")}
                               </TableCell>
                               <TableCell>
                                  <div className="flex items-center gap-2">

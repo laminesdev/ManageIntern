@@ -7,6 +7,7 @@ import LoginPage from "./pages/auth/LoginPage";
 // Admin Pages
 import AdminDashboard from "./pages/admin/Dashboard";
 import UserManagement from "./pages/admin/UserManagement";
+import DepartmentManagement from "./pages/admin/DepartmentManagement";
 import AdminReports from "./pages/admin/Reports";
 import ViewAttendanceReports from "./pages/admin/reports/ViewAttendanceReports";
 import ViewPerformanceReports from "./pages/admin/reports/ViewPerformanceReports";
@@ -66,6 +67,7 @@ export default function App() {
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="users" element={<UserManagement />} />
+            <Route path="departments" element={<DepartmentManagement />} />
             <Route path="reports" element={<AdminReports />} />
             <Route
                path="reports/attendance"
