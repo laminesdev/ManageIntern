@@ -66,6 +66,8 @@ import { cn } from "@/lib/utils";
 import { reportService } from "@/services/reportService";
 import { attendanceService } from "@/services/attendanceService";
 import { evaluationService } from "@/services/evaluationService";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const reportSchema = z.object({
    report_type: z.enum(["attendance", "performance"]),
@@ -82,8 +84,13 @@ interface GeneratedReport {
    period_start: string;
    period_end: string;
    generated_at: string;
+   created_at: string;
    sent_to_admin: boolean;
    data: any;
+   department?: {
+      id: number;
+      name: string;
+   };
 }
 
 export default function ManagerReports() {
@@ -211,28 +218,358 @@ export default function ManagerReports() {
       }
    };
 
+   // Helper function to safely format dates
+   const formatDate = (
+      dateValue: any,
+      formatString: string = "MMM dd, yyyy"
+   ): string => {
+      if (!dateValue) return "N/A";
+      try {
+         const date = new Date(dateValue);
+         if (isNaN(date.getTime())) return "N/A";
+         return format(date, formatString);
+      } catch {
+         return "N/A";
+      }
+   };
+
    const handleExportReport = async (report: GeneratedReport) => {
       try {
-         const response = await reportService.exportReport(report.id);
+         const doc = new jsPDF();
 
-         // Create download link
-         const blob = new Blob([JSON.stringify(response.data, null, 2)], {
-            type: "application/json",
-         });
-         const url = window.URL.createObjectURL(blob);
-         const link = document.createElement("a");
-         link.href = url;
-         link.download = `report-${report.type}-${format(
-            new Date(report.generated_at),
+         // Add header
+         doc.setFontSize(20);
+         doc.setTextColor(220, 38, 38); // Red color
+         doc.text(
+            `${
+               report.type.charAt(0).toUpperCase() + report.type.slice(1)
+            } Report`,
+            14,
+            22
+         );
+
+         // Add report metadata
+         doc.setFontSize(10);
+         doc.setTextColor(100);
+         doc.text(
+            `Period: ${formatDate(report.period_start)} - ${formatDate(
+               report.period_end
+            )}`,
+            14,
+            32
+         );
+         doc.text(
+            `Generated: ${formatDate(
+               report.created_at || report.data?.generated_at,
+               "MMM dd, yyyy HH:mm"
+            )}`,
+            14,
+            38
+         );
+         doc.text(
+            `Status: ${report.sent_to_admin ? "Sent to Admin" : "Pending"}`,
+            14,
+            44
+         );
+
+         // Add department info if available
+         if (report.department?.name) {
+            doc.text(`Department: ${report.department.name}`, 14, 50);
+         }
+
+         // Add a line separator
+         doc.setDrawColor(220, 38, 38);
+         doc.setLineWidth(0.5);
+         doc.line(14, 56, 196, 56);
+
+         let yPosition = 66;
+
+         if (report.type === "attendance") {
+            // Attendance Report
+            doc.setFontSize(14);
+            doc.setTextColor(0);
+            doc.text("Overall Statistics", 14, yPosition);
+            yPosition += 10;
+
+            doc.setFontSize(10);
+
+            // Access overall_statistics from the data
+            const overallStats = report.data?.overall_statistics || {};
+            const summaryData = [
+               ["Total Records", (overallStats.total_records || 0).toString()],
+               ["Present", (overallStats.present || 0).toString()],
+               ["Absent", (overallStats.absent || 0).toString()],
+               ["Late", (overallStats.late || 0).toString()],
+               ["Excused", (overallStats.excused || 0).toString()],
+               [
+                  "Overall Attendance Rate",
+                  `${overallStats.overall_attendance_rate || 0}%`,
+               ],
+            ];
+
+            autoTable(doc, {
+               startY: yPosition,
+               head: [["Metric", "Value"]],
+               body: summaryData,
+               theme: "striped",
+               headStyles: { fillColor: [220, 38, 38] },
+               margin: { left: 14 },
+            });
+
+            // Add intern attendance details
+            const internAttendance = report.data?.intern_attendance || [];
+            if (
+               Array.isArray(internAttendance) &&
+               internAttendance.length > 0
+            ) {
+               yPosition = (doc as any).lastAutoTable.finalY + 15;
+               doc.setFontSize(14);
+               doc.text("Intern Attendance Summary", 14, yPosition);
+               yPosition += 5;
+
+               const internData = internAttendance.map((intern: any) => [
+                  intern.intern_name || "N/A",
+                  intern.intern_email || "N/A",
+                  (intern.total_days || 0).toString(),
+                  (intern.present || 0).toString(),
+                  (intern.absent || 0).toString(),
+                  (intern.late || 0).toString(),
+                  `${intern.attendance_rate || 0}%`,
+               ]);
+
+               autoTable(doc, {
+                  startY: yPosition,
+                  head: [
+                     [
+                        "Intern",
+                        "Email",
+                        "Total Days",
+                        "Present",
+                        "Absent",
+                        "Late",
+                        "Rate",
+                     ],
+                  ],
+                  body: internData,
+                  theme: "striped",
+                  headStyles: { fillColor: [220, 38, 38] },
+                  margin: { left: 14 },
+                  styles: { fontSize: 8 },
+               });
+
+               // Add detailed attendance records for each intern
+               internAttendance.forEach((intern: any) => {
+                  if (
+                     intern.details &&
+                     Array.isArray(intern.details) &&
+                     intern.details.length > 0
+                  ) {
+                     yPosition = (doc as any).lastAutoTable.finalY + 10;
+
+                     // Check if we need a new page
+                     if (yPosition > 250) {
+                        doc.addPage();
+                        yPosition = 20;
+                     }
+
+                     doc.setFontSize(12);
+                     doc.text(
+                        `${intern.intern_name} - Detailed Records`,
+                        14,
+                        yPosition
+                     );
+                     yPosition += 5;
+
+                     const detailData = intern.details.map((detail: any) => [
+                        formatDate(detail.date),
+                        detail.status || "N/A",
+                        detail.recorded_at
+                           ? formatDate(detail.recorded_at, "HH:mm")
+                           : "N/A",
+                     ]);
+
+                     autoTable(doc, {
+                        startY: yPosition,
+                        head: [["Date", "Status", "Recorded At"]],
+                        body: detailData,
+                        theme: "striped",
+                        headStyles: { fillColor: [220, 38, 38] },
+                        margin: { left: 14 },
+                        styles: { fontSize: 8 },
+                     });
+                  }
+               });
+            }
+         } else if (report.type === "performance") {
+            // Performance Report
+            doc.setFontSize(14);
+            doc.setTextColor(0);
+            doc.text("Overall Statistics", 14, yPosition);
+            yPosition += 10;
+
+            doc.setFontSize(10);
+
+            // Access overall_statistics from the data
+            const overallStats = report.data?.overall_statistics || {};
+            const summaryData = [
+               ["Total Interns", (overallStats.total_interns || 0).toString()],
+               [
+                  "Avg Task Completion",
+                  `${(overallStats.average_task_completion_rate || 0).toFixed(
+                     2
+                  )}%`,
+               ],
+               [
+                  "Avg Evaluation Score",
+                  `${(overallStats.average_evaluation_score || 0).toFixed(2)}%`,
+               ],
+               [
+                  "Avg Attendance Rate",
+                  `${(overallStats.average_attendance_rate || 0).toFixed(2)}%`,
+               ],
+               [
+                  "Avg Overall Performance",
+                  `${(overallStats.average_overall_performance || 0).toFixed(
+                     2
+                  )}%`,
+               ],
+            ];
+
+            autoTable(doc, {
+               startY: yPosition,
+               head: [["Metric", "Value"]],
+               body: summaryData,
+               theme: "striped",
+               headStyles: { fillColor: [220, 38, 38] },
+               margin: { left: 14 },
+            });
+
+            // Add intern performance details
+            const internPerformance = report.data?.intern_performance || [];
+            if (
+               Array.isArray(internPerformance) &&
+               internPerformance.length > 0
+            ) {
+               yPosition = (doc as any).lastAutoTable.finalY + 15;
+               doc.setFontSize(14);
+               doc.text("Intern Performance Summary", 14, yPosition);
+               yPosition += 5;
+
+               const performanceData = internPerformance.map((intern: any) => [
+                  intern.intern_name || "N/A",
+                  `${(intern.tasks?.completion_rate || 0).toFixed(1)}%`,
+                  `${(intern.evaluations?.average_score || 0).toFixed(1)}%`,
+                  `${(intern.attendance?.attendance_rate || 0).toFixed(1)}%`,
+                  `${(intern.overall_performance_score || 0).toFixed(1)}%`,
+               ]);
+
+               autoTable(doc, {
+                  startY: yPosition,
+                  head: [
+                     [
+                        "Intern",
+                        "Task Rate",
+                        "Eval Score",
+                        "Attendance",
+                        "Overall",
+                     ],
+                  ],
+                  body: performanceData,
+                  theme: "striped",
+                  headStyles: { fillColor: [220, 38, 38] },
+                  margin: { left: 14 },
+                  styles: { fontSize: 8 },
+               });
+
+               // Add detailed breakdown for each intern
+               internPerformance.forEach((intern: any) => {
+                  yPosition = (doc as any).lastAutoTable.finalY + 10;
+
+                  // Check if we need a new page
+                  if (yPosition > 230) {
+                     doc.addPage();
+                     yPosition = 20;
+                  }
+
+                  doc.setFontSize(12);
+                  doc.text(
+                     `${intern.intern_name} - Detailed Breakdown`,
+                     14,
+                     yPosition
+                  );
+                  yPosition += 5;
+
+                  const detailData = [
+                     ["Task Total", (intern.tasks?.total || 0).toString()],
+                     [
+                        "Task Completed",
+                        (intern.tasks?.completed || 0).toString(),
+                     ],
+                     [
+                        "Task In Progress",
+                        (intern.tasks?.in_progress || 0).toString(),
+                     ],
+                     ["Task Pending", (intern.tasks?.pending || 0).toString()],
+                     ["Task Overdue", (intern.tasks?.overdue || 0).toString()],
+                     [
+                        "Evaluations Total",
+                        (intern.evaluations?.total || 0).toString(),
+                     ],
+                     [
+                        "Highest Evaluation",
+                        `${(intern.evaluations?.highest_score || 0).toFixed(
+                           1
+                        )}%`,
+                     ],
+                     [
+                        "Lowest Evaluation",
+                        `${(intern.evaluations?.lowest_score || 0).toFixed(
+                           1
+                        )}%`,
+                     ],
+                  ];
+
+                  autoTable(doc, {
+                     startY: yPosition,
+                     head: [["Metric", "Value"]],
+                     body: detailData,
+                     theme: "striped",
+                     headStyles: { fillColor: [220, 38, 38] },
+                     margin: { left: 14 },
+                     styles: { fontSize: 8 },
+                     columnStyles: {
+                        0: { cellWidth: 80 },
+                        1: { cellWidth: 40 },
+                     },
+                  });
+               });
+            }
+         }
+
+         // Add footer
+         const pageCount = doc.getNumberOfPages();
+         for (let i = 1; i <= pageCount; i++) {
+            doc.setPage(i);
+            doc.setFontSize(8);
+            doc.setTextColor(150);
+            doc.text(
+               `Page ${i} of ${pageCount}`,
+               doc.internal.pageSize.getWidth() / 2,
+               doc.internal.pageSize.getHeight() - 10,
+               { align: "center" }
+            );
+         }
+
+         // Save the PDF with safe date formatting
+         const fileName = `report-${report.type}-${formatDate(
+            report.created_at || report.data?.generated_at,
             "yyyy-MM-dd"
-         )}.json`;
-         document.body.appendChild(link);
-         link.click();
-         document.body.removeChild(link);
-         window.URL.revokeObjectURL(url);
+         )}.pdf`;
+         doc.save(fileName);
 
          toast.success("Report exported successfully");
       } catch (error) {
+         console.error("Export error:", error);
          toast.error("Failed to export report");
       }
    };
@@ -264,16 +601,20 @@ export default function ManagerReports() {
       if (!report.data) return { total: 0, description: "No data" };
 
       if (report.type === "attendance") {
+         const overallStats = report.data.overall_statistics || {};
          return {
-            total: report.data.total_records || 0,
-            description: `${report.data.present || 0} present, ${
-               report.data.absent || 0
+            total: overallStats.total_records || 0,
+            description: `${overallStats.present || 0} present, ${
+               overallStats.absent || 0
             } absent`,
          };
       } else {
+         const overallStats = report.data.overall_statistics || {};
          return {
-            total: report.data.total_evaluations || 0,
-            description: `Avg score: ${report.data.average_score || 0}%`,
+            total: overallStats.total_interns || 0,
+            description: `Avg score: ${(
+               overallStats.average_overall_performance || 0
+            ).toFixed(1)}%`,
          };
       }
    };
@@ -573,15 +914,16 @@ export default function ManagerReports() {
                                     {getReportTypeBadge(report.type)}
                                  </TableCell>
                                  <TableCell>
-                                    {report.period_start && report.period_end ? (
+                                    {report.period_start &&
+                                    report.period_end ? (
                                        <>
-                                          {format(
-                                             new Date(report.period_start),
+                                          {formatDate(
+                                             report.period_start,
                                              "MMM dd"
                                           )}{" "}
                                           -{" "}
-                                          {format(
-                                             new Date(report.period_end),
+                                          {formatDate(
+                                             report.period_end,
                                              "MMM dd, yyyy"
                                           )}
                                        </>
@@ -600,10 +942,10 @@ export default function ManagerReports() {
                                     </div>
                                  </TableCell>
                                  <TableCell>
-                                    {report.generated_at ? format(
-                                       new Date(report.generated_at),
+                                    {formatDate(
+                                       report.created_at,
                                        "MMM dd, yyyy"
-                                    ) : "N/A"}
+                                    )}
                                  </TableCell>
                                  <TableCell>
                                     {getStatusBadge(report.sent_to_admin)}
