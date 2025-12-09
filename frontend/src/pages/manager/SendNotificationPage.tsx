@@ -37,9 +37,7 @@ type NotificationFormData = z.infer<typeof notificationSchema>;
 export default function SendNotificationPage() {
    const navigate = useNavigate();
    const [isLoading, setIsLoading] = useState(false);
-   const [interns, setInterns] = useState<
-      Array<{ id: number; name: string; email: string }>
-   >([]);
+   const [interns, setInterns] = useState<Array<{ id: number; name: string; email: string }>>([]);
 
    const form = useForm<NotificationFormData>({
       resolver: zodResolver(notificationSchema),
@@ -57,6 +55,7 @@ export default function SendNotificationPage() {
    const loadInterns = async () => {
       try {
          const response = await notificationService.getDepartmentInterns();
+         console.log("Interns loaded:", response);
          setInterns(response?.data || []);
       } catch (error) {
          console.error("Failed to load interns:", error);
@@ -67,10 +66,15 @@ export default function SendNotificationPage() {
    const onSubmit = async (data: NotificationFormData) => {
       try {
          setIsLoading(true);
-         await notificationService.sendNotification(data);
+         await notificationService.sendNotification({
+            title: data.title,
+            message: data.message,
+            recipient_ids: data.recipients,
+         });
          toast.success("Notification sent successfully!");
          navigate("/manager/notifications");
       } catch (error: any) {
+         console.error("Send error:", error);
          toast.error(
             error.response?.data?.message || "Failed to send notification"
          );
@@ -156,61 +160,67 @@ export default function SendNotificationPage() {
                            render={() => (
                               <FormItem>
                                  <FormLabel>Recipients *</FormLabel>
-                                 <div className="space-y-2">
-                                    {interns.map((intern) => (
-                                       <FormField
-                                          key={intern.id}
-                                          control={form.control}
-                                          name="recipients"
-                                          render={({ field }) => {
-                                             return (
-                                                <FormItem
-                                                   key={intern.id}
-                                                   className="flex flex-row items-start space-x-3 space-y-0"
-                                                >
-                                                   <FormControl>
-                                                      <Checkbox
-                                                         checked={field.value?.includes(
-                                                            intern.id
-                                                         )}
-                                                         onCheckedChange={(
-                                                            checked
-                                                         ) => {
-                                                            return checked
-                                                               ? field.onChange(
-                                                                    [
-                                                                       ...field.value,
-                                                                       intern.id,
-                                                                    ]
-                                                                 )
-                                                               : field.onChange(
-                                                                    field.value?.filter(
-                                                                       (
-                                                                          value
-                                                                       ) =>
-                                                                          value !==
-                                                                          intern.id
+                                 {interns.length === 0 ? (
+                                    <p className="text-sm text-muted-foreground">
+                                       No interns available in your department
+                                    </p>
+                                 ) : (
+                                    <div className="space-y-2">
+                                       {interns.map((intern) => (
+                                          <FormField
+                                             key={intern.id}
+                                             control={form.control}
+                                             name="recipients"
+                                             render={({ field }) => {
+                                                return (
+                                                   <FormItem
+                                                      key={intern.id}
+                                                      className="flex flex-row items-start space-x-3 space-y-0"
+                                                   >
+                                                      <FormControl>
+                                                         <Checkbox
+                                                            checked={field.value?.includes(
+                                                               intern.id
+                                                            )}
+                                                            onCheckedChange={(
+                                                               checked
+                                                            ) => {
+                                                               return checked
+                                                                  ? field.onChange(
+                                                                       [
+                                                                          ...field.value,
+                                                                          intern.id,
+                                                                       ]
                                                                     )
-                                                                 );
-                                                         }}
-                                                      />
-                                                   </FormControl>
-                                                   <FormLabel className="font-normal">
-                                                      <div>
-                                                         <p className="font-medium">
-                                                            {intern.name}
-                                                         </p>
-                                                         <p className="text-sm text-gray-500">
-                                                            {intern.email}
-                                                         </p>
-                                                      </div>
-                                                   </FormLabel>
-                                                </FormItem>
-                                             );
-                                          }}
-                                       />
-                                    ))}
-                                 </div>
+                                                                  : field.onChange(
+                                                                       field.value?.filter(
+                                                                          (
+                                                                             value
+                                                                          ) =>
+                                                                             value !==
+                                                                             intern.id
+                                                                       )
+                                                                    );
+                                                            }}
+                                                         />
+                                                      </FormControl>
+                                                      <FormLabel className="font-normal cursor-pointer">
+                                                         <div>
+                                                            <p className="font-medium">
+                                                               {intern.name}
+                                                            </p>
+                                                            <p className="text-sm text-gray-500">
+                                                               {intern.email}
+                                                            </p>
+                                                         </div>
+                                                      </FormLabel>
+                                                   </FormItem>
+                                                );
+                                             }}
+                                          />
+                                       ))}
+                                    </div>
+                                 )}
                                  <FormMessage />
                               </FormItem>
                            )}

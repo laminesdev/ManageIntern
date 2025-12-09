@@ -9,11 +9,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { Bell, CheckCircle, Clock, Loader2 } from "lucide-react";
+import { Bell, CheckCircle, Loader2, Plus } from "lucide-react";
 import { format } from "date-fns";
 import { notificationService } from "@/services/notificationService";
+import { useNavigate } from "react-router-dom";
 
 export default function NotificationsPage() {
+   const navigate = useNavigate();
    const [notifications, setNotifications] = useState<any[]>([]);
    const [isLoading, setIsLoading] = useState(true);
 
@@ -25,6 +27,7 @@ export default function NotificationsPage() {
       try {
          setIsLoading(true);
          const response = await notificationService.getNotifications();
+         console.log("Manager notifications:", response);
          setNotifications(response?.data || []);
       } catch (error) {
          console.error("Failed to load notifications:", error);
@@ -34,23 +37,17 @@ export default function NotificationsPage() {
       }
    };
 
-   const handleMarkAsRead = async (id: number) => {
-      try {
-         await notificationService.markAsRead(id);
-         toast.success("Notification marked as read");
-         loadNotifications();
-      } catch (error) {
-         toast.error("Failed to mark as read");
+   const handleDelete = async (id: number) => {
+      if (!confirm("Are you sure you want to delete this notification?")) {
+         return;
       }
-   };
 
-   const handleMarkAllAsRead = async () => {
       try {
-         await notificationService.markAllAsRead();
-         toast.success("All notifications marked as read");
+         await notificationService.deleteNotification(id);
+         toast.success("Notification deleted");
          loadNotifications();
       } catch (error) {
-         toast.error("Failed to mark all as read");
+         toast.error("Failed to delete notification");
       }
    };
 
@@ -70,20 +67,18 @@ export default function NotificationsPage() {
                   Notifications
                </h1>
                <p className="text-muted-foreground">
-                  View and manage your notifications
+                  Manage notifications sent to your interns
                </p>
             </div>
-            {notifications.length > 0 && (
-               <Button variant="outline" onClick={handleMarkAllAsRead}>
-                  <CheckCircle className="mr-2 h-4 w-4" />
-                  Mark All as Read
-               </Button>
-            )}
+            <Button onClick={() => navigate("/manager/notifications/send")}>
+               <Plus className="mr-2 h-4 w-4" />
+               Send Notification
+            </Button>
          </div>
 
          <Card>
             <CardHeader>
-               <CardTitle>All Notifications</CardTitle>
+               <CardTitle>Sent Notifications</CardTitle>
                <CardDescription>
                   {notifications.length} notification(s)
                </CardDescription>
@@ -95,20 +90,22 @@ export default function NotificationsPage() {
                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
                         No Notifications
                      </h3>
-                     <p className="text-gray-500">
-                        You don't have any notifications yet
+                     <p className="text-gray-500 mb-4">
+                        You haven't sent any notifications yet
                      </p>
+                     <Button
+                        onClick={() => navigate("/manager/notifications/send")}
+                     >
+                        <Plus className="mr-2 h-4 w-4" />
+                        Send Your First Notification
+                     </Button>
                   </div>
                ) : (
                   <div className="space-y-4">
                      {notifications.map((notification) => (
                         <div
                            key={notification.id}
-                           className={`p-4 rounded-lg border ${
-                              notification.read_by?.length > 0
-                                 ? "bg-gray-50 border-gray-200"
-                                 : "bg-red-50 border-red-200"
-                           }`}
+                           className="p-4 rounded-lg border bg-white"
                         >
                            <div className="flex items-start justify-between">
                               <div className="flex-1">
@@ -116,20 +113,15 @@ export default function NotificationsPage() {
                                     <h4 className="font-semibold">
                                        {notification.title}
                                     </h4>
-                                    {notification.read_by?.length === 0 && (
-                                       <Badge className="bg-red-100 text-red-800">
-                                          New
-                                       </Badge>
-                                    )}
+                                    <Badge variant="outline">
+                                       {notification.recipients?.length || 0}{" "}
+                                       recipient(s)
+                                    </Badge>
                                  </div>
-                                 <p className="text-gray-600">
+                                 <p className="text-gray-600 mb-3">
                                     {notification.message}
                                  </p>
-                                 <div className="flex items-center gap-4 mt-3 text-sm text-gray-500">
-                                    <span>
-                                       From:{" "}
-                                       {notification.sender?.name || "System"}
-                                    </span>
+                                 <div className="flex items-center gap-4 text-sm text-gray-500">
                                     <span>
                                        {format(
                                           new Date(notification.created_at),
@@ -138,17 +130,14 @@ export default function NotificationsPage() {
                                     </span>
                                  </div>
                               </div>
-                              {notification.read_by?.length === 0 && (
-                                 <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    onClick={() =>
-                                       handleMarkAsRead(notification.id)
-                                    }
-                                 >
-                                    <CheckCircle className="h-4 w-4" />
-                                 </Button>
-                              )}
+                              <Button
+                                 size="sm"
+                                 variant="ghost"
+                                 className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                                 onClick={() => handleDelete(notification.id)}
+                              >
+                                 Delete
+                              </Button>
                            </div>
                         </div>
                      ))}
