@@ -1,73 +1,85 @@
-# React + TypeScript + Vite
+# ManageIntern Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The frontend for ManageIntern, an internship management system built with React and Vite.
 
-Currently, two official plugins are available:
+## Features
+- Role-based authentication (Admin, Manager, Intern)
+- Dashboard with analytics
+- Department management
+- Task assignment and tracking
+- Attendance recording
+- Evaluation system
+- Reclamation management
+- Notification center
+- Report generation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technology Stack
+- **Framework**: React 18
+- **Language**: TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **State Management**: Zustand
+- **Routing**: React Router
+- **API Client**: Axios
+- **Testing**: Vitest
 
-## React Compiler
+## Prerequisites
+- Node.js 18+
+- npm 9+
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/laminesdev/ManageIntern.git
+   cd ManageIntern/frontend
+   ```
 
-## Expanding the ESLint configuration
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+3. Configure environment:
+   Create a `.env` file in the root directory with your environment variables:
+   ```env
+   VITE_API_BASE_URL=http://localhost:8000/api
+   ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Running the Application
+Start the development server:
+```bash
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The application will be available at `http://localhost:5173`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Testing
+Run tests with Vitest:
+```bash
+npm run test
 ```
+
+## Directory Structure
+```
+frontend/
+├── src/               # Source code
+│   ├── components/    # Reusable components
+│   ├── pages/         # Application pages
+│   ├── services/      # API services
+│   ├── stores/        # Zustand state stores
+│   ├── types/         # TypeScript type definitions
+│   ├── layouts/       # Layout components
+│   ├── hooks/         # Custom hooks
+│   ├── utils/         # Utility functions
+│   └── config/        # Configuration files
+├── public/            # Public assets
+└── tests/             # Test files
+```
+
+## Deployment
+Build the production bundle:
+```bash
+npm run build
+```
+
+The production-ready files will be in the `dist` directory.
